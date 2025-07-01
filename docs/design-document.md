@@ -19,7 +19,19 @@ UI:
 
 ## Features
 
-### Controle / Criação de Workspaces
+### Workspace
+- Criação de um novo workspace
+  - Dialog com um formulário em que se coloca o nome do workspace e confirma
+  - `./src/features/workspace/components/create-workspace-dialog-button.tsx`
+  - `./src/features/workspace/form/create-workspace-form.tsx`
+- Listagem dos workspaces desse usuário `./src/features/workspace/components/user-workspaces-list.tsx`
+- Detalhes do workspace atual
+  - `./src/features/workspace/components/workspace-details.tsx`
+  - Contém
+    - Nome do workspace
+    - Link de Invite (com botão de Copy)
+    - Display dos usuários do workspace
+
 ### Controle / Cadastro de Itens
 ### Controle / Cadastro de Vendedores
 ### Controle / Cadastro de Demandas Recorrentes

@@ -1,5 +1,58 @@
 - PACKAGE MANAGER: `bun`
 
+# Overview da Arquitetura
+Separada em "domínios" ou "features".
+Na pasta ./src/features você vai encontrar esses domínios, em que uma separação comum das suas subpastas é
+    - ./src/features/some-domain/components
+    - ./src/features/some-domain/forms
+
+# Forms
+Use tanstack forms com validação Zod
+Eis um exemplo:
+```tsx
+import { InputField } from "@/features/form/input-field";
+import { useForm } from "@tanstack/react-form";
+import { Button } from "@/components/ui/button";
+import { z } from "zod";
+
+const newWorkspaceSchema = z.object({
+  name: z.string().min(6, "O nome precisa ter no mínimo 6 caracteres"),
+});
+
+export function NewWorkspaceForm() {
+  const form = useForm({
+    defaultValues: {
+      name: "",
+    },
+    validators: {
+      onChange: newWorkspaceSchema,
+    },
+    onSubmit: async ({ value, formApi }) => {
+      await someAction(); //TODO: change this
+      formApi.reset();
+    },
+  });
+
+  return (
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        form.handleSubmit();
+      }}
+    >
+      {/* ... */}
+      <form.Field
+        name="name"
+        children={field => (
+          <InputField field={field} type="email" label="Email" />
+        )}
+      />
+      {/* ... */}
+    </form>
+  );
+}
+```
 
 
 # Jazz Schema Template
