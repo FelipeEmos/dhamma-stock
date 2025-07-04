@@ -6,8 +6,7 @@ export const Route = createFileRoute("/")({
 });
 
 function IndexPage() {
-  AuthRedirectEffects.useRedirectFromPrivate();
-  AuthRedirectEffects.useRedirectFromPublic();
-
+  AuthRedirectEffects.useIndexRedirect();
+  // FIXME: loading spinner
   return null;
 }

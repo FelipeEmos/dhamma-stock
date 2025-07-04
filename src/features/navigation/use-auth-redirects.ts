@@ -27,6 +27,8 @@ export namespace AuthRedirectEffects {
       }
       navigate({ to: "/login" });
     }, [isAuth, navigate, shouldRedirect]);
+
+    return shouldRedirect;
   }
 
   export function useRedirectFromPublic() {
@@ -44,5 +46,25 @@ export namespace AuthRedirectEffects {
 
       navigate({ to: "/home" });
     }, [shouldRedirect, navigate]);
+
+    return shouldRedirect;
+  }
+
+  export function useIndexRedirect() {
+    const fromPrivate = useRedirectFromPrivate();
+    const fromPublic = useRedirectFromPublic();
+    const navigate = useNavigate();
+
+    const shouldRedirect = !fromPrivate && !fromPublic;
+
+    React.useEffect(() => {
+      if (shouldRedirect) {
+        navigate({
+          to: "/login",
+        });
+      }
+    }, [shouldRedirect, navigate]);
+
+    return shouldRedirect;
   }
 }
