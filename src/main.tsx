@@ -25,7 +25,7 @@ function JazzProvider({ children }: { children: React.ReactNode }) {
 const root = document.getElementById("root");
 if (!root) {
   throw new Error(
-    "Root element not found and can't mount app. Did you change the `index.html` file?",
+    "Root element not found and can't mount app. Did you change the `index.html` file?"
   );
 }
 
@@ -46,5 +46,5 @@ createRoot(root).render(
         </JazzProvider>
       )}
     </ClerkProvider>
-  </StrictMode>,
+  </StrictMode>
 );

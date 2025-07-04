@@ -42,11 +42,7 @@ export namespace AuthRedirectEffects {
         return;
       }
 
-      navigate({ to: "/workspaces" });
+      navigate({ to: "/home" });
     }, [shouldRedirect, navigate]);
-  }
-
-  export function useRedirectOutOfWorkspace({ orgId }: { orgId: string }) {
-    // TODO
   }
 }
