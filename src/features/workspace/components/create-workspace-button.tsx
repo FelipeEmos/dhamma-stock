@@ -6,14 +6,43 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { CreateWorkspaceForm } from "@/features/workspace/forms/create-workspace-form";
+import {
+  WorkspaceForm,
+  WorkspaceFormData,
+} from "@/features/workspace/forms/workspace-form";
+import * as Jazz from "@/jazz";
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import { Group } from "jazz-tools";
+import { useAccount } from "jazz-tools/react";
 
 export function CreateWorkspaceButton() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
 
-  const handleCreateSuccess = () => {
+  const { me } = useAccount(Jazz.Account, {
+    resolve: {
+      root: {
+        workspaces: true,
+      },
+    },
+  });
+
+  const handleCreateWorkspace = (data: WorkspaceFormData) => {
+    if (!me?.root) {
+      return;
+    }
+
+    const newWorkspace = Jazz.Workspace.create(
+      {
+        name: data.name,
+        description: data.description,
+      },
+      Group.create()
+    );
+
+    console.log("Created new workspace", newWorkspace);
+
+    me.root.workspaces.push(newWorkspace);
     setCreateModalOpen(false);
   };
 
@@ -29,7 +58,7 @@ export function CreateWorkspaceButton() {
         <DialogHeader>
           <DialogTitle>Criar Novo Workspace</DialogTitle>
         </DialogHeader>
-        <CreateWorkspaceForm onSuccess={handleCreateSuccess} />
+        <WorkspaceForm onSubmit={handleCreateWorkspace} />
       </DialogContent>
     </Dialog>
   );
