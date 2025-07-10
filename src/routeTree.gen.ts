@@ -15,6 +15,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as PrivateHomeRootRouteImport } from './routes/_private/home-root'
 import { Route as PrivateWWorkspaceIdRouteRouteImport } from './routes/_private/w.$workspaceId/route'
 import { Route as PrivateWWorkspaceIdIndexRouteImport } from './routes/_private/w.$workspaceId/index'
+import { Route as PrivateWWorkspaceIdConfigRouteImport } from './routes/_private/w.$workspaceId/config'
+import { Route as PrivateWWorkspaceIdStockIndexRouteImport } from './routes/_private/w.$workspaceId/stock/index'
+import { Route as PrivateWWorkspaceIdOrdersIndexRouteImport } from './routes/_private/w.$workspaceId/orders/index'
+import { Route as PrivateWWorkspaceIdNotificationsIndexRouteImport } from './routes/_private/w.$workspaceId/notifications/index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -47,19 +51,51 @@ const PrivateWWorkspaceIdIndexRoute =
     path: '/',
     getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
   } as any)
+const PrivateWWorkspaceIdConfigRoute =
+  PrivateWWorkspaceIdConfigRouteImport.update({
+    id: '/config',
+    path: '/config',
+    getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
+  } as any)
+const PrivateWWorkspaceIdStockIndexRoute =
+  PrivateWWorkspaceIdStockIndexRouteImport.update({
+    id: '/stock/',
+    path: '/stock/',
+    getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
+  } as any)
+const PrivateWWorkspaceIdOrdersIndexRoute =
+  PrivateWWorkspaceIdOrdersIndexRouteImport.update({
+    id: '/orders/',
+    path: '/orders/',
+    getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
+  } as any)
+const PrivateWWorkspaceIdNotificationsIndexRoute =
+  PrivateWWorkspaceIdNotificationsIndexRouteImport.update({
+    id: '/notifications/',
+    path: '/notifications/',
+    getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/home-root': typeof PrivateHomeRootRoute
   '/w/$workspaceId': typeof PrivateWWorkspaceIdRouteRouteWithChildren
+  '/w/$workspaceId/config': typeof PrivateWWorkspaceIdConfigRoute
   '/w/$workspaceId/': typeof PrivateWWorkspaceIdIndexRoute
+  '/w/$workspaceId/notifications': typeof PrivateWWorkspaceIdNotificationsIndexRoute
+  '/w/$workspaceId/orders': typeof PrivateWWorkspaceIdOrdersIndexRoute
+  '/w/$workspaceId/stock': typeof PrivateWWorkspaceIdStockIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/home-root': typeof PrivateHomeRootRoute
+  '/w/$workspaceId/config': typeof PrivateWWorkspaceIdConfigRoute
   '/w/$workspaceId': typeof PrivateWWorkspaceIdIndexRoute
+  '/w/$workspaceId/notifications': typeof PrivateWWorkspaceIdNotificationsIndexRoute
+  '/w/$workspaceId/orders': typeof PrivateWWorkspaceIdOrdersIndexRoute
+  '/w/$workspaceId/stock': typeof PrivateWWorkspaceIdStockIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,7 +104,11 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_private/home-root': typeof PrivateHomeRootRoute
   '/_private/w/$workspaceId': typeof PrivateWWorkspaceIdRouteRouteWithChildren
+  '/_private/w/$workspaceId/config': typeof PrivateWWorkspaceIdConfigRoute
   '/_private/w/$workspaceId/': typeof PrivateWWorkspaceIdIndexRoute
+  '/_private/w/$workspaceId/notifications/': typeof PrivateWWorkspaceIdNotificationsIndexRoute
+  '/_private/w/$workspaceId/orders/': typeof PrivateWWorkspaceIdOrdersIndexRoute
+  '/_private/w/$workspaceId/stock/': typeof PrivateWWorkspaceIdStockIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -77,9 +117,21 @@ export interface FileRouteTypes {
     | '/login'
     | '/home-root'
     | '/w/$workspaceId'
+    | '/w/$workspaceId/config'
     | '/w/$workspaceId/'
+    | '/w/$workspaceId/notifications'
+    | '/w/$workspaceId/orders'
+    | '/w/$workspaceId/stock'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/home-root' | '/w/$workspaceId'
+  to:
+    | '/'
+    | '/login'
+    | '/home-root'
+    | '/w/$workspaceId/config'
+    | '/w/$workspaceId'
+    | '/w/$workspaceId/notifications'
+    | '/w/$workspaceId/orders'
+    | '/w/$workspaceId/stock'
   id:
     | '__root__'
     | '/'
@@ -87,7 +139,11 @@ export interface FileRouteTypes {
     | '/login'
     | '/_private/home-root'
     | '/_private/w/$workspaceId'
+    | '/_private/w/$workspaceId/config'
     | '/_private/w/$workspaceId/'
+    | '/_private/w/$workspaceId/notifications/'
+    | '/_private/w/$workspaceId/orders/'
+    | '/_private/w/$workspaceId/stock/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -140,16 +196,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateWWorkspaceIdIndexRouteImport
       parentRoute: typeof PrivateWWorkspaceIdRouteRoute
     }
+    '/_private/w/$workspaceId/config': {
+      id: '/_private/w/$workspaceId/config'
+      path: '/config'
+      fullPath: '/w/$workspaceId/config'
+      preLoaderRoute: typeof PrivateWWorkspaceIdConfigRouteImport
+      parentRoute: typeof PrivateWWorkspaceIdRouteRoute
+    }
+    '/_private/w/$workspaceId/stock/': {
+      id: '/_private/w/$workspaceId/stock/'
+      path: '/stock'
+      fullPath: '/w/$workspaceId/stock'
+      preLoaderRoute: typeof PrivateWWorkspaceIdStockIndexRouteImport
+      parentRoute: typeof PrivateWWorkspaceIdRouteRoute
+    }
+    '/_private/w/$workspaceId/orders/': {
+      id: '/_private/w/$workspaceId/orders/'
+      path: '/orders'
+      fullPath: '/w/$workspaceId/orders'
+      preLoaderRoute: typeof PrivateWWorkspaceIdOrdersIndexRouteImport
+      parentRoute: typeof PrivateWWorkspaceIdRouteRoute
+    }
+    '/_private/w/$workspaceId/notifications/': {
+      id: '/_private/w/$workspaceId/notifications/'
+      path: '/notifications'
+      fullPath: '/w/$workspaceId/notifications'
+      preLoaderRoute: typeof PrivateWWorkspaceIdNotificationsIndexRouteImport
+      parentRoute: typeof PrivateWWorkspaceIdRouteRoute
+    }
   }
 }
 
 interface PrivateWWorkspaceIdRouteRouteChildren {
+  PrivateWWorkspaceIdConfigRoute: typeof PrivateWWorkspaceIdConfigRoute
   PrivateWWorkspaceIdIndexRoute: typeof PrivateWWorkspaceIdIndexRoute
+  PrivateWWorkspaceIdNotificationsIndexRoute: typeof PrivateWWorkspaceIdNotificationsIndexRoute
+  PrivateWWorkspaceIdOrdersIndexRoute: typeof PrivateWWorkspaceIdOrdersIndexRoute
+  PrivateWWorkspaceIdStockIndexRoute: typeof PrivateWWorkspaceIdStockIndexRoute
 }
 
 const PrivateWWorkspaceIdRouteRouteChildren: PrivateWWorkspaceIdRouteRouteChildren =
   {
+    PrivateWWorkspaceIdConfigRoute: PrivateWWorkspaceIdConfigRoute,
     PrivateWWorkspaceIdIndexRoute: PrivateWWorkspaceIdIndexRoute,
+    PrivateWWorkspaceIdNotificationsIndexRoute:
+      PrivateWWorkspaceIdNotificationsIndexRoute,
+    PrivateWWorkspaceIdOrdersIndexRoute: PrivateWWorkspaceIdOrdersIndexRoute,
+    PrivateWWorkspaceIdStockIndexRoute: PrivateWWorkspaceIdStockIndexRoute,
   }
 
 const PrivateWWorkspaceIdRouteRouteWithChildren =

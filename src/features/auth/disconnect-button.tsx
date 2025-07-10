@@ -1,5 +1,3 @@
-import { SignOutButton } from "@clerk/clerk-react";
-import { LogOut, Power } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,6 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { SignOutButton } from "@clerk/clerk-react";
+import { Power } from "lucide-react";
 import { useState } from "react";
 
 export function DisconnectButton() {
@@ -19,7 +19,7 @@ export function DisconnectButton() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">
-          <LogOut className="mr-2 h-4 w-4" />
+          <Power className="mr-2 h-4 w-4" />
           <span>Desconectar</span>
         </Button>
       </DialogTrigger>

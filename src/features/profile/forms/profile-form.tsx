@@ -1,43 +1,41 @@
 import { Button } from "@/components/ui/button";
-import { ImageField } from "@/features/form/image-field";
 import { InputField } from "@/features/form/input-field";
+import { ImageField } from "@/features/form/image-field";
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 
-const workspaceSchema = z.object({
-  name: z.string().min(3, "O nome precisa ter no mínimo 3 caracteres"),
+const profileSchema = z.object({
+  name: z.string().min(2, "O nome precisa ter no mínimo 2 caracteres"),
+  email: z.string().email("Email inválido"),
   image: z.any().optional(),
-  country: z.string(),
-  state: z.string(),
 });
 
-export type WorkspaceFormData = z.infer<typeof workspaceSchema>;
+export type ProfileFormData = z.infer<typeof profileSchema>;
 
-interface WorkspaceFormProps {
-  defaultValues?: Partial<WorkspaceFormData>;
-  onSubmit: (data: WorkspaceFormData) => void | Promise<void>;
+interface ProfileFormProps {
+  defaultValues?: Partial<ProfileFormData>;
+  onSubmit: (data: ProfileFormData) => void | Promise<void>;
   onCancel?: () => void;
 }
 
-const defaultValues: WorkspaceFormData = {
+const defaultValues: ProfileFormData = {
   name: "",
+  email: "",
   image: undefined,
-  country: "",
-  state: "",
 };
 
-export function WorkspaceForm({
+export function ProfileForm({
   defaultValues: _defaultValues,
   onSubmit,
   onCancel,
-}: WorkspaceFormProps) {
+}: ProfileFormProps) {
   const form = useForm({
     defaultValues: {
       ...defaultValues,
       ..._defaultValues,
     },
     validators: {
-      onChange: workspaceSchema,
+      onChange: profileSchema,
     },
     onSubmit: async ({ value, formApi }) => {
       await onSubmit(value);
@@ -61,31 +59,16 @@ export function WorkspaceForm({
         )}
       />
 
-      <div className="grid grid-cols-2 gap-4">
-        <form.Field
-          name="state"
-          children={field => (
-            <InputField field={field} type="text" label="Estado" />
-          )}
-        />
-
-        <form.Field
-          name="country"
-          children={field => (
-            <InputField field={field} type="text" label="País" />
-          )}
-        />
-      </div>
+      <form.Field
+        name="email"
+        children={field => (
+          <InputField field={field} type="email" label="Email" />
+        )}
+      />
 
       <form.Field
         name="image"
-        children={field => (
-          <ImageField
-            field={field}
-            label="Imagem do Grupo"
-            currentImage={_defaultValues?.image}
-          />
-        )}
+        children={field => <ImageField field={field} label="Foto do Perfil" />}
       />
 
       <div className="flex justify-end space-x-2">

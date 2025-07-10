@@ -13,9 +13,10 @@ export function UserAvatar({ horizontal = false, className }: UserAvatarProps) {
     return null;
   }
 
-  const initials = user.firstName && user.lastName
-    ? `${user.firstName[0]}${user.lastName[0]}`
-    : user.emailAddresses[0]?.emailAddress[0]?.toUpperCase() || "U";
+  const initials =
+    user.firstName && user.lastName
+      ? `${user.firstName[0]}${user.lastName[0]}`
+      : user.emailAddresses[0]?.emailAddress[0]?.toUpperCase() || "U";
 
   if (horizontal) {
     return (
@@ -28,7 +29,7 @@ export function UserAvatar({ horizontal = false, className }: UserAvatarProps) {
           <span className="text-sm font-medium">
             {user.fullName || user.emailAddresses[0]?.emailAddress}
           </span>
-          <span className="text-xs text-muted-foreground">
+          <span className="text-muted-foreground text-xs">
             {user.emailAddresses[0]?.emailAddress}
           </span>
         </div>

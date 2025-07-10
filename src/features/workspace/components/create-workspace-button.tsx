@@ -35,7 +35,14 @@ export function CreateWorkspaceButton() {
     const newWorkspace = Jazz.Workspace.create(
       {
         name: data.name,
-        description: data.description,
+        image: data.image,
+        location:
+          data.country || data.state
+            ? {
+                country: data.country,
+                state: data.state,
+              }
+            : undefined,
       },
       Group.create()
     );
@@ -51,12 +58,12 @@ export function CreateWorkspaceButton() {
       <DialogTrigger asChild>
         <Button className="w-full">
           <Plus className="mr-2 h-4 w-4" />
-          Criar novo workspace
+          Criar novo grupo
         </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Criar Novo Workspace</DialogTitle>
+          <DialogTitle>Criar Novo Grupo</DialogTitle>
         </DialogHeader>
         <WorkspaceForm onSubmit={handleCreateWorkspace} />
       </DialogContent>
