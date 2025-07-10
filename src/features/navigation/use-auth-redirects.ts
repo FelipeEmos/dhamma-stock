@@ -44,7 +44,7 @@ export namespace AuthRedirectEffects {
         return;
       }
 
-      navigate({ to: "/home" });
+      navigate({ to: "/home-root" });
     }, [shouldRedirect, navigate]);
 
     return shouldRedirect;

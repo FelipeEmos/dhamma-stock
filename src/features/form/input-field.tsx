@@ -19,7 +19,6 @@ export function InputField({ field, label, ...props }: FieldInputProps) {
       )}
       <Input
         id={field.name}
-        type="password"
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={e => field.handleChange(e.target.value)}

@@ -6,6 +6,7 @@ import type * as React from "react";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./app.tsx";
+import * as Jazz from "@/jazz";
 
 function JazzProvider({ children }: { children: React.ReactNode }) {
   const clerk = useClerk();
@@ -13,6 +14,7 @@ function JazzProvider({ children }: { children: React.ReactNode }) {
   return (
     <JazzReactProviderWithClerk
       clerk={clerk}
+      AccountSchema={Jazz.Account}
       sync={{
         peer: `wss://cloud.jazz.tools/?key=${env.VITE_JAZZ_API_KEY}`,
       }}
