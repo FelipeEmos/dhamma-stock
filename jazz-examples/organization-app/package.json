@@ -1,0 +1,36 @@
+{
+  "name": "organization-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "format-and-lint": "biome check .",
+    "format-and-lint:fix": "biome check . --write",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "jazz-tools": "^0.15.8",
+    "lucide-react": "^0.274.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-router": "^6.16.0",
+    "react-router-dom": "^6.16.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@playwright/test": "^1.50.1",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/postcss": "^4.1.10",
+    "@types/react": "19.1.0",
+    "@types/react-dom": "19.1.0",
+    "@vitejs/plugin-react": "^4.5.1",
+    "globals": "^15.11.0",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^4.1.10",
+    "typescript": "5.6.2",
+    "vite": "^6.3.5"
+  }
+}
