@@ -16,9 +16,10 @@ import { Route as PrivateHomeRootRouteImport } from './routes/_private/home-root
 import { Route as PrivateWWorkspaceIdRouteRouteImport } from './routes/_private/w.$workspaceId/route'
 import { Route as PrivateWWorkspaceIdIndexRouteImport } from './routes/_private/w.$workspaceId/index'
 import { Route as PrivateWWorkspaceIdConfigRouteImport } from './routes/_private/w.$workspaceId/config'
-import { Route as PrivateWWorkspaceIdStockIndexRouteImport } from './routes/_private/w.$workspaceId/stock/index'
-import { Route as PrivateWWorkspaceIdOrdersIndexRouteImport } from './routes/_private/w.$workspaceId/orders/index'
-import { Route as PrivateWWorkspaceIdNotificationsIndexRouteImport } from './routes/_private/w.$workspaceId/notifications/index'
+import { Route as PrivateWWorkspaceIdNavHomeRouteImport } from './routes/_private/w.$workspaceId/_nav.home'
+import { Route as PrivateWWorkspaceIdStockNavIndexRouteImport } from './routes/_private/w.$workspaceId/stock/_nav.index'
+import { Route as PrivateWWorkspaceIdOrdersNavIndexRouteImport } from './routes/_private/w.$workspaceId/orders/_nav.index'
+import { Route as PrivateWWorkspaceIdNotificationsNavIndexRouteImport } from './routes/_private/w.$workspaceId/notifications/_nav.index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -57,21 +58,27 @@ const PrivateWWorkspaceIdConfigRoute =
     path: '/config',
     getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
   } as any)
-const PrivateWWorkspaceIdStockIndexRoute =
-  PrivateWWorkspaceIdStockIndexRouteImport.update({
-    id: '/stock/',
+const PrivateWWorkspaceIdNavHomeRoute =
+  PrivateWWorkspaceIdNavHomeRouteImport.update({
+    id: '/_nav/home',
+    path: '/home',
+    getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
+  } as any)
+const PrivateWWorkspaceIdStockNavIndexRoute =
+  PrivateWWorkspaceIdStockNavIndexRouteImport.update({
+    id: '/stock/_nav/',
     path: '/stock/',
     getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
   } as any)
-const PrivateWWorkspaceIdOrdersIndexRoute =
-  PrivateWWorkspaceIdOrdersIndexRouteImport.update({
-    id: '/orders/',
+const PrivateWWorkspaceIdOrdersNavIndexRoute =
+  PrivateWWorkspaceIdOrdersNavIndexRouteImport.update({
+    id: '/orders/_nav/',
     path: '/orders/',
     getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
   } as any)
-const PrivateWWorkspaceIdNotificationsIndexRoute =
-  PrivateWWorkspaceIdNotificationsIndexRouteImport.update({
-    id: '/notifications/',
+const PrivateWWorkspaceIdNotificationsNavIndexRoute =
+  PrivateWWorkspaceIdNotificationsNavIndexRouteImport.update({
+    id: '/notifications/_nav/',
     path: '/notifications/',
     getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
   } as any)
@@ -83,9 +90,10 @@ export interface FileRoutesByFullPath {
   '/w/$workspaceId': typeof PrivateWWorkspaceIdRouteRouteWithChildren
   '/w/$workspaceId/config': typeof PrivateWWorkspaceIdConfigRoute
   '/w/$workspaceId/': typeof PrivateWWorkspaceIdIndexRoute
-  '/w/$workspaceId/notifications': typeof PrivateWWorkspaceIdNotificationsIndexRoute
-  '/w/$workspaceId/orders': typeof PrivateWWorkspaceIdOrdersIndexRoute
-  '/w/$workspaceId/stock': typeof PrivateWWorkspaceIdStockIndexRoute
+  '/w/$workspaceId/home': typeof PrivateWWorkspaceIdNavHomeRoute
+  '/w/$workspaceId/notifications': typeof PrivateWWorkspaceIdNotificationsNavIndexRoute
+  '/w/$workspaceId/orders': typeof PrivateWWorkspaceIdOrdersNavIndexRoute
+  '/w/$workspaceId/stock': typeof PrivateWWorkspaceIdStockNavIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -93,9 +101,10 @@ export interface FileRoutesByTo {
   '/home-root': typeof PrivateHomeRootRoute
   '/w/$workspaceId/config': typeof PrivateWWorkspaceIdConfigRoute
   '/w/$workspaceId': typeof PrivateWWorkspaceIdIndexRoute
-  '/w/$workspaceId/notifications': typeof PrivateWWorkspaceIdNotificationsIndexRoute
-  '/w/$workspaceId/orders': typeof PrivateWWorkspaceIdOrdersIndexRoute
-  '/w/$workspaceId/stock': typeof PrivateWWorkspaceIdStockIndexRoute
+  '/w/$workspaceId/home': typeof PrivateWWorkspaceIdNavHomeRoute
+  '/w/$workspaceId/notifications': typeof PrivateWWorkspaceIdNotificationsNavIndexRoute
+  '/w/$workspaceId/orders': typeof PrivateWWorkspaceIdOrdersNavIndexRoute
+  '/w/$workspaceId/stock': typeof PrivateWWorkspaceIdStockNavIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -106,9 +115,10 @@ export interface FileRoutesById {
   '/_private/w/$workspaceId': typeof PrivateWWorkspaceIdRouteRouteWithChildren
   '/_private/w/$workspaceId/config': typeof PrivateWWorkspaceIdConfigRoute
   '/_private/w/$workspaceId/': typeof PrivateWWorkspaceIdIndexRoute
-  '/_private/w/$workspaceId/notifications/': typeof PrivateWWorkspaceIdNotificationsIndexRoute
-  '/_private/w/$workspaceId/orders/': typeof PrivateWWorkspaceIdOrdersIndexRoute
-  '/_private/w/$workspaceId/stock/': typeof PrivateWWorkspaceIdStockIndexRoute
+  '/_private/w/$workspaceId/_nav/home': typeof PrivateWWorkspaceIdNavHomeRoute
+  '/_private/w/$workspaceId/notifications/_nav/': typeof PrivateWWorkspaceIdNotificationsNavIndexRoute
+  '/_private/w/$workspaceId/orders/_nav/': typeof PrivateWWorkspaceIdOrdersNavIndexRoute
+  '/_private/w/$workspaceId/stock/_nav/': typeof PrivateWWorkspaceIdStockNavIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -119,6 +129,7 @@ export interface FileRouteTypes {
     | '/w/$workspaceId'
     | '/w/$workspaceId/config'
     | '/w/$workspaceId/'
+    | '/w/$workspaceId/home'
     | '/w/$workspaceId/notifications'
     | '/w/$workspaceId/orders'
     | '/w/$workspaceId/stock'
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/home-root'
     | '/w/$workspaceId/config'
     | '/w/$workspaceId'
+    | '/w/$workspaceId/home'
     | '/w/$workspaceId/notifications'
     | '/w/$workspaceId/orders'
     | '/w/$workspaceId/stock'
@@ -141,9 +153,10 @@ export interface FileRouteTypes {
     | '/_private/w/$workspaceId'
     | '/_private/w/$workspaceId/config'
     | '/_private/w/$workspaceId/'
-    | '/_private/w/$workspaceId/notifications/'
-    | '/_private/w/$workspaceId/orders/'
-    | '/_private/w/$workspaceId/stock/'
+    | '/_private/w/$workspaceId/_nav/home'
+    | '/_private/w/$workspaceId/notifications/_nav/'
+    | '/_private/w/$workspaceId/orders/_nav/'
+    | '/_private/w/$workspaceId/stock/_nav/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -203,25 +216,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateWWorkspaceIdConfigRouteImport
       parentRoute: typeof PrivateWWorkspaceIdRouteRoute
     }
-    '/_private/w/$workspaceId/stock/': {
-      id: '/_private/w/$workspaceId/stock/'
+    '/_private/w/$workspaceId/_nav/home': {
+      id: '/_private/w/$workspaceId/_nav/home'
+      path: '/home'
+      fullPath: '/w/$workspaceId/home'
+      preLoaderRoute: typeof PrivateWWorkspaceIdNavHomeRouteImport
+      parentRoute: typeof PrivateWWorkspaceIdRouteRoute
+    }
+    '/_private/w/$workspaceId/stock/_nav/': {
+      id: '/_private/w/$workspaceId/stock/_nav/'
       path: '/stock'
       fullPath: '/w/$workspaceId/stock'
-      preLoaderRoute: typeof PrivateWWorkspaceIdStockIndexRouteImport
+      preLoaderRoute: typeof PrivateWWorkspaceIdStockNavIndexRouteImport
       parentRoute: typeof PrivateWWorkspaceIdRouteRoute
     }
-    '/_private/w/$workspaceId/orders/': {
-      id: '/_private/w/$workspaceId/orders/'
+    '/_private/w/$workspaceId/orders/_nav/': {
+      id: '/_private/w/$workspaceId/orders/_nav/'
       path: '/orders'
       fullPath: '/w/$workspaceId/orders'
-      preLoaderRoute: typeof PrivateWWorkspaceIdOrdersIndexRouteImport
+      preLoaderRoute: typeof PrivateWWorkspaceIdOrdersNavIndexRouteImport
       parentRoute: typeof PrivateWWorkspaceIdRouteRoute
     }
-    '/_private/w/$workspaceId/notifications/': {
-      id: '/_private/w/$workspaceId/notifications/'
+    '/_private/w/$workspaceId/notifications/_nav/': {
+      id: '/_private/w/$workspaceId/notifications/_nav/'
       path: '/notifications'
       fullPath: '/w/$workspaceId/notifications'
-      preLoaderRoute: typeof PrivateWWorkspaceIdNotificationsIndexRouteImport
+      preLoaderRoute: typeof PrivateWWorkspaceIdNotificationsNavIndexRouteImport
       parentRoute: typeof PrivateWWorkspaceIdRouteRoute
     }
   }
@@ -230,19 +250,23 @@ declare module '@tanstack/react-router' {
 interface PrivateWWorkspaceIdRouteRouteChildren {
   PrivateWWorkspaceIdConfigRoute: typeof PrivateWWorkspaceIdConfigRoute
   PrivateWWorkspaceIdIndexRoute: typeof PrivateWWorkspaceIdIndexRoute
-  PrivateWWorkspaceIdNotificationsIndexRoute: typeof PrivateWWorkspaceIdNotificationsIndexRoute
-  PrivateWWorkspaceIdOrdersIndexRoute: typeof PrivateWWorkspaceIdOrdersIndexRoute
-  PrivateWWorkspaceIdStockIndexRoute: typeof PrivateWWorkspaceIdStockIndexRoute
+  PrivateWWorkspaceIdNavHomeRoute: typeof PrivateWWorkspaceIdNavHomeRoute
+  PrivateWWorkspaceIdNotificationsNavIndexRoute: typeof PrivateWWorkspaceIdNotificationsNavIndexRoute
+  PrivateWWorkspaceIdOrdersNavIndexRoute: typeof PrivateWWorkspaceIdOrdersNavIndexRoute
+  PrivateWWorkspaceIdStockNavIndexRoute: typeof PrivateWWorkspaceIdStockNavIndexRoute
 }
 
 const PrivateWWorkspaceIdRouteRouteChildren: PrivateWWorkspaceIdRouteRouteChildren =
   {
     PrivateWWorkspaceIdConfigRoute: PrivateWWorkspaceIdConfigRoute,
     PrivateWWorkspaceIdIndexRoute: PrivateWWorkspaceIdIndexRoute,
-    PrivateWWorkspaceIdNotificationsIndexRoute:
-      PrivateWWorkspaceIdNotificationsIndexRoute,
-    PrivateWWorkspaceIdOrdersIndexRoute: PrivateWWorkspaceIdOrdersIndexRoute,
-    PrivateWWorkspaceIdStockIndexRoute: PrivateWWorkspaceIdStockIndexRoute,
+    PrivateWWorkspaceIdNavHomeRoute: PrivateWWorkspaceIdNavHomeRoute,
+    PrivateWWorkspaceIdNotificationsNavIndexRoute:
+      PrivateWWorkspaceIdNotificationsNavIndexRoute,
+    PrivateWWorkspaceIdOrdersNavIndexRoute:
+      PrivateWWorkspaceIdOrdersNavIndexRoute,
+    PrivateWWorkspaceIdStockNavIndexRoute:
+      PrivateWWorkspaceIdStockNavIndexRoute,
   }
 
 const PrivateWWorkspaceIdRouteRouteWithChildren =
