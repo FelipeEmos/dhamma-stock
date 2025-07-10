@@ -10,7 +10,7 @@ interface Props extends LinkOptions {
 
 export function NavLink({ children, buttonProps, ...linkOptions }: Props) {
   return (
-    <Button variant="ghost" asChild {...buttonProps}>
+    <Button variant="ghost" size="xl" asChild {...buttonProps}>
       <Link {...linkOptions} className="group">
         <ChevronRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
         <span className="transition-transform duration-200 group-hover:translate-x-1">

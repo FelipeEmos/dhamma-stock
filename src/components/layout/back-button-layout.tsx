@@ -26,7 +26,7 @@ export function BackButtonLayout({
                 <ArrowLeft className="size-6" />
               </Link>
             </Button>
-            <div className="flex flex-1 justify-center">{title}</div>
+            <div className="flex flex-1 justify-center text-lg">{title}</div>
             <div className="w-10"></div>
           </div>
         </div>

@@ -1,21 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { NavLink } from "@/features/navigation/components/nav-link";
 import { CurrentWorkspaceDropdown } from "@/features/workspace/components/current-workspace-dropdown";
-import { useRouteWorkspace } from "./route";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_private/w/$workspaceId/_nav/home")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const workspace = useRouteWorkspace();
+  const params = Route.useParams();
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-svh flex-col">
       <div className="border-b p-4">
         <CurrentWorkspaceDropdown />
       </div>
       <div className="flex-1 p-6">
-        <div>Workspace: {workspace.name}</div>
+        <NavLink to="/w/$workspaceId/events" params={params}>
+          Cursos e Eventos
+        </NavLink>
       </div>
     </div>
   );
