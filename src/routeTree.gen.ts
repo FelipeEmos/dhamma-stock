@@ -13,6 +13,8 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as PrivateRouteRouteImport } from './routes/_private/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PrivateHomeRootRouteImport } from './routes/_private/home-root'
+import { Route as PrivateWWorkspaceIdRouteRouteImport } from './routes/_private/w.$workspaceId/route'
+import { Route as PrivateWWorkspaceIdIndexRouteImport } from './routes/_private/w.$workspaceId/index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -33,16 +35,31 @@ const PrivateHomeRootRoute = PrivateHomeRootRouteImport.update({
   path: '/home-root',
   getParentRoute: () => PrivateRouteRoute,
 } as any)
+const PrivateWWorkspaceIdRouteRoute =
+  PrivateWWorkspaceIdRouteRouteImport.update({
+    id: '/w/$workspaceId',
+    path: '/w/$workspaceId',
+    getParentRoute: () => PrivateRouteRoute,
+  } as any)
+const PrivateWWorkspaceIdIndexRoute =
+  PrivateWWorkspaceIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => PrivateWWorkspaceIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/home-root': typeof PrivateHomeRootRoute
+  '/w/$workspaceId': typeof PrivateWWorkspaceIdRouteRouteWithChildren
+  '/w/$workspaceId/': typeof PrivateWWorkspaceIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/home-root': typeof PrivateHomeRootRoute
+  '/w/$workspaceId': typeof PrivateWWorkspaceIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -50,13 +67,27 @@ export interface FileRoutesById {
   '/_private': typeof PrivateRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/_private/home-root': typeof PrivateHomeRootRoute
+  '/_private/w/$workspaceId': typeof PrivateWWorkspaceIdRouteRouteWithChildren
+  '/_private/w/$workspaceId/': typeof PrivateWWorkspaceIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/home-root'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/home-root'
+    | '/w/$workspaceId'
+    | '/w/$workspaceId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/home-root'
-  id: '__root__' | '/' | '/_private' | '/login' | '/_private/home-root'
+  to: '/' | '/login' | '/home-root' | '/w/$workspaceId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_private'
+    | '/login'
+    | '/_private/home-root'
+    | '/_private/w/$workspaceId'
+    | '/_private/w/$workspaceId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -95,15 +126,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateHomeRootRouteImport
       parentRoute: typeof PrivateRouteRoute
     }
+    '/_private/w/$workspaceId': {
+      id: '/_private/w/$workspaceId'
+      path: '/w/$workspaceId'
+      fullPath: '/w/$workspaceId'
+      preLoaderRoute: typeof PrivateWWorkspaceIdRouteRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_private/w/$workspaceId/': {
+      id: '/_private/w/$workspaceId/'
+      path: '/'
+      fullPath: '/w/$workspaceId/'
+      preLoaderRoute: typeof PrivateWWorkspaceIdIndexRouteImport
+      parentRoute: typeof PrivateWWorkspaceIdRouteRoute
+    }
   }
 }
 
+interface PrivateWWorkspaceIdRouteRouteChildren {
+  PrivateWWorkspaceIdIndexRoute: typeof PrivateWWorkspaceIdIndexRoute
+}
+
+const PrivateWWorkspaceIdRouteRouteChildren: PrivateWWorkspaceIdRouteRouteChildren =
+  {
+    PrivateWWorkspaceIdIndexRoute: PrivateWWorkspaceIdIndexRoute,
+  }
+
+const PrivateWWorkspaceIdRouteRouteWithChildren =
+  PrivateWWorkspaceIdRouteRoute._addFileChildren(
+    PrivateWWorkspaceIdRouteRouteChildren,
+  )
+
 interface PrivateRouteRouteChildren {
   PrivateHomeRootRoute: typeof PrivateHomeRootRoute
+  PrivateWWorkspaceIdRouteRoute: typeof PrivateWWorkspaceIdRouteRouteWithChildren
 }
 
 const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
   PrivateHomeRootRoute: PrivateHomeRootRoute,
+  PrivateWWorkspaceIdRouteRoute: PrivateWWorkspaceIdRouteRouteWithChildren,
 }
 
 const PrivateRouteRouteWithChildren = PrivateRouteRoute._addFileChildren(
