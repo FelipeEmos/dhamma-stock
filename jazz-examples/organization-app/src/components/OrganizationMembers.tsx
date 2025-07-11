@@ -4,12 +4,14 @@ import { Organization } from "../schema.ts";
 
 export function OrganizationMembers({
   organization,
-}: { organization: Loaded<typeof Organization> }) {
+}: {
+  organization: Loaded<typeof Organization>;
+}) {
   const group = organization._owner.castAs(Group);
 
   return (
     <>
-      {group.members.map((member) => (
+      {group.members.map(member => (
         <MemberItem
           key={member.id}
           account={member.account}
@@ -25,7 +27,11 @@ function MemberItem({
   account,
   role,
   group,
-}: { account: Account; role: string; group: Group }) {
+}: {
+  account: Account;
+  role: string;
+  group: Group;
+}) {
   const { me } = useAccount();
 
   const canRemoveMember = group.myRole() === "admin" && account.id !== me?.id;
@@ -37,14 +43,14 @@ function MemberItem({
   }
 
   return (
-    <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
+    <div className="flex items-center justify-between px-4 py-5 sm:px-6">
       <div>
         <strong className="font-medium">{account.profile?.name}</strong> ({role}
         )
       </div>
       {canRemoveMember && (
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
           onClick={handleRemoveMember}
         >
           Remove member

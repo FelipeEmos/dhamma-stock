@@ -9,12 +9,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <header className="bg-white shadow-sm mb-12 dark:bg-stone-925 dark:border-b">
-        <div className="w-full max-w-4xl mx-auto px-4 py-3 flex gap-4  items-center">
+      <header className="dark:bg-stone-925 mb-12 bg-white shadow-sm dark:border-b">
+        <div className="mx-auto flex w-full max-w-4xl items-center gap-4 px-4 py-3">
           <a href="/#">Home</a>
 
           <span className="ml-auto flex items-center gap-2">
-            <span className="bg-stone-500 pt-1 size-6 flex items-center justify-center rounded-full">
+            <span className="flex size-6 items-center justify-center rounded-full bg-stone-500 pt-1">
               <UserIcon size={20} className="stroke-white" />
             </span>
             <label htmlFor="profile-name" className="sr-only">
@@ -24,8 +24,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
               id="profile-name"
               type="text"
               value={me?.profile.name ?? ""}
-              className="rounded-md shadow-sm dark:bg-transparent text-sm py-1.5 px-3"
-              onChange={(e) => {
+              className="rounded-md px-3 py-1.5 text-sm shadow-sm dark:bg-transparent"
+              onChange={e => {
                 if (me) {
                   me.profile.name = e.target.value;
                 }
@@ -34,7 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </span>
 
           <button
-            className="bg-stone-100 py-1.5 px-3 text-sm rounded-md dark:bg-stone-900 dark:text-white"
+            className="rounded-md bg-stone-100 px-3 py-1.5 text-sm dark:bg-stone-900 dark:text-white"
             onClick={() => {
               window.location.href = "/";
               logOut();
@@ -45,7 +45,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </header>
 
-      <main className="px-4 py-3 max-w-4xl mx-auto flex flex-col gap-8">
+      <main className="mx-auto flex max-w-4xl flex-col gap-8 px-4 py-3">
         {children}
       </main>
     </>

@@ -17,7 +17,7 @@ export function OrderForm({
   // If instructions already exist, applyDiff updates them incrementally.
   // Otherwise, creates a new CoPlainText instance for the instructions.
   const handleInstructionsChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
     if (order.instructions) {
       return order.instructions.applyDiff(e.target.value);
@@ -34,13 +34,13 @@ export function OrderForm({
           id="baseTea"
           value={order.baseTea || ""}
           className="dark:bg-transparent"
-          onChange={(e) => (order.baseTea = e.target.value as any)}
+          onChange={e => (order.baseTea = e.target.value as any)}
           required
         >
           <option value="" disabled>
             Please select your preferred base tea
           </option>
-          {BubbleTeaBaseTeaTypes.map((teaType) => (
+          {BubbleTeaBaseTeaTypes.map(teaType => (
             <option key={teaType} value={teaType}>
               {teaType}
             </option>
@@ -51,7 +51,7 @@ export function OrderForm({
       <fieldset>
         <legend className="mb-2">Add-ons</legend>
 
-        {BubbleTeaAddOnTypes.map((addOn) => (
+        {BubbleTeaAddOnTypes.map(addOn => (
           <div key={addOn} className="flex items-center gap-2">
             <input
               type="checkbox"
@@ -59,7 +59,7 @@ export function OrderForm({
               name={addOn}
               id={addOn}
               checked={order.addOns?.includes(addOn) || false}
-              onChange={(e) => {
+              onChange={e => {
                 if (e.target.checked) {
                   order.addOns?.push(addOn);
                 } else {
@@ -80,7 +80,7 @@ export function OrderForm({
           id="deliveryDate"
           className="dark:bg-transparent"
           value={order.deliveryDate?.toISOString().split("T")[0] || ""}
-          onChange={(e) => (order.deliveryDate = new Date(e.target.value))}
+          onChange={e => (order.deliveryDate = new Date(e.target.value))}
           required
         />
       </div>
@@ -91,7 +91,7 @@ export function OrderForm({
           name="withMilk"
           id="withMilk"
           checked={order.withMilk}
-          onChange={(e) => (order.withMilk = e.target.checked)}
+          onChange={e => (order.withMilk = e.target.checked)}
         />
         <label htmlFor="withMilk">With milk?</label>
       </div>
@@ -110,7 +110,7 @@ export function OrderForm({
       {onSave && (
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         >
           Submit
         </button>

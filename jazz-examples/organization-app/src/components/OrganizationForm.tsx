@@ -9,7 +9,7 @@ export function OrganizationForm({
   onSave?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
   return (
-    <form onSubmit={onSave} className="flex gap-3 items-center">
+    <form onSubmit={onSave} className="flex items-center gap-3">
       <label className="flex-1">
         <span className="sr-only">Organization name</span>
         <input
@@ -18,15 +18,15 @@ export function OrganizationForm({
           id="name"
           value={organization.name}
           placeholder="Enter organization name..."
-          className="rounded-md shadow-sm dark:bg-transparent w-full"
-          onChange={(e) => (organization.name = e.target.value)}
+          className="w-full rounded-md shadow-sm dark:bg-transparent"
+          onChange={e => (organization.name = e.target.value)}
           required
         />
       </label>
       {onSave && (
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         >
           Create
         </button>

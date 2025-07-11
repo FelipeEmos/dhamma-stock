@@ -16,7 +16,7 @@ export function generateRandomProject(numTasks: number) {
         done: faker.datatype.boolean(),
         text: CoPlainText.create(
           faker.lorem.sentence({ min: 3, max: 8 }),
-          tasks._owner,
+          tasks._owner
         ),
         version: 1,
       });
@@ -30,7 +30,7 @@ export function generateRandomProject(numTasks: number) {
       title: projectTitle,
       tasks: tasks,
     }),
-    done: new Promise((resolve) => {
+    done: new Promise(resolve => {
       setTimeout(() => {
         populateTasks();
         resolve(true);

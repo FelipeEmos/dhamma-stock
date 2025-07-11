@@ -21,25 +21,25 @@ export function HomePage() {
     <Layout>
       <Heading text="Organizations example app" />
 
-      <div className="rounded-lg border shadow-sm bg-white dark:bg-stone-925">
+      <div className="dark:bg-stone-925 rounded-lg border bg-white shadow-sm">
         <div className="border-b px-4 py-5 sm:px-6">
           <h2>Organizations</h2>
         </div>
         <div className="divide-y">
           {me.root.organizations.length > 0 ? (
-            me.root.organizations.map((project) =>
+            me.root.organizations.map(project =>
               project ? (
                 <a
                   key={project.id}
-                  className="px-4 py-5 sm:px-6 font-medium block"
+                  className="block px-4 py-5 font-medium sm:px-6"
                   href={`/#/organizations/${project.id}`}
                 >
                   <strong>{project.name}</strong>
                 </a>
-              ) : null,
+              ) : null
             )
           ) : (
-            <p className="col-span-full text-center px-4 py-8 sm:px-6">
+            <p className="col-span-full px-4 py-8 text-center sm:px-6">
               You have no organizations yet.
             </p>
           )}

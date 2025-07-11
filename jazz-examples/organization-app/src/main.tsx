@@ -40,5 +40,5 @@ createRoot(document.getElementById("root")!).render(
       <Router />
       <JazzInspector />
     </JazzReactProvider>
-  </StrictMode>,
+  </StrictMode>
 );

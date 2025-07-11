@@ -36,7 +36,7 @@ export function CreateOrganization() {
       {
         projects: co.list(Project).create([], { owner: group }),
       },
-      { owner: group },
+      { owner: group }
     );
 
     navigate(`/organizations/${draft.id}`);

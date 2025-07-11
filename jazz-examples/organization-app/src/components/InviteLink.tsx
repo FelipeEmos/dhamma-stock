@@ -6,7 +6,9 @@ import { Organization } from "../schema.ts";
 
 export function InviteLink({
   organization,
-}: { organization: Loaded<typeof Organization> }) {
+}: {
+  organization: Loaded<typeof Organization>;
+}) {
   let [copyCount, setCopyCount] = useState(0);
   let copied = copyCount > 0;
 
@@ -22,7 +24,7 @@ export function InviteLink({
   const copyUrl = () => {
     const inviteLink = createInviteLink(organization, "writer");
     navigator.clipboard.writeText(inviteLink).then(() => {
-      setCopyCount((count) => count + 1);
+      setCopyCount(count => count + 1);
     });
   };
 

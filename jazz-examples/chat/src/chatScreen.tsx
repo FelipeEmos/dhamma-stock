@@ -24,7 +24,7 @@ export function ChatScreen(props: { chatID: string }) {
 
   if (!chat)
     return (
-      <div className="flex-1 flex justify-center items-center">Loading...</div>
+      <div className="flex flex-1 items-center justify-center">Loading...</div>
     );
 
   const sendImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,15 +37,15 @@ export function ChatScreen(props: { chatID: string }) {
       return;
     }
 
-    createImage(file, { owner: chat._owner }).then((image) => {
+    createImage(file, { owner: chat._owner }).then(image => {
       chat.push(
         Message.create(
           {
             text: co.plainText().create(file.name, chat._owner),
             image: image,
           },
-          chat._owner,
-        ),
+          chat._owner
+        )
       );
     });
   };
@@ -61,13 +61,13 @@ export function ChatScreen(props: { chatID: string }) {
           chat
             .slice(-showNLastMessages)
             .reverse() // this plus flex-col-reverse on ChatBody gives us scroll-to-bottom behavior
-            .map((msg) => <ChatBubble me={me} msg={msg} key={msg.id} />)
+            .map(msg => <ChatBubble me={me} msg={msg} key={msg.id} />)
         ) : (
           <EmptyChatMessage />
         )}
         {chat.length > showNLastMessages && (
           <button
-            className="px-4 py-1 block mx-auto my-2 border rounded"
+            className="mx-auto my-2 block rounded border px-4 py-1"
             onClick={() => setShowNLastMessages(showNLastMessages + 10)}
           >
             Show more
@@ -79,12 +79,12 @@ export function ChatScreen(props: { chatID: string }) {
         <ImageInput onImageChange={sendImage} />
 
         <TextInput
-          onSubmit={(text) => {
+          onSubmit={text => {
             chat.push(
               Message.create(
                 { text: co.plainText().create(text, chat._owner) },
-                chat._owner,
-              ),
+                chat._owner
+              )
             );
           }}
         />

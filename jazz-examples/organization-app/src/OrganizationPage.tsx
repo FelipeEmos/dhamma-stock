@@ -18,7 +18,7 @@ export function OrganizationPage() {
   if (organization === undefined) return <p>Loading organization...</p>;
   if (organization === null) {
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="flex h-full items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold">
             You don't have access to this organization
@@ -36,9 +36,9 @@ export function OrganizationPage() {
       <div className="grid gap-8">
         <Heading text={`Welcome to ${organization.name} organization!`} />
 
-        <div className="rounded-lg border shadow-sm bg-white dark:bg-stone-925">
+        <div className="dark:bg-stone-925 rounded-lg border bg-white shadow-sm">
           <div className="border-b px-4 py-5 sm:px-6">
-            <div className="flex justify-between items-center">
+            <div className="flex items-center justify-between">
               <h2>Members</h2>
 
               {organization._owner?.myRole() === "admin" && (
@@ -51,24 +51,24 @@ export function OrganizationPage() {
           </div>
         </div>
 
-        <div className="rounded-lg border shadow-sm bg-white dark:bg-stone-925">
+        <div className="dark:bg-stone-925 rounded-lg border bg-white shadow-sm">
           <div className="border-b px-4 py-5 sm:px-6">
             <h2>Projects</h2>
           </div>
           <div className="divide-y">
             {organization.projects.length > 0 ? (
-              organization.projects.map((project) =>
+              organization.projects.map(project =>
                 project ? (
                   <strong
                     key={project.id}
-                    className="px-4 py-5 sm:px-6 font-medium block"
+                    className="block px-4 py-5 font-medium sm:px-6"
                   >
                     {project.name}
                   </strong>
-                ) : null,
+                ) : null
               )
             ) : (
-              <p className="col-span-full text-center px-4 py-8 sm:px-6">
+              <p className="col-span-full px-4 py-8 text-center sm:px-6">
                 You have no projects yet.
               </p>
             )}

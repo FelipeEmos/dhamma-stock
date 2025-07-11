@@ -30,12 +30,12 @@ function DescriptionVersionHistory({ id }: { id: string }) {
       <h2 className="mb-3">Description version history</h2>
       <div className="grid grid-cols-3 border">
         {version && (
-          <div className="col-span-2 border-r p-3 flex flex-col justify-between">
+          <div className="col-span-2 flex flex-col justify-between border-r p-3">
             <p>{version.value}</p>
 
             {!isVersionLatest && (
               <button
-                className="bg-black text-white py-1 px-2 rounded"
+                className="rounded bg-black px-2 py-1 text-white"
                 onClick={() => (issue.description = version.value)}
               >
                 Restore
@@ -43,11 +43,11 @@ function DescriptionVersionHistory({ id }: { id: string }) {
             )}
           </div>
         )}
-        <div className="flex flex-col gap-1 p-2 max-h-96 overflow-y-auto">
+        <div className="flex max-h-96 flex-col gap-1 overflow-y-auto p-2">
           {edits.map((edit, i) => (
             <button
               key={i}
-              className="text-xs text-left p-2 hover:bg-stone-100"
+              className="p-2 text-left text-xs hover:bg-stone-100"
               onClick={() => selectVersion(edit, i === 0)}
             >
               {i == 0 ? "(Latest)" : ""}
@@ -78,7 +78,7 @@ export function IssueVersionHistory({ id }: { id: string }) {
 
   return (
     <>
-      <div className="flex flex-col text-sm gap-2">
+      <div className="flex flex-col gap-2 text-sm">
         <h2 className="sr-only">Edits</h2>
         {edits.map((edit, i) => (
           <div key={i}>

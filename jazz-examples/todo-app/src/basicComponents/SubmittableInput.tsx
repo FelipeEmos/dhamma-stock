@@ -15,23 +15,23 @@ export function SubmittableInput({
   return (
     <form
       className="flex flex-row items-center gap-3"
-      onSubmit={(e) => {
+      onSubmit={e => {
         e.preventDefault();
         const textEl = e.currentTarget.elements.namedItem(
-          "text",
+          "text"
         ) as HTMLInputElement;
         onSubmit(textEl.value);
         textEl.value = "";
       }}
     >
       <Input
-        className="-ml-3 -my-2 grow flex-3 text-base"
+        className="-my-2 -ml-3 flex-3 grow text-base"
         name="text"
         placeholder={placeholder}
         autoComplete="off"
         disabled={disabled}
       />
-      <Button asChild type="submit" className="shrink flex-1 cursor-pointer">
+      <Button asChild type="submit" className="flex-1 shrink cursor-pointer">
         <Input type="submit" value={label} disabled={disabled} />
       </Button>
     </form>

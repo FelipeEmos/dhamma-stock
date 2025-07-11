@@ -12,7 +12,7 @@ export function OrderThumbnail({
   return (
     <a
       href={`/#/order/${id}`}
-      className="border p-3 flex justify-between items-start gap-3"
+      className="flex items-start justify-between gap-3 border p-3"
     >
       <div>
         <strong>

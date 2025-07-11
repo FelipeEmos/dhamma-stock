@@ -9,7 +9,7 @@ export function IssueComponent({ issue }: { issue: Loaded<typeof Issue> }) {
         <input
           type="text"
           value={issue.title}
-          onChange={(event) => {
+          onChange={event => {
             issue.title = event.target.value;
           }}
         />
@@ -19,32 +19,32 @@ export function IssueComponent({ issue }: { issue: Loaded<typeof Issue> }) {
         Description
         <textarea
           value={`${issue.description}`}
-          onChange={(event) => {
+          onChange={event => {
             issue.description = CoPlainText.create(
               event.target.value,
-              issue._owner,
+              issue._owner
             );
           }}
         />
       </label>
       <div className="grid grid-cols-2 gap-8">
-        <label className="flex gap-2 items-center">
+        <label className="flex items-center gap-2">
           Estimate:
           <input
             type="number"
             value={issue.estimate}
-            onChange={(event) => {
+            onChange={event => {
               issue.estimate = Number(event.target.value);
             }}
           />
         </label>
 
-        <label className="flex gap-2 items-center">
+        <label className="flex items-center gap-2">
           Status
           <select
             className="flex-1"
             value={issue.status}
-            onChange={(event) => {
+            onChange={event => {
               issue.status = event.target.value as
                 | "backlog"
                 | "in progress"

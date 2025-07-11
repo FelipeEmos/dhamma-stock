@@ -22,7 +22,7 @@ export function CreateProject({
   };
 
   return (
-    <form onSubmit={onSave} className="flex gap-3 items-center">
+    <form onSubmit={onSave} className="flex items-center gap-3">
       <label className="flex-1">
         <span className="sr-only">Project name</span>
         <input
@@ -31,14 +31,14 @@ export function CreateProject({
           id="name"
           placeholder="Enter project name..."
           value={name}
-          className="rounded-md shadow-sm dark:bg-transparent w-full"
-          onChange={(e) => setName(e.target.value)}
+          className="w-full rounded-md shadow-sm dark:bg-transparent"
+          onChange={e => setName(e.target.value)}
           required
         />
       </label>
       <button
         type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
       >
         Add project
       </button>

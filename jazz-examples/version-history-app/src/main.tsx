@@ -18,5 +18,5 @@ createRoot(document.getElementById("root")!).render(
       </DemoAuthBasicUI>
       <JazzInspector position="bottom right" />
     </JazzReactProvider>
-  </StrictMode>,
+  </StrictMode>
 );

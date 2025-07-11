@@ -45,6 +45,6 @@ test("create and edit an order", async ({ page }) => {
   await expect(editedOrder).toHaveText(/10% sugar/);
   await expect(editedOrder).toHaveText(/12\/25\/2024/);
   await expect(editedOrder).toHaveText(
-    /with pearl, taro, red bean, brown sugar/,
+    /with pearl, taro, red bean, brown sugar/
   );
 });

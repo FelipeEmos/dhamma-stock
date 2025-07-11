@@ -31,11 +31,11 @@ export function FileWidget() {
     try {
       setIsUploading(true);
       me.profile.file = await co.fileStream().createFromBlob(file, {
-        onProgress: (p) => setProgress(Math.round(p * 100)),
+        onProgress: p => setProgress(Math.round(p * 100)),
       });
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to upload file",
+        error instanceof Error ? error.message : "Failed to upload file"
       );
       console.error("Error uploading file:", error);
     } finally {
@@ -80,7 +80,7 @@ export function FileWidget() {
     e.stopPropagation();
     dragAndDropElementRef?.current?.classList.replace(
       "border-stone-400",
-      "border-blue-700",
+      "border-blue-700"
     );
   };
 
@@ -89,7 +89,7 @@ export function FileWidget() {
     e.stopPropagation();
     dragAndDropElementRef?.current?.classList.replace(
       "border-stone-400",
-      "border-blue-700",
+      "border-blue-700"
     );
   };
 
@@ -98,7 +98,7 @@ export function FileWidget() {
     e.stopPropagation();
     dragAndDropElementRef?.current?.classList.replace(
       "border-blue-700",
-      "border-stone-400",
+      "border-stone-400"
     );
   };
 
@@ -107,7 +107,7 @@ export function FileWidget() {
     e.stopPropagation();
     dragAndDropElementRef?.current?.classList.replace(
       "border-blue-700",
-      "border-stone-400",
+      "border-stone-400"
     );
 
     if (!me?.profile) {
@@ -126,11 +126,11 @@ export function FileWidget() {
     try {
       setIsUploading(true);
       me.profile.file = await co.fileStream().createFromBlob(file, {
-        onProgress: (p) => setProgress(Math.round(p * 100)),
+        onProgress: p => setProgress(Math.round(p * 100)),
       });
     } catch (error) {
       setError(
-        error instanceof Error ? error.message : "Failed to upload file",
+        error instanceof Error ? error.message : "Failed to upload file"
       );
       console.error("Error uploading file:", error);
     } finally {
@@ -142,7 +142,7 @@ export function FileWidget() {
     return (
       <div className="flex flex-col gap-4">
         <div
-          className="flex flex-col border-2 border-dashed border-stone-400 h-48 items-center justify-center bg-stone-100 m-5 rounded-md"
+          className="m-5 flex h-48 flex-col items-center justify-center rounded-md border-2 border-dashed border-stone-400 bg-stone-100"
           ref={dragAndDropElementRef}
           onDragEnter={onDragEnter}
           onDragOver={onDragOver}
@@ -153,7 +153,7 @@ export function FileWidget() {
         </div>
         <form onSubmit={handleUpload} className="flex gap-2">
           <input
-            className="bg-stone-100 py-1.5 px-2 text-sm rounded-md w-4/5"
+            className="w-4/5 rounded-md bg-stone-100 px-2 py-1.5 text-sm"
             ref={inputRef}
             type="file"
             accept="file"
@@ -163,24 +163,24 @@ export function FileWidget() {
 
           <button
             type="submit"
-            className="bg-stone-100 py-1.5 px-3 text-sm rounded-md disabled:opacity-50"
+            className="rounded-md bg-stone-100 px-3 py-1.5 text-sm disabled:opacity-50"
             disabled={isUploading}
           >
             {isUploading ? `Uploading...` : "Upload file"}
           </button>
         </form>
         {error && (
-          <div className="text-red-800 text-sm pl-4" role="alert">
+          <div className="pl-4 text-sm text-red-800" role="alert">
             {error}
           </div>
         )}
 
         {isUploading && (
-          <div className="flex gap-2 items-center">
-            <div className="py-1.5 px-3 text-sm">Progress: {progress}%</div>
-            <div className="h-2 bg-stone-200 rounded-full flex-1">
+          <div className="flex items-center gap-2">
+            <div className="px-3 py-1.5 text-sm">Progress: {progress}%</div>
+            <div className="h-2 flex-1 rounded-full bg-stone-200">
               <div
-                className="h-full bg-blue-500 rounded-full transition-all duration-300"
+                className="h-full rounded-full bg-blue-500 transition-all duration-300"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -216,16 +216,16 @@ export function FileWidget() {
         </div>
       </div>
 
-      <div className="flex gap-2 justify-end">
+      <div className="flex justify-end gap-2">
         <button
-          className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+          className="rounded-md bg-stone-100 px-3 py-1.5 text-sm"
           onClick={handleDelete}
         >
           Delete file
         </button>
 
         <button
-          className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+          className="rounded-md bg-stone-100 px-3 py-1.5 text-sm"
           onClick={handleDownload}
         >
           Download file
@@ -237,10 +237,10 @@ export function FileWidget() {
           <div className="flex justify-center">
             <img
               src={URL.createObjectURL(
-                me?.profile?.file?.toBlob() || new Blob(),
+                me?.profile?.file?.toBlob() || new Blob()
               )}
               alt="File preview"
-              className="max-w-xs mb-4"
+              className="mb-4 max-w-xs"
             />
           </div>
         )}
@@ -249,10 +249,10 @@ export function FileWidget() {
           <div className="flex justify-center">
             <audio
               src={URL.createObjectURL(
-                me?.profile?.file?.toBlob() || new Blob(),
+                me?.profile?.file?.toBlob() || new Blob()
               )}
               controls
-              className="w-full mb-4"
+              className="mb-4 w-full"
             />
           </div>
         )}
@@ -261,10 +261,10 @@ export function FileWidget() {
           <div className="flex justify-center">
             <video
               src={URL.createObjectURL(
-                me?.profile?.file?.toBlob() || new Blob(),
+                me?.profile?.file?.toBlob() || new Blob()
               )}
               controls
-              className="w-full mb-4"
+              className="mb-4 w-full"
             />
           </div>
         )}

@@ -3,7 +3,7 @@ import ImageUpload from "./ImageUpload.tsx";
 function App() {
   return (
     <>
-      <main className="max-w-3xl mx-auto px-3 py-16">
+      <main className="mx-auto max-w-3xl px-3 py-16">
         <ImageUpload />
       </main>
     </>

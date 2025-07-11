@@ -33,7 +33,7 @@ export function App() {
           type="text"
           value={me?.profile?.name ?? ""}
           className="bg-transparent"
-          onChange={(e) => {
+          onChange={e => {
             if (!me?.profile) return;
             me.profile.name = e.target.value;
           }}
@@ -43,7 +43,7 @@ export function App() {
       </TopBar>
       {router.route({
         "/": () => createChat() as never,
-        "/chat/:id": (id) => <ChatScreen chatID={id} />,
+        "/chat/:id": id => <ChatScreen chatID={id} />,
       })}
     </AppContainer>
   );
@@ -65,5 +65,5 @@ createRoot(document.getElementById("root")!).render(
         <JazzInspector />
       </JazzReactProvider>
     </StrictMode>
-  </ThemeProvider>,
+  </ThemeProvider>
 );

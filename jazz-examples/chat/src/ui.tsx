@@ -6,7 +6,7 @@ import { useId, useRef } from "react";
 
 export function AppContainer(props: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col justify-between w-screen h-screen bg-stone-50 dark:bg-stone-925 dark:text-white">
+    <div className="dark:bg-stone-925 flex h-screen w-screen flex-col justify-between bg-stone-50 dark:text-white">
       {props.children}
     </div>
   );
@@ -14,7 +14,7 @@ export function AppContainer(props: { children: React.ReactNode }) {
 
 export function TopBar(props: { children: React.ReactNode }) {
   return (
-    <div className="p-3 bg-white w-full flex justify-between gap-2 border-b dark:bg-transparent dark:border-stone-900">
+    <div className="flex w-full justify-between gap-2 border-b bg-white p-3 dark:border-stone-900 dark:bg-transparent">
       {props.children}
     </div>
   );
@@ -23,7 +23,7 @@ export function TopBar(props: { children: React.ReactNode }) {
 export function ChatBody(props: { children: React.ReactNode }) {
   return (
     <div
-      className="flex-1 overflow-y-auto flex flex-col-reverse"
+      className="flex flex-1 flex-col-reverse overflow-y-auto"
       role="application"
     >
       {props.children}
@@ -33,7 +33,7 @@ export function ChatBody(props: { children: React.ReactNode }) {
 
 export function EmptyChatMessage() {
   return (
-    <div className="h-full text-base text-stone-500 flex items-center justify-center px-3 md:text-2xl">
+    <div className="flex h-full items-center justify-center px-3 text-base text-stone-500 md:text-2xl">
       Start a conversation below.
     </div>
   );
@@ -45,7 +45,7 @@ export function BubbleContainer(props: {
 }) {
   const align = props.fromMe ? "items-end" : "items-start";
   return (
-    <div className={`${align} flex flex-col m-3`} role="row">
+    <div className={`${align} m-3 flex flex-col`} role="row">
       {props.children}
     </div>
   );
@@ -59,10 +59,10 @@ export function BubbleBody(props: {
     <div
       className={clsx(
         "line-clamp-10 text-ellipsis whitespace-pre-wrap",
-        "rounded-2xl overflow-hidden max-w-[calc(100%-5rem)] shadow-sm p-1",
+        "max-w-[calc(100%-5rem)] overflow-hidden rounded-2xl p-1 shadow-sm",
         props.fromMe
           ? "bg-white dark:bg-stone-900 dark:text-white"
-          : "bg-blue text-white",
+          : "bg-blue text-white"
       )}
     >
       {props.children}
@@ -86,7 +86,7 @@ export function BubbleImage(props: { image: ImageDefinition }) {
     <ProgressiveImg image={props.image}>
       {({ src }) => (
         <img
-          className="h-auto max-h-80 max-w-full rounded-t-xl mb-1"
+          className="mb-1 h-auto max-h-80 max-w-full rounded-t-xl"
           src={src}
         />
       )}
@@ -96,7 +96,7 @@ export function BubbleImage(props: { image: ImageDefinition }) {
 
 export function BubbleInfo(props: { by: string | undefined; madeAt: Date }) {
   return (
-    <div className="text-xs text-neutral-500 mt-1.5">
+    <div className="mt-1.5 text-xs text-neutral-500">
       {props.by} · {props.madeAt.toLocaleTimeString()}
     </div>
   );
@@ -104,7 +104,7 @@ export function BubbleInfo(props: { by: string | undefined; madeAt: Date }) {
 
 export function InputBar(props: { children: React.ReactNode }) {
   return (
-    <div className="p-3 bg-white border-t shadow-2xl mt-auto flex gap-1 dark:bg-transparent dark:border-stone-900">
+    <div className="mt-auto flex gap-1 border-t bg-white p-3 shadow-2xl dark:border-stone-900 dark:bg-transparent">
       {props.children}
     </div>
   );
@@ -112,7 +112,9 @@ export function InputBar(props: { children: React.ReactNode }) {
 
 export function ImageInput({
   onImageChange,
-}: { onImageChange?: (event: React.ChangeEvent<HTMLInputElement>) => void }) {
+}: {
+  onImageChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onUploadClick = () => {
@@ -126,7 +128,7 @@ export function ImageInput({
         aria-label="Send image"
         title="Send image"
         onClick={onUploadClick}
-        className="text-stone-500 p-1.5 rounded-full hover:bg-stone-100 hover:text-stone-800 dark:hover:bg-stone-800 dark:hover:text-stone-200 transition-colors"
+        className="rounded-full p-1.5 text-stone-500 transition-colors hover:bg-stone-100 hover:text-stone-800 dark:hover:bg-stone-800 dark:hover:text-stone-200"
       >
         <ImageIcon size={24} strokeWidth={1.5} />
       </button>
@@ -154,7 +156,7 @@ export function TextInput(props: { onSubmit: (text: string) => void }) {
       </label>
       <input
         id={inputId}
-        className="rounded-full py-1 px-3 border block w-full placeholder:text-stone-500 dark:bg-stone-925 dark:text-white dark:border-stone-900"
+        className="dark:bg-stone-925 block w-full rounded-full border px-3 py-1 placeholder:text-stone-500 dark:border-stone-900 dark:text-white"
         placeholder="Type a message and press Enter"
         maxLength={2048}
         onKeyDown={({ key, currentTarget: input }) => {

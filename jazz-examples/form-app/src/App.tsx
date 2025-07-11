@@ -8,11 +8,11 @@ function App() {
 
   return (
     <>
-      <main className="max-w-xl mx-auto px-3 py-8 space-y-8">
+      <main className="mx-auto max-w-xl space-y-8 px-3 py-8">
         {router.route({
           "/": () => <Orders />,
           "/order": () => <CreateOrder />,
-          "/order/:id": (id) => <EditOrder id={id} />,
+          "/order/:id": id => <EditOrder id={id} />,
         })}
       </main>
     </>

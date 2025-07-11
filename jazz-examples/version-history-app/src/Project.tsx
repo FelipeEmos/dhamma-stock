@@ -23,8 +23,8 @@ export function ProjectComponent({ projectID }: { projectID: string }) {
           estimate: 0,
           status: "backlog",
         },
-        project._owner,
-      ),
+        project._owner
+      )
     );
   };
   const { me } = useAccount();
@@ -38,7 +38,7 @@ export function ProjectComponent({ projectID }: { projectID: string }) {
         </>
       )}
       <div className="border-r border-b">
-        {project.issues.map((issue) => (
+        {project.issues.map(issue => (
           <IssueComponent key={issue.id} issue={issue} />
         ))}
         <button onClick={createAndAddIssue}>Create Issue</button>

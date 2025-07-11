@@ -37,7 +37,7 @@ if (location.search.includes("expirationTest")) {
       <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
         <SignOutButton>Simulate expiration</SignOutButton>
       </ClerkProvider>
-    </StrictMode>,
+    </StrictMode>
   );
 } else {
   createRoot(document.getElementById("root")!).render(
@@ -48,6 +48,6 @@ if (location.search.includes("expirationTest")) {
           <JazzInspector />
         </JazzProvider>
       </ClerkProvider>
-    </StrictMode>,
+    </StrictMode>
   );
 }

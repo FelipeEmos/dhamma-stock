@@ -5,23 +5,26 @@ Live version: [https://todo.demo.jazz.tools/](https://todo.demo.jazz.tools/)
 ## Getting started
 
 You can either
+
 1. Clone the jazz repository, and run the app within the monorepo.
 2. Or create a new Jazz project using this example as a template.
-
 
 ### Using the example as a template
 
 Create a new Jazz project, and use this example as a template.
+
 ```bash
 npx create-jazz-app@latest todo-app --example todo
 ```
 
 Go to the new project directory.
+
 ```bash
 cd todo-app
 ```
 
 Run the dev server.
+
 ```bash
 npm run dev
 ```
@@ -31,21 +34,25 @@ npm run dev
 This requires `pnpm` to be installed, see [https://pnpm.io/installation](https://pnpm.io/installation).
 
 Clone the jazz repository.
+
 ```bash
 git clone https://github.com/garden-co/jazz.git
 ```
 
 Install and build dependencies.
+
 ```bash
 pnpm i && npx turbo build
 ```
 
 Go to the example directory.
+
 ```bash
 cd jazz/examples/todo/
 ```
 
 Start the dev server.
+
 ```bash
 pnpm dev
 ```
@@ -54,12 +61,12 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 
 ## Structure
 
--   [`src/basicComponents`](./src/basicComponents): simple components to build the UI, unrelated to Jazz (uses [shadcn/ui](https://ui.shadcn.com))
--   [`src/components`](./src/components/): helper components that do contain Jazz-specific logic, but aren't very relevant to understand the basics of Jazz and CoJSON
--   [`src/1_schema.ts`](./src/1_schema.ts),
-    [`src/2_main.tsx`](./src/2_main.tsx),
-    [`src/3_NewProjectForm.tsx`](./src/3_NewProjectForm.tsx),
-    [`src/4_ProjectTodoTable.tsx`](./src/4_ProjectTodoTable.tsx): the main files for this example, see the walkthrough below
+- [`src/basicComponents`](./src/basicComponents): simple components to build the UI, unrelated to Jazz (uses [shadcn/ui](https://ui.shadcn.com))
+- [`src/components`](./src/components/): helper components that do contain Jazz-specific logic, but aren't very relevant to understand the basics of Jazz and CoJSON
+- [`src/1_schema.ts`](./src/1_schema.ts),
+  [`src/2_main.tsx`](./src/2_main.tsx),
+  [`src/3_NewProjectForm.tsx`](./src/3_NewProjectForm.tsx),
+  [`src/4_ProjectTodoTable.tsx`](./src/4_ProjectTodoTable.tsx): the main files for this example, see the walkthrough below
 
 ## Walkthrough
 
@@ -75,7 +82,7 @@ Open [http://localhost:5173](http://localhost:5173) with your browser to see the
 
 ### Helpers
 
--   (not yet explained) Creating Invite Links/QR codes with `<InviteButton/>`: [`src/components/InviteButton.tsx`](./src/components/InviteButton.tsx)
+- (not yet explained) Creating Invite Links/QR codes with `<InviteButton/>`: [`src/components/InviteButton.tsx`](./src/components/InviteButton.tsx)
 
 This is the whole Todo List app!
 

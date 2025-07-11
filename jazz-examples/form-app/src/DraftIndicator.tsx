@@ -7,7 +7,7 @@ export function DraftIndicator() {
 
   if (DraftBubbleTeaOrder.hasChanges(me?.root.draft)) {
     return (
-      <div className="absolute -top-1 -right-1 bg-blue-500 border-2 border-white w-3 h-3 rounded-full dark:border-stone-925">
+      <div className="dark:border-stone-925 absolute -top-1 -right-1 h-3 w-3 rounded-full border-2 border-white bg-blue-500">
         <span className="sr-only">You have a draft</span>
       </div>
     );

@@ -55,14 +55,14 @@ export default function ImageUpload() {
   if (me?.profile?.image) {
     return (
       <>
-        <ProgressiveImg image={me.profile.image as any /* TODO: fix this */}>
-          {({ src }) => <img alt="" src={src} className="w-full h-auto" />}
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+        <ProgressiveImg image={me.profile.image as any}>
+          {({ src }) => <img alt="" src={src} className="h-auto w-full" />}
         </ProgressiveImg>
-
         <button
           type="button"
           onClick={deleteImage}
-          className="mt-5 bg-blue-600 text-white py-2 px-3 rounded"
+          className="mt-5 rounded bg-blue-600 px-3 py-2 text-white"
         >
           Delete image
         </button>
@@ -73,13 +73,13 @@ export default function ImageUpload() {
   if (imagePreviewUrl) {
     return (
       <div className="relative">
-        <p className="z-10 absolute font-semibold text-gray-900 inset-0 flex items-center justify-center">
+        <p className="absolute inset-0 z-10 flex items-center justify-center font-semibold text-gray-900">
           Uploading image...
         </p>
         <img
           src={imagePreviewUrl}
           alt="Preview"
-          className="opacity-50 w-full h-auto"
+          className="h-auto w-full opacity-50"
         />
       </div>
     );

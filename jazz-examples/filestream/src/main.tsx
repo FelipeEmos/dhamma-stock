@@ -21,5 +21,5 @@ createRoot(document.getElementById("root")!).render(
       <JazzInspector />
       <App />
     </JazzReactProvider>
-  </StrictMode>,
+  </StrictMode>
 );

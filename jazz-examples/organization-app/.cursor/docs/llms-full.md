@@ -31,9 +31,9 @@ Or set up Jazz yourself, using the following instructions for your framework of 
 - [Vue](/docs/vue/project-setup)
 - [Svelte](/docs/svelte/project-setup)
 
-{/* <ContentByFramework framework="react">
-  Or you can follow this [React step-by-step guide](/docs/react/guide) where we walk you through building an issue tracker app.
-</ContentByFramework> */}
+{/_ <ContentByFramework framework="react">
+Or you can follow this [React step-by-step guide](/docs/react/guide) where we walk you through building an issue tracker app.
+</ContentByFramework> _/}
 
 ## Example apps
 
@@ -57,11 +57,7 @@ Get better results with AI by [importing the Jazz docs](/docs/ai-tools) into you
 If you have any questions or need assistance, please don't hesitate to reach out to us on [Discord](https://discord.gg/utDMjHYg42).
 We would love to help you get started.
 
-
-
 #### Example apps
-
-
 
 #### FAQs
 
@@ -96,19 +92,20 @@ Define your data schema using [CoValues](/docs/schemas/covalues) from `jazz-tool
 // schema.ts
 
 export const TodoItem = co.map({
-  title: z.string(),
-  completed: z.boolean(),
+title: z.string(),
+completed: z.boolean(),
 });
 
 export const AccountRoot = co.map({
-  todos: co.list(TodoItem),
+todos: co.list(TodoItem),
 });
 
 export const MyAppAccount = co.account({
-  root: AccountRoot,
-  profile: co.map({ name: z.string() }),
+root: AccountRoot,
+profile: co.map({ name: z.string() }),
 });
-```
+
+````
 </CodeGroup>
 
 See [CoValues](/docs/schemas/covalues) for more information on how to define your schema.
@@ -150,10 +147,12 @@ createRoot(document.getElementById("root")!).render(
     <App />
   </JazzProvider>
 );
-```
+````
+
 </CodeGroup>
 
 This setup handles:
+
 - Connection to the Jazz sync server
 - Schema registration for type-safe data handling
 - Local storage configuration
@@ -171,35 +170,34 @@ The simplest approach for Next.js is client-side only integration:
 // @filename: schema.ts
 
 export const TodoItem = co.map({
-  title: z.string(),
-  completed: z.boolean(),
+title: z.string(),
+completed: z.boolean(),
 });
 
 export const AccountRoot = co.map({
-  todos: co.list(TodoItem),
+todos: co.list(TodoItem),
 });
 
 export const MyAppAccount = co.account({
-  root: AccountRoot,
-  profile: co.map({ name: z.string() }),
+root: AccountRoot,
+profile: co.map({ name: z.string() }),
 });
 // @filename: app.tsx
 // ---cut---
 // app.tsx
 "use client" // Mark as client component
 
-
 export function JazzWrapper({ children }: { children: React.ReactNode }) {
-  return (
-    <JazzProvider
-      sync={{ peer: "wss://cloud.jazz.tools/?key=you@example.com" }}
-      AccountSchema={MyAppAccount}
-    >
-      {children}
-    </JazzProvider>
-  );
+return (
+<JazzProvider
+sync={{ peer: "wss://cloud.jazz.tools/?key=you@example.com" }}
+AccountSchema={MyAppAccount} >
+{children}
+</JazzProvider>
+);
 }
-```
+
+````
 </CodeGroup>
 
 Remember to mark any component that uses Jazz hooks with `"use client"`:
@@ -233,7 +231,8 @@ export function Profile() {
 
   return <div>Hello, {me?.profile.name}</div>;
 }
-```
+````
+
 </CodeGroup>
 
 ### SSR Support (Experimental)
@@ -247,8 +246,9 @@ For server-side rendering, Jazz offers experimental approaches:
 
 Use Jazz in server components by directly loading data with `CoValue.load()`.
 
-{/*
+{/\*
 <CodeGroup>
+
 ```tsx twoslash
 // @errors: 18047
 // @filename: schema.ts
@@ -273,13 +273,12 @@ export default async function PublicData() {
 
   return (
     <ul>
-      {items.map(item => (
-        item ? <li key={item.id}>{item.title}</li> : null
-      ))}
+      {items.map(item => (item ? <li key={item.id}>{item.title}</li> : null))}
     </ul>
   );
 }
 ```
+
 </CodeGroup>
 */}
 
@@ -291,8 +290,9 @@ For more complex cases, you can pre-render on the server and hydrate on the clie
 
 1. Create a shared rendering component.
 
-{/*
+{/\*
 <CodeGroup>
+
 ```tsx twoslash
 // @filename: schema.ts
 
@@ -312,13 +312,15 @@ export function ItemList({ items }: { items: MyItem[] }) {
   );
 }
 ```
+
 </CodeGroup>
 */}
 
 2. Create a client hydration component.
 
-{/*
+{/\*
 <CodeGroup>
+
 ```tsx twoslash
 // @filename: schema.ts
 
@@ -341,7 +343,7 @@ export function ItemList({ items }: { items: MyItem[] }) {
 // ItemListHydrator.tsx
 const myCollectionID = "co_z123" as ID<MyCollection>;
 // ---cut---
-"use client"
+("use client");
 
 export function ItemListHydrator({ initialItems }: { initialItems: MyItem[] }) {
   // Hydrate with real-time data once client loads
@@ -358,13 +360,15 @@ export function ItemListHydrator({ initialItems }: { initialItems: MyItem[] }) {
   return <ItemList items={displayItems} />;
 }
 ```
+
 </CodeGroup>
 */}
 
 3. Create a server component that pre-loads data.
 
-{/*
+{/\*
 <CodeGroup>
+
 ```tsx twoslash
 // @filename: schema.ts
 
@@ -388,7 +392,7 @@ export function ItemList({ items }: { items: MyItem[] }) {
 // ItemListHydrator.tsx
 const myCollectionID = "co_z123" as ID<MyCollection>;
 // ---cut---
-"use client"
+("use client");
 
 export function ItemListHydrator({ initialItems }: { initialItems: MyItem[] }) {
   // Hydrate with real-time data once client loads
@@ -421,6 +425,7 @@ export default async function ServerItemPage() {
   return <ItemListHydrator initialItems={items} />;
 }
 ```
+
 </CodeGroup>
 */}
 
@@ -480,10 +485,11 @@ class MyWorkerAccount extends Account {}
 // ---cut---
 
 const { worker } = await startWorker({
-  AccountSchema: MyWorkerAccount,
-  syncServer: 'wss://cloud.jazz.tools/?key=you@example.com',
+AccountSchema: MyWorkerAccount,
+syncServer: 'wss://cloud.jazz.tools/?key=you@example.com',
 });
-```
+
+````
 </CodeGroup>
 
 `worker` acts like `me` (as returned by `useAccount` on the client) - you can use it to:
@@ -517,7 +523,8 @@ To add some Jazz to your Svelte app, you can use the following steps:
 <CodeGroup>
 ```sh
 pnpm install jazz-tools jazz-svelte
-```
+````
+
 </CodeGroup>
 
 2. Write your schema
@@ -529,16 +536,17 @@ See the [schema docs](/docs/schemas/covalues) for more information.
 // src/lib/schema.ts
 
 export class MyProfile extends Profile {
-  name = coField.string;
-  counter = coField.number; // This will be publically visible
+name = coField.string;
+counter = coField.number; // This will be publically visible
 }
 
 export class MyAccount extends Account {
-  profile = coField.ref(MyProfile);
+profile = coField.ref(MyProfile);
 
-  // ...
+// ...
 }
-```
+
+````
 </CodeGroup>
 
 3. Set up the Provider in your root layout
@@ -566,7 +574,8 @@ export class MyAccount extends Account {
 <JazzProvider {sync} {AccountSchema}>
   <App />
 </JazzProvider>
-```
+````
+
 </CodeGroup>
 
 4. Use Jazz hooks in your components
@@ -578,14 +587,14 @@ export class MyAccount extends Account {
   import { useCoState, useAccount } from 'jazz-svelte';
   import { MyProfile } from './schema';
 
-  const { me } = useAccount();
+const { me } = useAccount();
 
-  const profile = $derived(useCoState(MyProfile, me._refs.profile.id));
+const profile = $derived(useCoState(MyProfile, me.\_refs.profile.id));
 
-  function increment() {
-    if (!profile.current) return;
-    profile.current.counter = profile.current.counter + 1;
-  }
+function increment() {
+if (!profile.current) return;
+profile.current.counter = profile.current.counter + 1;
+}
 </script>
 
 <button on:click={increment}>
@@ -607,6 +616,7 @@ For a complete example of Jazz with Svelte, check out our [file sharing example]
 Simply use `wss://cloud.jazz.tools/?key=...` as the sync server URL.
 
 Jazz Cloud will
+
 - sync CoValues in real-time between users and devices
 - safely persist CoValues on redundant storage nodes with additional backups
 - make use of geographically distributed cache nodes for low latency
@@ -618,12 +628,11 @@ Jazz Cloud will
 - See [Jazz Cloud pricing](/cloud#pricing) for more details
 - ⚠️ Please use a valid email address as your API key.
 
-    Your full sync server URL should look something like
+  Your full sync server URL should look something like
 
-    ```wss://cloud.jazz.tools/?key=you@example.com```
+  `wss://cloud.jazz.tools/?key=you@example.com`
 
-    Once we support per-app API keys, we'll email you an API key you can use instead.
-
+  Once we support per-app API keys, we'll email you an API key you can use instead.
 
 ## Running your own sync server
 
@@ -649,8 +658,6 @@ In this case, provide the WebSocket endpoint your proxy exposes as the sync serv
 ### Source code
 
 The implementation of this simple sync server is available open-source [on GitHub](https://github.com/garden-co/jazz/blob/main/packages/jazz-run/src/startSyncServer.ts).
-
-
 
 #### Node.JS / server workers
 
@@ -697,10 +704,11 @@ class MyWorkerAccount extends Account {}
 // ---cut---
 
 const { worker } = await startWorker({
-  AccountSchema: MyWorkerAccount,
-  syncServer: 'wss://cloud.jazz.tools/?key=you@example.com',
+AccountSchema: MyWorkerAccount,
+syncServer: 'wss://cloud.jazz.tools/?key=you@example.com',
 });
-```
+
+````
 </CodeGroup>
 
 `worker` acts like `me` (as returned by `useAccount` on the client) - you can use it to:
@@ -760,7 +768,8 @@ declare module "jazz-expo" {
     Account: MyAppAccount;
   }
 }
-```
+````
+
 </CodeGroup>
 
 ## Provider Options
@@ -782,7 +791,7 @@ The authentication hooks must always be used inside the `<JazzProvider />` compo
 Implementing PassphraseAuth is straightforward:
 
 1. Import the [wordlist](https://github.com/bitcoinjs/bip39/tree/a7ecbfe2e60d0214ce17163d610cad9f7b23140c/src/wordlists) for generating recovery phrases
-2. Use the `usePassphraseAuth` hook to handle authentication 
+2. Use the `usePassphraseAuth` hook to handle authentication
 3. Create simple registration and sign-in screens
 
 <CodeGroup>
@@ -795,31 +804,31 @@ function SignInScreen({ auth }: { auth: any }) {
 // Example with PassphraseAuth
 
 function JazzAuthentication({ children }: { children: ReactNode }) {
-  const auth = usePassphraseAuth({
-    wordlist: englishWordlist,
-  });
+const auth = usePassphraseAuth({
+wordlist: englishWordlist,
+});
 
-  // If the user is already signed in, render the App
-  if (auth.state === "signedIn") {
-    return children
-  }
-  
-  // Otherwise, show a sign-in screen
-  return <SignInScreen auth={auth} />;
+// If the user is already signed in, render the App
+if (auth.state === "signedIn") {
+return children
+}
+
+// Otherwise, show a sign-in screen
+return <SignInScreen auth={auth} />;
 }
 
 function AuthenticatedProvider({ children }: { children: ReactNode }) {
-  return (
-    <JazzProvider
-      sync={{ peer: "wss://cloud.jazz.tools/?key=your-api-key" }}
-    >
-      <JazzAuthentication>
-        {children}
-      </JazzAuthentication>
-    </JazzProvider>
-  );
+return (
+<JazzProvider
+sync={{ peer: "wss://cloud.jazz.tools/?key=your-api-key" }} >
+<JazzAuthentication>
+{children}
+</JazzAuthentication>
+</JazzProvider>
+);
 }
-```
+
+````
 </CodeGroup>
 
 For a complete example, see the [Expo Chat Demo](https://github.com/garden-co/jazz/tree/main/examples/chat-rn-expo).
@@ -872,7 +881,8 @@ declare module "jazz-react-native" {
     Account: MyAppAccount;
   }
 }
-```
+````
+
 </CodeGroup>
 
 ## Provider Options
@@ -894,7 +904,7 @@ The authentication hooks must always be used inside the `<JazzProvider />` compo
 Implementing PassphraseAuth is straightforward:
 
 1. Import the [wordlist](https://github.com/bitcoinjs/bip39/tree/a7ecbfe2e60d0214ce17163d610cad9f7b23140c/src/wordlists) for generating recovery phrases
-2. Use the `usePassphraseAuth` hook to handle authentication 
+2. Use the `usePassphraseAuth` hook to handle authentication
 3. Create simple registration and sign-in screens
 
 <CodeGroup>
@@ -907,31 +917,31 @@ function SignInScreen({ auth }: { auth: any }) {
 // Example with PassphraseAuth
 
 function JazzAuthentication({ children }: { children: ReactNode }) {
-  const auth = usePassphraseAuth({
-    wordlist: englishWordlist,
-  });
+const auth = usePassphraseAuth({
+wordlist: englishWordlist,
+});
 
-  // If the user is already signed in, render the App
-  if (auth.state === "signedIn") {
-    return children
-  }
-  
-  // Otherwise, show a sign-in screen
-  return <SignInScreen auth={auth} />;
+// If the user is already signed in, render the App
+if (auth.state === "signedIn") {
+return children
+}
+
+// Otherwise, show a sign-in screen
+return <SignInScreen auth={auth} />;
 }
 
 function AuthenticatedProvider({ children }: { children: ReactNode }) {
-  return (
-    <JazzProvider
-      sync={{ peer: "wss://cloud.jazz.tools/?key=your-api-key" }}
-    >
-      <JazzAuthentication>
-        {children}
-      </JazzAuthentication>
-    </JazzProvider>
-  );
+return (
+<JazzProvider
+sync={{ peer: "wss://cloud.jazz.tools/?key=your-api-key" }} >
+<JazzAuthentication>
+{children}
+</JazzAuthentication>
+</JazzProvider>
+);
 }
-```
+
+````
 </CodeGroup>
 
 ## Local Persistence
@@ -996,7 +1006,8 @@ export function MyApp({ children }: { children: React.ReactNode }) {
     </JazzProvider>
   );
 }
-```
+````
+
 </CodeGroup>
 
 ## Provider Options
@@ -1009,13 +1020,14 @@ The `sync` property configures how your application connects to the Jazz network
 ```tsx twoslash
 
 const syncConfig: SyncConfig = {
-  // Connection to Jazz Cloud or your own sync server
-  peer: "wss://cloud.jazz.tools/?key=your-api-key",
+// Connection to Jazz Cloud or your own sync server
+peer: "wss://cloud.jazz.tools/?key=your-api-key",
 
-  // When to sync: "always" (default), "never", or "signedUp"
-  when: "always",
+// When to sync: "always" (default), "never", or "signedUp"
+when: "always",
 }
-```
+
+````
 </CodeGroup>
 
 See [Authentication States](/docs/authentication/authentication-states#controlling-sync-for-different-authentication-states) for more details on how the `when` property affects synchronization based on authentication state.
@@ -1064,7 +1076,8 @@ export function MyApp ({ children }: { children: React.ReactNode }) {
     </JazzProvider>
   );
 }
-```
+````
+
 </CodeGroup>
 
 ### Additional Options
@@ -1075,16 +1088,16 @@ The provider accepts these additional options:
 ```tsx twoslash
 
 const syncConfig: SyncConfig = {
-  peer: "wss://cloud.jazz.tools/?key=your-api-key",
-  when: "always",
+peer: "wss://cloud.jazz.tools/?key=your-api-key",
+when: "always",
 }
 
 // ---cut---
 // app.tsx
 export function MyApp ({ children }: { children: React.ReactNode }) {
-  return (
-    <JazzProvider
-      sync={syncConfig}
+return (
+<JazzProvider
+sync={syncConfig}
 
       // Enable guest mode for account-less access
       guestMode={false}
@@ -1106,9 +1119,11 @@ export function MyApp ({ children }: { children: React.ReactNode }) {
     >
       {children}
     </JazzProvider>
-  );
+
+);
 }
-```
+
+````
 </CodeGroup>
 
 See [Authentication States](/docs/authentication/authentication-states) for more information on authentication states, guest mode, and handling anonymous accounts.
@@ -1159,7 +1174,7 @@ The `<JazzProvider />` accepts several configuration options:
 </script>
 
 <JazzProvider
-  sync={{ 
+  sync={{
     peer: "wss://cloud.jazz.tools/?key=your-api-key",
     when: "always" // When to sync: "always", "never", or "signedUp"
   }}
@@ -1167,7 +1182,8 @@ The `<JazzProvider />` accepts several configuration options:
 >
   {@render children()}
 </JazzProvider>
-```
+````
+
 </CodeGroup>
 
 ## Provider Options
@@ -1176,7 +1192,6 @@ The `<JazzProvider />` accepts several configuration options:
 
 The `sync` property configures how your application connects to the Jazz network:
 
-
 <CodeGroup>
 ```ts twoslash
 // @filename: src/routes/layout.svelte
@@ -1184,13 +1199,14 @@ The `sync` property configures how your application connects to the Jazz network
 // ---cut---
 
 const syncConfig: SyncConfig = {
-  // Connection to Jazz Cloud or your own sync server
-  peer: "wss://cloud.jazz.tools/?key=your-api-key",
-  
-  // When to sync: "always" (default), "never", or "signedUp"
-  when: "always",
+// Connection to Jazz Cloud or your own sync server
+peer: "wss://cloud.jazz.tools/?key=your-api-key",
+
+// When to sync: "always" (default), "never", or "signedUp"
+when: "always",
 }
-```
+
+````
 </CodeGroup>
 
 
@@ -1224,7 +1240,8 @@ The `AccountSchema` property defines your application's account structure:
 >
   {@render children()}
 </JazzProvider>
-```
+````
+
 </CodeGroup>
 
 ### Additional Options
@@ -1250,23 +1267,24 @@ The provider accepts these additional options:
     console.log("User logged out");
   };
 
-  // Handle anonymous account data when user logs in to existing account
-  const onAnonymousAccountDiscarded = (account) => {
-    console.log("Anonymous account discarded", account.id);
-    // Migrate data here
-    return Promise.resolve();
-  };
+// Handle anonymous account data when user logs in to existing account
+const onAnonymousAccountDiscarded = (account) => {
+console.log("Anonymous account discarded", account.id);
+// Migrate data here
+return Promise.resolve();
+};
 </script>
 
 <JazzProvider
-  sync={syncConfig}
-  {guestMode}
-  {defaultProfileName}
-  {onLogOut}
-  {onAnonymousAccountDiscarded}
->
-  {@render children}
-</JazzProvider>
+sync={syncConfig}
+{guestMode}
+{defaultProfileName}
+{onLogOut}
+{onAnonymousAccountDiscarded}
+
+> {@render children}
+> </JazzProvider>
+
 ```
 </CodeGroup>
 
@@ -1314,8 +1332,10 @@ Upload the txt file in your prompt.
 
 <CodeGroup>
 ```
+
 https://jazz.tools/llms-full.txt
-```
+
+````
 </CodeGroup>
 
 ## llms.txt convention
@@ -1346,10 +1366,12 @@ Create a new Jazz app from a starter template in seconds:
 <CodeGroup>
 ```bash
 npx create-jazz-app@latest --api-key you@example.com
-```
+````
+
 </CodeGroup>
 
 This launches an interactive CLI that guides you through selecting:
+
 - Pre-configured frameworks and authentication methods (See [Available Starters](#available-starters))
 - Package manager
 - Project name
@@ -1365,11 +1387,14 @@ If you know what you want, you can specify options directly from the command lin
 npx create-jazz-app@latest my-app --framework react --api-key you@example.com
 
 # Specify a starter template
+
 npx create-jazz-app@latest my-app --starter react-passkey-auth --api-key you@example.com
 
 # Specify example app
+
 npx create-jazz-app@latest my-app --example chat --api-key you@example.com
-```
+
+````
 </CodeGroup>
 
 ### Available Options
@@ -1389,7 +1414,8 @@ Want to start from one of [our example apps](https://jazz.tools/examples)? Our e
 <CodeGroup>
 ```bash
 npx create-jazz-app@latest --example chat
-```
+````
+
 </CodeGroup>
 
 ## Available Starters
@@ -1421,8 +1447,6 @@ When you run `create-jazz-app`, we'll:
 - Node.js 14.0.0 or later
 - Your preferred package manager (npm, yarn, pnpm, bun, or deno)
 
-
-
 #### Inspector
 
 # Jazz Inspector
@@ -1434,6 +1458,7 @@ For now, you can get your account credentials from the `jazz-logged-in-secret` l
 [https://inspector.jazz.tools](https://inspector.jazz.tools)
 
 <ContentByFramework framework={["react", "svelte", "vue", "vanilla"]}>
+
 ## Exporting current account to Inspector from your app [!framework=react,svelte,vue,vanilla]
 
 In development mode, you can launch the Inspector from your Jazz app to inspect your account by pressing `Cmd+J`.
@@ -1466,9 +1491,11 @@ Render the component within your `JazzProvider`.
 
 <ContentByFramework framework={["svelte", "vue", "vanilla"]}>
 <CodeGroup>
+
 ```sh
 npm install jazz-inspector-element
 ```
+
 </CodeGroup>
 
 Render the component.
@@ -1477,7 +1504,8 @@ Render the component.
 ```ts
 
 document.body.appendChild(document.createElement("jazz-inspector"))
-```
+
+````
 </CodeGroup>
 
 Or
@@ -1486,7 +1514,8 @@ Or
 ```tsx
 
 <jazz-inspector />
-```
+````
+
 </CodeGroup>
 
 </ContentByFramework>
@@ -1532,8 +1561,6 @@ Check out the [music player app](https://github.com/garden-co/jazz/blob/main/exa
 Check out the [file share app](https://github.com/garden-co/jazz/blob/main/examples/file-share-svelte/src/src/routes/%2Blayout.svelte) for a full example.
 </ContentByFramework>
 
-
-
 ### Upgrade guides
 
 #### 0.14.0 - Zod-based schemas
@@ -1566,13 +1593,14 @@ So far, Jazz has relied on our own idiosyncratic schema definition syntax where 
 // BEFORE
 
 export class Message extends CoMap {
-  text = co.ref(CoPlainText);
-  image = co.optional.ref(ImageDefinition);
-  important = co.boolean;
+text = co.ref(CoPlainText);
+image = co.optional.ref(ImageDefinition);
+important = co.boolean;
 }
 
 export class Chat extends CoList.Of(co.ref(Message)) {}
-```
+
+````
 </CodeGroup>
 
 While this had certain ergonomic benefits it relied on unclean hacks to work.
@@ -1592,7 +1620,8 @@ export const Message = co.map({
 });
 
 export const Chat = co.list(Message);
-```
+````
+
 </CodeGroup>
 
 ## Major breaking changes
@@ -1631,30 +1660,31 @@ And while you can still read from the type just as before...
 // ---cut---
 
 const Pet = co.map({
-  name: z.string(),
-  age: z.number(),
+name: z.string(),
+age: z.number(),
 });
 type Pet = co.loaded<typeof Pet>;
 
 const Person = co.map({
-  name: z.string(),
-  age: z.number(),
-  pets: co.list(Pet),
+name: z.string(),
+age: z.number(),
+pets: co.list(Pet),
 });
 type Person = co.loaded<typeof Person>;
 
 function MyComponent({ id }: { id: string }) {
-  const person = useCoState(Person, id);
+const person = useCoState(Person, id);
 
-  return person && <PersonName person={person} />;
+return person && <PersonName person={person} />;
 }
 
 function PersonName({ person }: {
-  person: Person
+person: Person
 }) {
-  return <div>{person.name}</div>;
+return <div>{person.name}</div>;
 }
-```
+
+````
 </CodeGroup>
 
 `co.loaded` can also take a second argument to specify the loading depth of the expected CoValue, mirroring the `resolve` options for `useCoState`, `load`, `subscribe`, etc.
@@ -1689,7 +1719,8 @@ function PersonAndFirstPetName({ person }: {
 }) {
   return <div>{person.name} & {person.pets[0].name}</div>;
 }
-```
+````
+
 </CodeGroup>
 </ContentByFramework>
 <ContentByFramework framework="svelte">
@@ -1706,18 +1737,19 @@ And while you can still read from the type just as before...
 // @filename: schema.ts
 
 const Pet = co.map({
-  name: z.string(),
-  age: z.number(),
+name: z.string(),
+age: z.number(),
 });
 type Pet = co.loaded<typeof Pet>;
 
 const Person = co.map({
-  name: z.string(),
-  age: z.number(),
-  pets: co.list(Pet),
+name: z.string(),
+age: z.number(),
+pets: co.list(Pet),
 });
 type Person = co.loaded<typeof Person>;
-``` 
+
+````
 ```svelte twoslash filename="app.svelte"
 // @filename: app.svelte
 <script lang="ts">
@@ -1728,7 +1760,8 @@ const person = new CoState(Person, id);
 <div>
   {person.current?.name}
 </div>
-```
+````
+
 </CodeGroup>
 
 `co.loaded` can also take a second argument to specify the loading depth of the expected CoValue, mirroring the `resolve` options for `CoState`, `load`, `subscribe`, etc.
@@ -1773,23 +1806,24 @@ When using `useAccount` you should now pass the `Account` schema directly:
 // @filename: schema.ts
 
 export const MyAccount = co.account({
-  profile: co.profile(),
-  root: co.map({})
+profile: co.profile(),
+root: co.map({})
 });
 
 // @filename: app.tsx
 // ---cut---
 
 function MyComponent() {
-  const { me } = useAccount(MyAccount, {
-    resolve: {
-      profile: true,
-    },
-  });
+const { me } = useAccount(MyAccount, {
+resolve: {
+profile: true,
+},
+});
 
-  return <div>{me?.profile.name}</div>;
+return <div>{me?.profile.name}</div>;
 }
-```
+
+````
 </CodeGroup>
 </ContentByFramework>
 
@@ -1810,7 +1844,8 @@ const account = new AccountCoState(MyAccount, {
 <div>
   {account.current?.profile.name}
 </div>
-```
+````
+
 </CodeGroup>
 </ContentByFramework>
 
@@ -1822,39 +1857,41 @@ Now account schemas need to be defined with `co.account()` and migrations can be
 ```ts twoslash
 
 const Pet = co.map({
-  name: z.string(),
-  age: z.number(),
+name: z.string(),
+age: z.number(),
 });
 
 const MyAppRoot = co.map({
-  pets: co.list(Pet),
+pets: co.list(Pet),
 });
 
 const MyAppProfile = co.profile({
-  name: z.string(),
-  age: z.number().optional(),
+name: z.string(),
+age: z.number().optional(),
 });
 
 export const MyAppAccount = co.account({
-  root: MyAppRoot,
-  profile: MyAppProfile,
+root: MyAppRoot,
+profile: MyAppProfile,
 }).withMigration((account, creationProps?: { name: string }) => {
-  if (account.root === undefined) {
-    account.root = MyAppRoot.create({
-      pets: co.list(Pet).create([]),
-    });
-  }
+if (account.root === undefined) {
+account.root = MyAppRoot.create({
+pets: co.list(Pet).create([]),
+});
+}
 
-  if (account.profile === undefined) {
-    const profileGroup = Group.create();
-    profileGroup.addMember("everyone", "reader");
+if (account.profile === undefined) {
+const profileGroup = Group.create();
+profileGroup.addMember("everyone", "reader");
 
     account.profile = MyAppProfile.create({
       name: creationProps?.name ?? "New user",
     }, profileGroup);
-  }
+
+}
 });
-```
+
+````
 </CodeGroup>
 
 ### Defining Schema helper methods
@@ -1868,7 +1905,7 @@ TODO
 The type of `_refs` and `_edits` is now nullable.
 
 <CodeGroup>
-```ts twoslash 
+```ts twoslash
 // ---cut---
 const Person = co.map({
   name: z.string(),
@@ -1879,7 +1916,8 @@ const person = Person.create({ name: "John", age: 30 });
 
 person._refs; // now nullable
 person._edits; // now nullable
-``` 
+````
+
 </CodeGroup>
 
 ### `members` and `by` now return basic `Account`
@@ -1892,58 +1930,59 @@ This means that you now need to rely on `useCoState` on them to load their using
 ```tsx twoslash
 
 const Pet = co.map({
-  name: z.string(),
-  age: z.number(),
+name: z.string(),
+age: z.number(),
 });
 
 const MyAppRoot = co.map({
-  pets: co.list(Pet),
+pets: co.list(Pet),
 });
 
 const MyAppProfile = co.profile({
-  name: z.string(),
-  age: z.number().optional(),
+name: z.string(),
+age: z.number().optional(),
 });
 
 export const MyAppAccount = co.account({
-  root: MyAppRoot,
-  profile: MyAppProfile,
+root: MyAppRoot,
+profile: MyAppProfile,
 });
 
 // ---cut---
 function GroupMembers({ group }: { group: Group }) {
-  const members = group.members;
+const members = group.members;
 
-  return (
-    <div>
-      {members.map((member) => (
-        <GroupMemberDetails
+return (
+<div>
+{members.map((member) => (
+<GroupMemberDetails
           accountId={member.account.id}
           key={member.account.id}
         />
-      ))}
-    </div>
-  );
+))}
+</div>
+);
 }
 
 function GroupMemberDetails({ accountId }: { accountId: string }) {
-  const account = useCoState(MyAppAccount, accountId, {
-    resolve: {
-      profile: true,
-      root: {
-        pets: { $each: true },
-      },
-    },
-  });
+const account = useCoState(MyAppAccount, accountId, {
+resolve: {
+profile: true,
+root: {
+pets: { $each: true },
+},
+},
+});
 
-  return (
-    <div>
-      <div>{account?.profile.name}</div>
-      <ul>{account?.root.pets.map((pet) => <li>{pet.name}</li>)}</ul>
-    </div>
-  );
+return (
+<div>
+<div>{account?.profile.name}</div>
+<ul>{account?.root.pets.map((pet) => <li>{pet.name}</li>)}</ul>
+</div>
+);
 }
-```
+
+````
 </CodeGroup>
 
 
@@ -1990,10 +2029,11 @@ export const TodoProject = co.map({
   title: z.string(),
   tasks: ListOfTasks,
 });
-```
+````
+
 </CodeGroup>
 
-This gives us schema info that is available for type inference *and* at runtime.
+This gives us schema info that is available for type inference _and_ at runtime.
 
 Check out the inferred type of `project` in the example below, as well as the input `.create()` expects.
 
@@ -2004,8 +2044,8 @@ Check out the inferred type of `project` in the example below, as well as the in
 export const ListOfTasks = co.list(z.string());
 
 export const TodoProject = co.map({
-  title: z.string(),
-  tasks: ListOfTasks,
+title: z.string(),
+tasks: ListOfTasks,
 });
 
 // @filename: app.ts
@@ -2013,13 +2053,14 @@ export const TodoProject = co.map({
 // app.ts
 
 const project = TodoProject.create(
-  {
-    title: "New Project",
-    tasks: ListOfTasks.create([], Group.create()),
-  },
-  Group.create()
+{
+title: "New Project",
+tasks: ListOfTasks.create([], Group.create()),
+},
+Group.create()
 );
-```
+
+````
 </CodeGroup>
 
 ## Types of CoValues
@@ -2038,7 +2079,8 @@ const Task = co.map({
   title: z.string(),
   completed: z.boolean(),
 });
-```
+````
+
 </CodeGroup>
 
 Or record-like CoMaps (key-value pairs, where keys are always `string`):
@@ -2053,7 +2095,8 @@ const Fruit = co.map({
 const ColorToHex = co.record(z.string(), z.string());
 
 const ColorToFruit = co.record(z.string(), Fruit);
-```
+
+````
 </CodeGroup>
 
 
@@ -2077,7 +2120,8 @@ const Task = co.map({
 // ---cut---
 const ListOfColors = co.list(z.string());
 const ListOfTasks = co.list(Task);
-```
+````
+
 </CodeGroup>
 
 See the corresponding sections for [creating](/docs/using-covalues/colists#creating-colists),
@@ -2143,18 +2187,19 @@ You can declare unions of CoMaps that have discriminating fields, using `z.discr
 // ---cut---
 
 const ButtonWidget = co.map({
-  type: z.literal("button"),
-  label: z.string(),
+type: z.literal("button"),
+label: z.string(),
 });
 
 const SliderWidget = co.map({
-  type: z.literal("slider"),
-  min: z.number(),
-  max: z.number(),
+type: z.literal("slider"),
+min: z.number(),
+max: z.number(),
 });
 
 const WidgetUnion = z.discriminatedUnion([ButtonWidget, SliderWidget]);
-```
+
+````
 </CodeGroup>
 
 See the corresponding sections for [creating](/docs/using-covalues/schemaunions#creating-schemaunions),
@@ -2177,7 +2222,8 @@ const Person = co.map({
 })
 
 export const ListOfColors = co.list(z.string());
-```
+````
+
 </CodeGroup>
 
 Here's a quick overview of the primitive types you can use:
@@ -2194,7 +2240,7 @@ z.literal(["waiting", "ready"]); // For enums
 ```
 </CodeGroup>
 
-Finally, for more complex JSON data, that you *don't want to be collaborative internally* (but only ever update as a whole), you can use more complex Zod types.
+Finally, for more complex JSON data, that you _don't want to be collaborative internally_ (but only ever update as a whole), you can use more complex Zod types.
 
 For example, you can use `z.object()` to represent an internally immutable position:
 
@@ -2241,9 +2287,10 @@ const Person = co.map({
 const ListOfPeople = co.list(Person);
 
 const Company = co.map({
-  members: ListOfPeople,
+members: ListOfPeople,
 });
-```
+
+````
 </CodeGroup>
 
 #### Optional References
@@ -2259,7 +2306,8 @@ const Pet = co.map({
 const Person = co.map({
   pet: z.optional(Pet),
 });
-```
+````
+
 </CodeGroup>
 
 #### Recursive References
@@ -2285,14 +2333,15 @@ You can use the same technique for mutually recursive references, but you'll nee
 // ---cut---
 
 const Person = co.map({
-  name: z.string(),
-  get friends(): CoListSchema<typeof Person> {
-    return ListOfPeople;
-  }
+name: z.string(),
+get friends(): CoListSchema<typeof Person> {
+return ListOfPeople;
+}
 });
 
 const ListOfPeople = co.list(Person);
-```
+
+````
 </CodeGroup>
 
 Note: similarly, if you use modifiers like `z.optional()` you'll need to help TypeScript along:
@@ -2306,7 +2355,8 @@ const Person = co.map({
     return z.optional(Person);
   }
 });
-```
+````
+
 </CodeGroup>
 
 ### Helper methods
@@ -2328,22 +2378,23 @@ const Person = co.map({
 type Person = co.loaded<typeof Person>;
 
 export function getPersonFullName(person: Person) {
-  return `${person.firstName} ${person.lastName}`;
+return `${person.firstName} ${person.lastName}`;
 }
 
 export function getPersonAgeAsOf(person: Person, date: Date) {
-  return differenceInYears(date, person.dateOfBirth);
+return differenceInYears(date, person.dateOfBirth);
 }
 
 const person = Person.create({
-  firstName: "John",
-  lastName: "Doe",
-  dateOfBirth: new Date("1990-01-01"),
+firstName: "John",
+lastName: "Doe",
+dateOfBirth: new Date("1990-01-01"),
 });
 
 const fullName = getPersonFullName(person);
 const age = getPersonAgeAsOf(person, new Date());
-```
+
+````
 </CodeGroup>
 
 
@@ -2380,7 +2431,8 @@ export const MyAppAccount = co.account({
   root: MyAppRoot,
   profile: co.profile(),
 });
-```
+````
+
 </CodeGroup>
 
 ### `Account.profile` - public data associated with a user
@@ -2415,10 +2467,11 @@ const MyAppRoot = co.map({ // [!code ++:3]
 });
 
 export const MyAppAccount = co.account({
-  root: MyAppRoot, // [!code ++]
-  profile: co.profile(),
+root: MyAppRoot, // [!code ++]
+profile: co.profile(),
 });
-```
+
+````
 </CodeGroup>
 
 If you want to extend the `profile` to contain additional fields (such as an avatar `co.image()`), you can declare your own profile schema class using `co.profile({...})`:
@@ -2440,7 +2493,8 @@ export const MyAppAccount = co.account({
   root: MyAppRoot,
   profile: MyAppProfile, // [!code ++]
 });
-```
+````
+
 </CodeGroup>
 
 ## Resolving CoValues starting at `profile` or `root`
@@ -2454,14 +2508,14 @@ To use per-user data in your app, you typically use `useAccount` somewhere in a 
 const Chat = co.map({});
 
 const MyAppRoot = co.map({
-  myChats: co.list(Chat),
+myChats: co.list(Chat),
 });
 
 const MyAppProfile = co.profile();
 
 const MyAppAccount = co.account({
-  root: MyAppRoot,
-  profile: MyAppProfile,
+root: MyAppRoot,
+profile: MyAppProfile,
 });
 
 class ChatPreview extends React.Component<{ chat: Loaded<typeof Chat> }> {};
@@ -2469,32 +2523,32 @@ class ContactPreview extends React.Component<{ contact: Loaded<typeof MyAppAccou
 // ---cut---
 
 function DashboardPageComponent() {
-  const { me } = useAccount(MyAppAccount, { resolve: {
-    profile: true,
-    root: {
-      myChats: { $each: true },
-    }
-  }});
+const { me } = useAccount(MyAppAccount, { resolve: {
+profile: true,
+root: {
+myChats: { $each: true },
+}
+}});
 
-  return (
-    <div>
-      <h1>Dashboard</h1>
-      {me ? (
-        <div>
-          <p>Logged in as {me.profile.name}</p>
-          <h2>My chats</h2>
-          {me.root.myChats.map((chat) => (
-            <ChatPreview key={chat.id} chat={chat} />
-          ))}
-        </div>
-      ) : (
-        "Loading..."
-      )}
-    </div>
-  );
+return (
+<div>
+<h1>Dashboard</h1>
+{me ? (
+<div>
+<p>Logged in as {me.profile.name}</p>
+<h2>My chats</h2>
+{me.root.myChats.map((chat) => (
+<ChatPreview key={chat.id} chat={chat} />
+))}
+</div>
+) : (
+"Loading..."
+)}
+</div>
+);
 }
 
-```
+````
 </CodeGroup>
 </ContentByFramework>
 
@@ -2555,7 +2609,8 @@ export const MyAppAccount = co.account({
     }, profileGroup);
   }
 });
-```
+````
+
 </CodeGroup>
 
 ### Adding/changing fields to `root` and `profile`
@@ -2573,39 +2628,39 @@ const Chat = co.map({});
 const Bookmark = co.map({});
 
 const MyAppProfile = co.profile({
-  name: z.string(),
-  bookmarks: co.list(Bookmark),
+name: z.string(),
+bookmarks: co.list(Bookmark),
 });
 
 // ---cut---
 const MyAppRoot = co.map({
-  myChats: co.list(Chat),
-  myBookmarks: z.optional(co.list(Bookmark)), // [!code ++:1]
+myChats: co.list(Chat),
+myBookmarks: z.optional(co.list(Bookmark)), // [!code ++:1]
 });
-
 
 export const MyAppAccount = co.account({
-  root: MyAppRoot,
-  profile: MyAppProfile,
+root: MyAppRoot,
+profile: MyAppProfile,
 }).withMigration(async (account) => {
-  if (account.root === undefined) {
-    account.root = MyAppRoot.create({
-      myChats: co.list(Chat).create([], Group.create()),
-    });
-  }
-
-  // We need to load the root field to check for the myContacts field
-  const { root } = await account.ensureLoaded({
-    resolve: { root: true }
-  });
-
-  // we specifically need to check for undefined,
-  // because myBookmarks might simply be not loaded (`null`) yet
-  if (root.myBookmarks === undefined) { // [!code ++:3]
-    root.myBookmarks = co.list(Bookmark).create([], Group.create());
-  }
+if (account.root === undefined) {
+account.root = MyAppRoot.create({
+myChats: co.list(Chat).create([], Group.create()),
 });
-```
+}
+
+// We need to load the root field to check for the myContacts field
+const { root } = await account.ensureLoaded({
+resolve: { root: true }
+});
+
+// we specifically need to check for undefined,
+// because myBookmarks might simply be not loaded (`null`) yet
+if (root.myBookmarks === undefined) { // [!code ++:3]
+root.myBookmarks = co.list(Bookmark).create([], Group.create());
+}
+});
+
+````
 </CodeGroup>
 
 {/*
@@ -2642,7 +2697,8 @@ const Project = co.map({
   status: z.literal(["planning", "active", "completed"]),
   coordinator: z.optional(Member),
 });
-```
+````
+
 </CodeGroup>
 
 You can create either struct-like CoMaps with fixed fields (as above) or record-like CoMaps for key-value pairs:
@@ -2677,10 +2733,11 @@ const project = Project.create({
 });
 
 const inventory = Inventory.create({
-  tomatoes: 48,
-  basil: 12,
+tomatoes: 48,
+basil: 12,
 });
-```
+
+````
 </CodeGroup>
 
 ### Ownership
@@ -2723,7 +2780,8 @@ const communityProject = Project.create(
   },
   { owner: gardenGroup },
 );
-```
+````
+
 </CodeGroup>
 
 See [Groups as permission scopes](/docs/groups/intro) for more information on how to use groups to control access to CoMaps.
@@ -2802,8 +2860,9 @@ const inventory = Inventory.create({
   basil: 12
 });
 
-console.log(inventory["tomatoes"]);  // 48
-```
+console.log(inventory["tomatoes"]); // 48
+
+````
 </CodeGroup>
 
 ## Updating CoMaps
@@ -2833,7 +2892,8 @@ const project = Project.create(
 // ---cut---
 project.name = "Spring Vegetable Garden";    // Update name
 project.startDate = new Date("2025-03-20");  // Update date
-```
+````
+
 </CodeGroup>
 
 ### Type Safety
@@ -2866,7 +2926,6 @@ project.name = "Spring Vegetable Planting";  // ✓ Valid string
 project.startDate = "2025-03-15"; // ✗ Type error: expected Date
 ```
 </CodeGroup>
-
 
 ### Deleting Properties
 
@@ -2901,8 +2960,9 @@ const inventory = Inventory.create({
 delete inventory["basil"];  // Remove a key-value pair
 
 // For optional fields in struct-like CoMaps
-project.coordinator = undefined;  // Remove the reference
-```
+project.coordinator = undefined; // Remove the reference
+
+````
 </CodeGroup>
 
 ## Best Practices
@@ -2958,10 +3018,9 @@ const project = Project.create({
 
 console.log(isProjectActive(project)); // false
 console.log(formatProjectDuration(project, "short")); // "3 days"
-```
+````
+
 </CodeGroup>
-
-
 
 #### CoLists
 
@@ -2985,7 +3044,8 @@ const Task = co.map({
 const ListOfResources = co.list(z.string());
 
 const ListOfTasks = co.list(Task);
-```
+
+````
 </CodeGroup>
 
 To create a `CoList`:
@@ -3006,7 +3066,8 @@ const tasks = co.list(Task).create([
   Task.create({ title: "Prepare soil beds", status: "in-progress" }),
   Task.create({ title: "Order compost", status: "todo" })
 ]);
-```
+````
+
 </CodeGroup>
 
 ### Ownership
@@ -3028,7 +3089,8 @@ const teamGroup = Group.create();
 teamGroup.addMember(colleagueAccount, "writer");
 
 const teamList = co.list(Task).create([], { owner: teamGroup });
-```
+
+````
 </CodeGroup>
 
 See [Groups as permission scopes](/docs/groups/intro) for more information on how to use groups to control access to CoLists.
@@ -3070,7 +3132,8 @@ tasks.forEach(task => {
 // Array methods
 const todoTasks = tasks.filter(task => task.status === "todo");
 console.log(todoTasks.length); // 1
-```
+````
+
 </CodeGroup>
 
 ## Updating CoLists
@@ -3081,8 +3144,8 @@ Update `CoList`s just like you would JavaScript arrays:
 ```ts twoslash
 
 const Task = co.map({
-  title: z.string(),
-  status: z.literal(["todo", "in-progress", "complete"]),
+title: z.string(),
+status: z.literal(["todo", "in-progress", "complete"]),
 });
 
 const ListOfTasks = co.list(Task);
@@ -3094,19 +3157,20 @@ const tasks = ListOfTasks.create([]);
 
 // ---cut---
 // Add items
-resources.push("Tomatoes");       // Add to end
-resources.unshift("Lettuce");     // Add to beginning
-tasks.push(Task.create({          // Add complex items
-  title: "Install irrigation",
-  status: "todo"
+resources.push("Tomatoes"); // Add to end
+resources.unshift("Lettuce"); // Add to beginning
+tasks.push(Task.create({ // Add complex items
+title: "Install irrigation",
+status: "todo"
 }));
 
 // Replace items
-resources[0] = "Cucumber";           // Replace by index
+resources[0] = "Cucumber"; // Replace by index
 
 // Modify nested items
-tasks[0].status = "complete";        // Update properties of references
-```
+tasks[0].status = "complete"; // Update properties of references
+
+````
 </CodeGroup>
 
 ### Deleting Items
@@ -3136,7 +3200,8 @@ console.log(resources);              // ["Peppers"]
 // Remove items
 const lastItem = resources.pop();    // Remove and return last item
 resources.shift();                   // Remove first item
-```
+````
+
 </CodeGroup>
 
 ### Array Methods
@@ -3164,7 +3229,8 @@ console.log(tItems); // ["Tomatoes"]
 // Sort (modifies the CoList in-place)
 resources.sort();
 console.log(resources); // ["Basil", "Peppers", "Tomatoes"]
-```
+
+````
 </CodeGroup>
 
 ### Type Safety
@@ -3194,7 +3260,8 @@ resources.push(42);               // ✗ Type error: expected string
 tasks.forEach(task => {
   console.log(task.title);        // TypeScript knows task has title
 });
-```
+````
+
 </CodeGroup>
 ## Best Practices
 
@@ -3208,8 +3275,8 @@ CoLists work well with UI rendering libraries:
 ```tsx twoslash
 
 const Task = co.map({
-  title: z.string(),
-  status: z.literal(["todo", "in-progress", "complete"]),
+title: z.string(),
+status: z.literal(["todo", "in-progress", "complete"]),
 });
 
 // ---cut---
@@ -3217,7 +3284,8 @@ const ListOfTasks = co.list(Task);
 
 // React example
 function TaskList({ tasks }: { tasks: Loaded<typeof ListOfTasks> }) {
-  return  (
+return (
+
    <ul>
      {tasks.map(task => (
        task ? (
@@ -3240,35 +3308,35 @@ CoLists can be used to create one-to-many relationships:
 ```ts twoslash
 
 const Task = co.map({
-  title: z.string(),
-  status: z.literal(["todo", "in-progress", "complete"]),
+title: z.string(),
+status: z.literal(["todo", "in-progress", "complete"]),
 
-  get project(): z.ZodOptional<typeof Project> {
-    return z.optional(Project);
-  }
+get project(): z.ZodOptional<typeof Project> {
+return z.optional(Project);
+}
 });
 
 const ListOfTasks = co.list(Task);
 
 const Project = co.map({
-  name: z.string(),
+name: z.string(),
 
-  get tasks(): CoListSchema<typeof Task> {
-    return ListOfTasks;
-  }
+get tasks(): CoListSchema<typeof Task> {
+return ListOfTasks;
+}
 });
 
 const project = Project.create(
-  {
-    name: "Garden Project",
-    tasks: ListOfTasks.create([]),
-  },
+{
+name: "Garden Project",
+tasks: ListOfTasks.create([]),
+},
 );
 
 const task = Task.create({
-  title: "Plant seedlings",
-  status: "todo",
-  project: project, // Add a reference to the project
+title: "Plant seedlings",
+status: "todo",
+project: project, // Add a reference to the project
 });
 
 // Add a task to a garden project
@@ -3276,7 +3344,8 @@ project.tasks.push(task);
 
 // Access the project from the task
 console.log(task.project); // { name: "Garden Project", tasks: [task] }
-```
+
+````
 </CodeGroup>
 
 
@@ -3312,7 +3381,8 @@ const ActivityFeed = co.feed(Activity);
 
 // Create a feed instance
 const activityFeed = ActivityFeed.create([]);
-```
+````
+
 </CodeGroup>
 
 ### Ownership
@@ -3325,9 +3395,9 @@ const me = await createJazzTestAccount();
 const colleagueAccount = await createJazzTestAccount();
 
 const Activity = co.map({
-  timestamp: z.date(),
-  action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
-  notes: z.optional(z.string()),
+timestamp: z.date(),
+action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
+notes: z.optional(z.string()),
 });
 
 const ActivityFeed = co.feed(Activity);
@@ -3337,7 +3407,8 @@ const teamGroup = Group.create();
 teamGroup.addMember(colleagueAccount, "writer");
 
 const teamFeed = ActivityFeed.create([], { owner: teamGroup });
-```
+
+````
 </CodeGroup>
 
  See [Groups as permission scopes](/docs/groups/intro) for more information on how to use groups to control access to CoFeeds.
@@ -3370,7 +3441,8 @@ const sessionFeed = activityFeed.perSession[sessionId];
 
 // Latest entry from a session
 console.log(sessionFeed?.value?.action); // "watering"
-```
+````
+
 </CodeGroup>
 
 For convenience, you can also access the latest entry from the current session with `inCurrentSession`:
@@ -3380,9 +3452,9 @@ For convenience, you can also access the latest entry from the current session w
 const me = await createJazzTestAccount();
 
 const Activity = co.map({
-  timestamp: z.date(),
-  action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
-  notes: z.optional(z.string()),
+timestamp: z.date(),
+action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
+notes: z.optional(z.string()),
 });
 
 const ActivityFeed = co.feed(Activity);
@@ -3395,7 +3467,8 @@ const currentSessionFeed = activityFeed.inCurrentSession;
 
 // Latest entry from the current session
 console.log(currentSessionFeed?.value?.action); // "harvesting"
-```
+
+````
 </CodeGroup>
 
 ### Per-Account Access
@@ -3422,7 +3495,8 @@ const accountFeed = activityFeed.perAccount[accountId];
 
 // Latest entry from the account
 console.log(accountFeed.value?.action); // "watering"
-```
+````
+
 </CodeGroup>
 
 For convenience, you can also access the latest entry from the current account with `byMe`:
@@ -3432,9 +3506,9 @@ For convenience, you can also access the latest entry from the current account w
 const me = await createJazzTestAccount();
 
 const Activity = co.map({
-  timestamp: z.date(),
-  action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
-  notes: z.optional(z.string()),
+timestamp: z.date(),
+action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
+notes: z.optional(z.string()),
 });
 
 const ActivityFeed = co.feed(Activity);
@@ -3447,7 +3521,8 @@ const myLatestEntry = activityFeed.byMe;
 
 // Latest entry from the current account
 console.log(myLatestEntry?.value?.action); // "harvesting"
-```
+
+````
 </CodeGroup>
 
 ### Feed Entries
@@ -3485,7 +3560,8 @@ for (const entry of accountFeed.all) {
 for (const entry of sessionFeed.all) {
   console.log(entry.value);
 }
-```
+````
+
 </CodeGroup>
 
 #### Latest Entry
@@ -3497,9 +3573,9 @@ To retrieve the latest entry from a CoFeed, ie. the last update:
 const me = await createJazzTestAccount();
 
 const Activity = co.map({
-  timestamp: z.date(),
-  action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
-  notes: z.optional(z.string()),
+timestamp: z.date(),
+action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
+notes: z.optional(z.string()),
 });
 
 const ActivityFeed = co.feed(Activity);
@@ -3510,14 +3586,15 @@ const activityFeed = ActivityFeed.create([]);
 const latestEntry = activityFeed.byMe;
 
 console.log(`My last action was ${latestEntry?.value?.action}`);
-  // "My last action was harvesting"
+// "My last action was harvesting"
 
 // Get the latest entry from each account
 const latestEntriesByAccount = Object.values(activityFeed.perAccount).map(entry => ({
-  accountName: entry.by?.profile?.name,
-  value: entry.value,
+accountName: entry.by?.profile?.name,
+value: entry.value,
 }));
-```
+
+````
 </CodeGroup>
 
 ## Writing to CoFeeds
@@ -3546,7 +3623,8 @@ activityFeed.push(Activity.create({
   action: "watering",
   notes: "Extra water for new seedlings"
 }));
-```
+````
+
 </CodeGroup>
 
 Each item is automatically associated with the current user's session. You don't need to specify which session the item belongs to - Jazz handles this automatically.
@@ -3560,9 +3638,9 @@ Each entry is automatically added to the current session's feed. When a user has
 const me = await createJazzTestAccount();
 
 const Activity = co.map({
-  timestamp: z.date(),
-  action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
-  notes: z.optional(z.string()),
+timestamp: z.date(),
+action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
+notes: z.optional(z.string()),
 });
 
 const ActivityFeed = co.feed(Activity);
@@ -3572,20 +3650,21 @@ const fromBrowserFeed = ActivityFeed.create([]);
 // ---cut---
 // On mobile device:
 fromMobileFeed.push(Activity.create({
-  timestamp: new Date(),
-  action: "harvesting",
-  notes: "Vegetable patch"
+timestamp: new Date(),
+action: "harvesting",
+notes: "Vegetable patch"
 }));
 
 // On web browser (same user):
 fromBrowserFeed.push(Activity.create({
-  timestamp: new Date(),
-  action: "planting",
-  notes: "Flower bed"
+timestamp: new Date(),
+action: "planting",
+notes: "Flower bed"
 }));
 
 // These are separate entries in the same feed, from the same account
-```
+
+````
 </CodeGroup>
 
 ## Metadata
@@ -3615,7 +3694,8 @@ const accountFeed = activityFeed.perAccount[accountId];
 
 // Get the account that made the last entry
 console.log(accountFeed?.by);
-```
+````
+
 </CodeGroup>
 
 ### MadeAt
@@ -3627,9 +3707,9 @@ The `madeAt` property is a timestamp of when the entry was added to the feed.
 const me = await createJazzTestAccount();
 
 const Activity = co.map({
-  timestamp: z.date(),
-  action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
-  notes: z.optional(z.string()),
+timestamp: z.date(),
+action: z.literal(["watering", "planting", "harvesting", "maintenance"]),
+notes: z.optional(z.string()),
 });
 
 const ActivityFeed = co.feed(Activity);
@@ -3644,9 +3724,10 @@ console.log(accountFeed?.madeAt);
 
 // Get the timestamp of each entry
 for (const entry of accountFeed.all) {
-  console.log(entry.madeAt);
+console.log(entry.madeAt);
 }
-```
+
+````
 </CodeGroup>
 
 ## Best Practices
@@ -3687,7 +3768,8 @@ const note = co.plainText().create("Meeting notes", { owner: me });
 note.applyDiff("Meeting notes for Tuesday");
 
 console.log(note.toString());  // "Meeting notes for Tuesday"
-```
+````
+
 </CodeGroup>
 
 For a full example of CoTexts in action, see [our Richtext example app](https://github.com/garden-co/jazz/tree/main/examples/richtext), which shows plain text and rich text editing.
@@ -3713,11 +3795,12 @@ CoText values are typically used as fields in your schemas:
 
 // ---cut---
 const Profile = co.profile({
-  name: z.string(),
-  bio: co.plainText(),         // Plain text field
-  description: co.richText(),  // Rich text with formatting
+name: z.string(),
+bio: co.plainText(), // Plain text field
+description: co.richText(), // Rich text with formatting
 });
-```
+
+````
 </CodeGroup>
 
 Create a CoText value with a simple string:
@@ -3734,7 +3817,8 @@ const note = co.plainText().create("Meeting notes", { owner: me });
 const document = co.richText().create("<p>Project <strong>overview</strong></p>",
   { owner: me }
 );
-```
+````
+
 </CodeGroup>
 
 ### Ownership
@@ -3752,7 +3836,8 @@ const teamGroup = Group.create();
 teamGroup.addMember(colleagueAccount, "writer");
 
 const teamNote = co.plainText().create("Team updates", { owner: teamGroup });
-```
+
+````
 </CodeGroup>
 
 See [Groups as permission scopes](/docs/groups/intro) for more information on how to use groups to control access to CoText values.
@@ -3773,7 +3858,8 @@ console.log(`${note}`);    // "Meeting notes"
 
 // Check the text length
 console.log(note.length);      // 14
-```
+````
+
 </CodeGroup>
 
 <ContentByFramework framework="react">
@@ -3785,6 +3871,7 @@ const note = co.plainText().create("Meeting notes", { owner: me });
 
 // ---cut---
 <>
+
   <p>{note.toString()}</p>
   <p>{note}</p>
 </>
@@ -3803,17 +3890,18 @@ const note = co.plainText().create("Meeting notes", { owner: me });
 
 // ---cut---
 // Insert text at a specific position
-note.insertBefore(8, "weekly ");  // "Meeting weekly notes"
+note.insertBefore(8, "weekly "); // "Meeting weekly notes"
 
 // Insert after a position
-note.insertAfter(21, " for Monday");  // "Meeting weekly notes for Monday"
+note.insertAfter(21, " for Monday"); // "Meeting weekly notes for Monday"
 
 // Delete a range of text
-note.deleteRange({ from: 8, to: 15 });  // "Meeting notes for Monday"
+note.deleteRange({ from: 8, to: 15 }); // "Meeting notes for Monday"
 
 // Apply a diff to update the entire text
 note.applyDiff("Team meeting notes for Tuesday");
-```
+
+````
 </CodeGroup>
 
 ### Applying Diffs
@@ -3835,7 +3923,8 @@ minutes.applyDiff("Weekly team status update for Project X");
 let text = minutes.toString();
 text = text.replace("Weekly", "Monday");
 minutes.applyDiff(text);  // Efficiently updates only what changed
-```
+````
+
 </CodeGroup>
 
 Perfect for handling user input in form controls:
@@ -3847,19 +3936,20 @@ const me = await createJazzTestAccount();
 
 // ---cut---
 function TextEditor({ textId }: { textId: string }) {
-  const note = useCoState(co.plainText(), textId);
+const note = useCoState(co.plainText(), textId);
 
-  return (
-    note && <textarea
-      value={note.toString()}
-      onChange={(e) => {
-        // Efficiently update only what the user changed
-        note.applyDiff(e.target.value);
-      }}
-    />
-  );
+return (
+note && <textarea
+value={note.toString()}
+onChange={(e) => {
+// Efficiently update only what the user changed
+note.applyDiff(e.target.value);
+}}
+/>
+);
 }
-```
+
+````
 </CodeGroup>
 </ContentByFramework>
 
@@ -3884,7 +3974,8 @@ textarea.addEventListener('input', (e: Event) => {
 
 // Add the textarea to the document
 document.body.appendChild(textarea);
-```
+````
+
 </CodeGroup>
 </ContentByFramework>
 
@@ -3897,16 +3988,16 @@ const note = ref(null);
 const textContent = ref("");
 
 onMounted(async () => {
-  const me = await createJazzTestAccount();
-  note.value = co.plainText().create("", { owner: me });
-  textContent.value = note.value.toString();
+const me = await createJazzTestAccount();
+note.value = co.plainText().create("", { owner: me });
+textContent.value = note.value.toString();
 });
 
 function updateText(e) {
-  if (note.value) {
-    note.value.applyDiff(e.target.value);
-    textContent.value = note.value.toString();
-  }
+if (note.value) {
+note.value.applyDiff(e.target.value);
+textContent.value = note.value.toString();
+}
 }
 </script>
 
@@ -3930,10 +4021,11 @@ const note = co.plainText().create("", { owner: me });
 </script>
 
 <textarea
-  value={note.toString()}
-  oninput={e => note.applyDiff(e.target.value)}
+value={note.toString()}
+oninput={e => note.applyDiff(e.target.value)}
 />
-```
+
+````
 </CodeGroup>
 </ContentByFramework>
 
@@ -3955,7 +4047,8 @@ pnpm add jazz-tools/prosemirror \
   prosemirror-view \
   prosemirror-state \
   prosemirror-schema-basic
-```
+````
+
 </CodeGroup>
 
 ### Integration
@@ -3971,6 +4064,7 @@ We don't currently have a React Native Expo-specific example, but you need help 
 <ContentByFramework framework={["react", "react-native", "react-native-expo"]}>
 For use with React:
 <CodeGroup>
+
 ```tsx twoslash
 const JazzProfile = co.profile({
   bio: co.richText(),
@@ -3978,7 +4072,7 @@ const JazzProfile = co.profile({
 
 const JazzAccount = co.account({
   profile: JazzProfile,
-  root: co.map({})
+  root: co.map({}),
 });
 
 // ---cut---
@@ -4020,12 +4114,13 @@ function RichTextEditor() {
   if (!me) return null;
 
   return (
-    <div className="border rounded">
+    <div className="rounded border">
       <div ref={editorRef} className="p-2" />
     </div>
   );
 }
 ```
+
 </CodeGroup>
 </ContentByFramework>
 
@@ -4040,8 +4135,8 @@ We don't currently have a Vue-specific example, but you need help you can [reque
 <ContentByFramework framework={["vanilla", "svelte", "vue", "react-native", "react-native-expo"]}>
 For use without a framework:
 <CodeGroup>
-```js twoslash
 
+```js twoslash
 function setupRichTextEditor(coRichText, container) {
   // Create the Jazz plugin for ProseMirror
   // Providing a co.richText() instance to the plugin to automatically sync changes
@@ -4072,10 +4167,9 @@ const cleanup = setupRichTextEditor(document, editorContainer);
 // Later when done with the editor
 cleanup();
 ```
+
 </CodeGroup>
 </ContentByFramework>
-
-
 
 #### FileStreams
 
@@ -4084,6 +4178,7 @@ cleanup();
 FileStreams handle binary data in Jazz applications - think documents, audio files, and other non-text content. They're essentially collaborative versions of `Blob`s that sync automatically across devices.
 
 Use FileStreams when you need to:
+
 - Distribute documents across devices
 - Store audio or video files
 - Sync any binary data between users
@@ -4099,10 +4194,11 @@ In your schema, reference FileStreams like any other CoValue:
 // schema.ts
 
 const Document = co.map({
-  title: z.string(),
-  file: co.fileStream(),  // Store a document file
+title: z.string(),
+file: co.fileStream(), // Store a document file
 });
-```
+
+````
 </CodeGroup>
 
 ## Creating FileStreams
@@ -4140,7 +4236,8 @@ fileInput.addEventListener('change', async () => {
     owner: myGroup
   });
 });
-```
+````
+
 </CodeGroup>
 
 ### Creating Empty FileStreams
@@ -4172,7 +4269,8 @@ teamGroup.addMember(colleagueAccount, "writer");
 
 // Create a FileStream with shared ownership
 const teamFileStream = FileStream.create({ owner: teamGroup });
-```
+
+````
 </CodeGroup>
 
  See [Groups as permission scopes](/docs/groups/intro) for more information on how to use groups to control access to FileStreams.
@@ -4204,7 +4302,8 @@ if (fileData) {
     console.log(`Chunk size: ${chunk.length} bytes`);
   }
 }
-```
+````
+
 </CodeGroup>
 
 By default, `getChunks()` only returns data for completely synced `FileStream`s. To start using chunks from a `FileStream` that's currently still being synced use the `allowUnfinished` option:
@@ -4233,19 +4332,20 @@ const blob = fileStream.toBlob();
 const filename = fileStream.getChunks()?.fileName;
 
 if (blob) {
-  // Use with URL.createObjectURL
-  const url = URL.createObjectURL(blob);
+// Use with URL.createObjectURL
+const url = URL.createObjectURL(blob);
 
-  // Create a download link
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename || 'document.pdf';
-  link.click();
+// Create a download link
+const link = document.createElement('a');
+link.href = url;
+link.download = filename || 'document.pdf';
+link.click();
 
-  // Clean up when done
-  URL.revokeObjectURL(url);
+// Clean up when done
+URL.revokeObjectURL(url);
 }
-```
+
+````
 </CodeGroup>
 
 ### Loading FileStreams as Blobs
@@ -4264,7 +4364,8 @@ const blob = await FileStream.loadAsBlob(fileStreamId);
 const partialBlob = await FileStream.loadAsBlob(fileStreamId, {
   allowUnfinished: true,
 });
-```
+````
+
 </CodeGroup>
 
 ### Checking Completion Status
@@ -4308,11 +4409,12 @@ const fileStream = FileStream.create({ owner: myGroup });
 
 // Initialize with metadata
 fileStream.start({
-  mimeType: 'application/pdf',      // MIME type (required)
-  totalSizeBytes: 1024 * 1024 * 2,  // Size in bytes (if known)
-  fileName: 'document.pdf'          // Original filename (optional)
+mimeType: 'application/pdf', // MIME type (required)
+totalSizeBytes: 1024 _ 1024 _ 2, // Size in bytes (if known)
+fileName: 'document.pdf' // Original filename (optional)
 });
-```
+
+````
 </CodeGroup>
 
 ### Pushing Data
@@ -4342,7 +4444,8 @@ for (let i = 0; i < data.length; i += chunkSize) {
   const progress = Math.min(100, Math.round((i + chunk.length) * 100 / data.length));
   console.log(`Upload progress: ${progress}%`);
 }
-```
+````
+
 </CodeGroup>
 
 ### Completing the Upload
@@ -4357,7 +4460,8 @@ const fileStream = FileStream.create();
 fileStream.end();
 
 console.log('Upload complete!');
-```
+
+````
 </CodeGroup>
 
 ## Subscribing to `FileStream`s
@@ -4384,7 +4488,8 @@ if (fileStream) {
     const blob = fileStream.toBlob();
   }
 }
-```
+````
+
 </CodeGroup>
 
 ### Subscribing to Changes
@@ -4400,12 +4505,12 @@ const unsubscribe = FileStream.subscribe(fileStreamId, (fileStream: FileStream) 
   // Called whenever the FileStream changes
   console.log('FileStream updated');
 
-  // Get current status
-  const chunks = fileStream.getChunks({ allowUnfinished: true });
-  if (chunks) {
-    const uploadedBytes = chunks.chunks.reduce((sum: number, chunk: Uint8Array) => sum + chunk.length, 0);
-    const totalBytes = chunks.totalSizeBytes || 1;
-    const progress = Math.min(100, Math.round(uploadedBytes * 100 / totalBytes));
+// Get current status
+const chunks = fileStream.getChunks({ allowUnfinished: true });
+if (chunks) {
+const uploadedBytes = chunks.chunks.reduce((sum: number, chunk: Uint8Array) => sum + chunk.length, 0);
+const totalBytes = chunks.totalSizeBytes || 1;
+const progress = Math.min(100, Math.round(uploadedBytes \* 100 / totalBytes));
 
     console.log(`Upload progress: ${progress}%`);
 
@@ -4417,9 +4522,11 @@ const unsubscribe = FileStream.subscribe(fileStreamId, (fileStream: FileStream) 
       // Clean up the subscription if we're done
       unsubscribe();
     }
-  }
+
+}
 });
-```
+
+````
 </CodeGroup>
 
 ### Waiting for Upload Completion
@@ -4436,12 +4543,11 @@ await fileStream.waitForSync({
 });
 
 console.log('FileStream is now synced to all connected devices');
-```
+````
+
 </CodeGroup>
 
 This is useful when you need to ensure that a file is available to other users before proceeding with an operation.
-
-
 
 #### ImageDefinition
 
@@ -4454,11 +4560,13 @@ This is useful when you need to ensure that a file is available to other users b
 **Note**: This guide applies to both Expo and framework-less React Native implementations. The functionality described here is identical regardless of which implementation you're using, though you'll need to import from the appropriate package (`jazz-expo` or `jazz-react-native`).
 
 Jazz offers several tools to work with images in React Native:
+
 - [`createImage()`](#creating-images) - function to create an `ImageDefinition` from a base64 image data URI
 - [`ProgressiveImg`](#displaying-images-with-progressiveimg) - React component to display an image with progressive loading
 - [`useProgressiveImg`](#using-useprogressiveimg-hook) - React hook to load an image in your own component
 
 For examples of use, see our example apps:
+
 - [React Native Chat](https://github.com/gardencmp/jazz/tree/main/examples/chat-rn) (Framework-less implementation)
 - [React Native Expo Chat](https://github.com/gardencmp/jazz/tree/main/examples/chat-rn-expo) (Expo implementation)
 - [React Native Expo Clerk Chat](https://github.com/gardencmp/jazz/tree/main/examples/chat-rn-expo-clerk) (Expo implementation with Clerk)
@@ -4471,13 +4579,13 @@ The easiest way to create and use images in your Jazz application is with the `c
 ```tsx
 
 async function handleImagePicker() {
-  try {
-    // Launch the image picker
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      base64: true,
-      quality: 1,
-    });
+try {
+// Launch the image picker
+const result = await ImagePicker.launchImageLibraryAsync({
+mediaTypes: ImagePicker.MediaTypeOptions.Images,
+base64: true,
+quality: 1,
+});
 
     if (!result.canceled) {
       const base64Uri = `data:image/jpeg;base64,${result.assets[0].base64}`;
@@ -4491,11 +4599,13 @@ async function handleImagePicker() {
       // Store the image
       me.profile.image = image;
     }
-  } catch (error) {
-    console.error("Error creating image:", error);
-  }
+
+} catch (error) {
+console.error("Error creating image:", error);
 }
-```
+}
+
+````
 </CodeGroup>
 
 The `createImage()` function:
@@ -4523,7 +4633,8 @@ const options = {
 // undefined: Creates all resolutions including the original size
 
 const image = await createImage(base64Uri, options);
-```
+````
+
 </CodeGroup>
 
 ## Displaying Images with `ProgressiveImg`
@@ -4534,30 +4645,30 @@ For a complete progressive loading experience, use the `ProgressiveImg` componen
 ```tsx
 
 function GalleryView({ image }) {
-  return (
-    <ProgressiveImg
-      image={image}  // The image definition to load
-      targetWidth={800} //  Looks for the best available resolution for a 800px image
-    >
-      {({ src }) => (
-        <Image
-          source={{ uri: src }}
-          style={styles.galleryImage}
-          resizeMode="cover"
-        />
-      )}
-    </ProgressiveImg>
-  );
+return (
+<ProgressiveImg
+image={image} // The image definition to load
+targetWidth={800} // Looks for the best available resolution for a 800px image >
+{({ src }) => (
+<Image
+source={{ uri: src }}
+style={styles.galleryImage}
+resizeMode="cover"
+/>
+)}
+</ProgressiveImg>
+);
 }
 
 const styles = StyleSheet.create({
-  galleryImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-  }
+galleryImage: {
+width: '100%',
+height: 200,
+borderRadius: 8,
+}
 });
-```
+
+````
 </CodeGroup>
 
 The `ProgressiveImg` component handles:
@@ -4626,7 +4737,8 @@ function CustomImageComponent({ image }) {
     </View>
   );
 }
-```
+````
+
 </CodeGroup>
 
 ## Understanding ImageDefinition
@@ -4650,10 +4762,11 @@ const image = ImageDefinition.create({
 // Accessing the highest available resolution
 const highestRes = image.highestResAvailable();
 if (highestRes) {
-  console.log(`Found resolution: ${highestRes.res}`);
-  console.log(`Stream: ${highestRes.stream}`);
+console.log(`Found resolution: ${highestRes.res}`);
+console.log(`Stream: ${highestRes.stream}`);
 }
-```
+
+````
 </CodeGroup>
 
 For more details on using `ImageDefinition` directly, see the [VanillaJS docs](/docs/vanilla/using-covalues/imagedef).
@@ -4673,7 +4786,8 @@ image["800x450"] = await FileStream.createFromBlob(mediumSizeBlob);
 
 const highestRes = image.highestResAvailable();
 console.log(highestRes.res); // 800x450
-```
+````
+
 </CodeGroup>
 
 ---
@@ -4687,11 +4801,13 @@ console.log(highestRes.res); // 800x450
 **Note**: This guide applies to both Expo and framework-less React Native implementations. The functionality described here is identical regardless of which implementation you're using, though you'll need to import from the appropriate package (`jazz-expo` or `jazz-react-native`).
 
 Jazz offers several tools to work with images in React Native:
+
 - [`createImage()`](#creating-images) - function to create an `ImageDefinition` from a base64 image data URI
 - [`ProgressiveImg`](#displaying-images-with-progressiveimg) - React component to display an image with progressive loading
 - [`useProgressiveImg`](#using-useprogressiveimg-hook) - React hook to load an image in your own component
 
 For examples of use, see our example apps:
+
 - [React Native Chat](https://github.com/gardencmp/jazz/tree/main/examples/chat-rn) (Framework-less implementation)
 - [React Native Expo Chat](https://github.com/gardencmp/jazz/tree/main/examples/chat-rn-expo) (Expo implementation)
 - [React Native Expo Clerk Chat](https://github.com/gardencmp/jazz/tree/main/examples/chat-rn-expo-clerk) (Expo implementation with Clerk)
@@ -4704,13 +4820,13 @@ The easiest way to create and use images in your Jazz application is with the `c
 ```tsx
 
 async function handleImagePicker() {
-  try {
-    // Launch the image picker
-    const result = await launchImageLibrary({
-      mediaType: 'photo',
-      includeBase64: true,
-      quality: 1,
-    });
+try {
+// Launch the image picker
+const result = await launchImageLibrary({
+mediaType: 'photo',
+includeBase64: true,
+quality: 1,
+});
 
     if (!result.canceled) {
       const base64Uri = `data:image/jpeg;base64,${result.assets[0].base64}`;
@@ -4724,11 +4840,13 @@ async function handleImagePicker() {
       // Store the image
       me.profile.image = image;
     }
-  } catch (error) {
-    console.error("Error creating image:", error);
-  }
+
+} catch (error) {
+console.error("Error creating image:", error);
 }
-```
+}
+
+````
 </CodeGroup>
 
 The `createImage()` function:
@@ -4756,7 +4874,8 @@ const options = {
 // undefined: Creates all resolutions including the original size
 
 const image = await createImage(base64Uri, options);
-```
+````
+
 </CodeGroup>
 
 ## Displaying Images with `ProgressiveImg`
@@ -4767,30 +4886,30 @@ For a complete progressive loading experience, use the `ProgressiveImg` componen
 ```tsx
 
 function GalleryView({ image }) {
-  return (
-    <ProgressiveImg
-      image={image}  // The image definition to load
-      targetWidth={800} //  Looks for the best available resolution for a 800px image
-    >
-      {({ src }) => (
-        <Image
-          source={{ uri: src }}
-          style={styles.galleryImage}
-          resizeMode="cover"
-        />
-      )}
-    </ProgressiveImg>
-  );
+return (
+<ProgressiveImg
+image={image} // The image definition to load
+targetWidth={800} // Looks for the best available resolution for a 800px image >
+{({ src }) => (
+<Image
+source={{ uri: src }}
+style={styles.galleryImage}
+resizeMode="cover"
+/>
+)}
+</ProgressiveImg>
+);
 }
 
 const styles = StyleSheet.create({
-  galleryImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 8,
-  }
+galleryImage: {
+width: '100%',
+height: 200,
+borderRadius: 8,
+}
 });
-```
+
+````
 </CodeGroup>
 
 The `ProgressiveImg` component handles:
@@ -4859,7 +4978,8 @@ function CustomImageComponent({ image }) {
     </View>
   );
 }
-```
+````
+
 </CodeGroup>
 
 ## Understanding ImageDefinition
@@ -4883,10 +5003,11 @@ const image = ImageDefinition.create({
 // Accessing the highest available resolution
 const highestRes = image.highestResAvailable();
 if (highestRes) {
-  console.log(`Found resolution: ${highestRes.res}`);
-  console.log(`Stream: ${highestRes.stream}`);
+console.log(`Found resolution: ${highestRes.res}`);
+console.log(`Stream: ${highestRes.stream}`);
 }
-```
+
+````
 </CodeGroup>
 
 For more details on using `ImageDefinition` directly, see the [VanillaJS docs](/docs/vanilla/using-covalues/imagedef).
@@ -4906,7 +5027,8 @@ image["800x450"] = await FileStream.createFromBlob(mediumSizeBlob);
 
 const highestRes = image.highestResAvailable();
 console.log(highestRes.res); // 800x450
-```
+````
+
 </CodeGroup>
 
 ---
@@ -4918,6 +5040,7 @@ console.log(highestRes.res); // 800x450
 `ImageDefinition` is a specialized CoValue designed specifically for managing images in Jazz applications. It extends beyond basic file storage by supporting multiple resolutions of the same image and progressive loading patterns.
 
 Beyond [`ImageDefinition`](#understanding-imagedefinition), Jazz offers higher-level functions and components that make it easier to use images:
+
 - [`createImage()`](#creating-images) - function to create an `ImageDefinition` from a file
 - [`ProgressiveImg`](#displaying-images-with-progressiveimg) - React component to display an image with progressive loading
 - [`useProgressiveImg`](#using-useprogressiveimg-hook) - React hook to load an image in your own component
@@ -4932,26 +5055,26 @@ The easiest way to create and use images in your Jazz application is with the `c
 ```ts twoslash
 
 const MyProfile = co.profile({
-  name: z.string(),
-  image: z.optional(co.image()),
+name: z.string(),
+image: z.optional(co.image()),
 });
 
 const MyAccount = co.account({
-  root: co.map({}),
-  profile: MyProfile,
+root: co.map({}),
+profile: MyProfile,
 });
 
 MyAccount.withMigration((account, creationProps) => {
-  if (account.profile === undefined) {
-    const profileGroup = Group.create();
-    profileGroup.addMember("everyone", "reader");
-    account.profile = MyProfile.create(
-      {
-        name: creationProps?.name ?? "New user",
-      },
-      profileGroup,
-    );
-  }
+if (account.profile === undefined) {
+const profileGroup = Group.create();
+profileGroup.addMember("everyone", "reader");
+account.profile = MyProfile.create(
+{
+name: creationProps?.name ?? "New user",
+},
+profileGroup,
+);
+}
 });
 
 const me = await MyAccount.create({});
@@ -4962,17 +5085,18 @@ const myGroup = Group.create();
 
 // Create an image from a file input
 async function handleFileUpload(event: React.ChangeEvent<HTMLInputElement>) {
-  const file = event.target.files?.[0];
-  if (file) {
-    // Creates ImageDefinition with multiple resolutions automatically
-    const image = await createImage(file, { owner: myGroup });
+const file = event.target.files?.[0];
+if (file) {
+// Creates ImageDefinition with multiple resolutions automatically
+const image = await createImage(file, { owner: myGroup });
 
     // Store the image in your application data
     me.profile.image = image;
-  }
+
+}
 }
 
-```
+````
 </CodeGroup>
 
 **Note:** `createImage()` requires a browser environment as it uses browser APIs to process images.
@@ -5005,7 +5129,8 @@ const options = {
 // undefined: Creates all resolutions including the original size
 
 const image = await createImage(file, options);
-```
+````
+
 </CodeGroup>
 
 ### Ownership
@@ -5025,7 +5150,8 @@ teamGroup.addMember(colleagueAccount, "writer");
 
 // Create an image with shared ownership
 const teamImage = await createImage(file, { owner: teamGroup });
-```
+
+````
 </CodeGroup>
 
 See [Groups as permission scopes](/docs/groups/intro) for more information on how to use groups to control access to images.
@@ -5047,9 +5173,9 @@ function GalleryView({ image }: { image: Loaded<typeof Image> }) {
         targetWidth={800} // Looks for the best available resolution for a 800px image
       >
         {({ src }) => (
-          <img 
-            src={src} 
-            alt="Gallery image" 
+          <img
+            src={src}
+            alt="Gallery image"
             className="gallery-image"
           />
         )}
@@ -5057,10 +5183,12 @@ function GalleryView({ image }: { image: Loaded<typeof Image> }) {
     </div>
   );
 }
-```
+````
+
 </CodeGroup>
 
 The `ProgressiveImg` component handles:
+
 - Showing a placeholder while loading
 - Automatically selecting the appropriate resolution
 - Progressive enhancement as higher resolutions become available
@@ -5076,41 +5204,42 @@ const Image = co.image();
 // ---cut---
 
 function CustomImageComponent({ image }: { image: Loaded<typeof Image> }) {
-  const {
-    src,         // Data URI containing the image data as a base64 string,
-                 // or a placeholder image URI
-    res,         // The current resolution
-    originalSize // The original size of the image
-  } = useProgressiveImg({
-    image: image,  // The image definition to load
-    targetWidth: 800  // Limit to resolutions up to 800px wide
-  });
+const {
+src, // Data URI containing the image data as a base64 string,
+// or a placeholder image URI
+res, // The current resolution
+originalSize // The original size of the image
+} = useProgressiveImg({
+image: image, // The image definition to load
+targetWidth: 800 // Limit to resolutions up to 800px wide
+});
 
-  // When image is not available yet
-  if (!src) {
-    return <div className="image-loading-fallback">Loading image...</div>;
-  }
-  
-  // When image is loading, show a placeholder
-  if (res === "placeholder") {
-    return <img src={src} alt="Loading..." className="blur-effect" />;
-  }
+// When image is not available yet
+if (!src) {
+return <div className="image-loading-fallback">Loading image...</div>;
+}
 
-  // Full image display with custom overlay
-  return (
-    <div className="custom-image-wrapper">
-      <img 
+// When image is loading, show a placeholder
+if (res === "placeholder") {
+return <img src={src} alt="Loading..." className="blur-effect" />;
+}
+
+// Full image display with custom overlay
+return (
+<div className="custom-image-wrapper">
+<img 
         src={src} 
         alt="Custom image" 
         className="custom-image"
       />
-      <div className="image-overlay">
-        <span className="image-caption">Resolution: {res}</span>
-      </div>
-    </div>
-  );
+<div className="image-overlay">
+<span className="image-caption">Resolution: {res}</span>
+</div>
+</div>
+);
 }
-```
+
+````
 </CodeGroup>
 
 ## Understanding ImageDefinition
@@ -5138,7 +5267,8 @@ if (highestRes) {
   console.log(`Found resolution: ${highestRes.res}`);
   console.log(`Stream: ${highestRes.stream}`);
 }
-```
+````
+
 </CodeGroup>
 
 For more details on using `ImageDefinition` directly, see the [VanillaJS docs](/docs/vanilla/using-covalues/imagedef).
@@ -5153,7 +5283,7 @@ const mediumSizeBlob = new Blob([], { type: "image/jpeg" });
 
 // ---cut---
 const image = ImageDefinition.create({
-  originalSize: [1920, 1080],
+originalSize: [1920, 1080],
 });
 
 image["1920x1080"] = FileStream.create(); // Empty image upload
@@ -5161,7 +5291,8 @@ image["800x450"] = await FileStream.createFromBlob(mediumSizeBlob);
 
 const highestRes = ImageDefinition.highestResAvailable(image);
 console.log(highestRes?.res); // 800x450
-```
+
+````
 </CodeGroup>
 
 
@@ -5209,7 +5340,8 @@ const unsubscribe = Task.subscribe(taskId, {}, (updatedTask) => {
 
 // Clean up when you're done
 unsubscribe();
-```
+````
+
 </CodeGroup>
 
 If you already have a CoValue instance, you can subscribe to it by calling its `subscribe` method.
@@ -5218,25 +5350,26 @@ If you already have a CoValue instance, you can subscribe to it by calling its `
 ```ts twoslash
 
 const Task = co.map({
-  title: z.string(),
-  description: z.string(),
-  status: z.literal(["todo", "in-progress", "completed"]),
-  assignedTo: z.optional(z.string()),
+title: z.string(),
+description: z.string(),
+status: z.literal(["todo", "in-progress", "completed"]),
+assignedTo: z.optional(z.string()),
 });
 const otherProps = {} as any;
 // ---cut-before---
 const task = Task.create({
-  title: "Cut the grass",
-  ...otherProps
+title: "Cut the grass",
+...otherProps
 });
 
 const unsubscribe = task.subscribe((updatedTask) => {
-  console.log("Task updated:", updatedTask.title);
+console.log("Task updated:", updatedTask.title);
 });
 
 // Clean up when you're done
 unsubscribe();
-```
+
+````
 </CodeGroup>
 
 <ContentByFramework framework={["react", "react-native"]}>
@@ -5293,7 +5426,8 @@ function TaskList({ tasks }: { tasks: Loaded<typeof Task>[] }) {
     </ul>
   );
 }
-```
+````
+
 </CodeGroup>
 
 The `useCoState` hook handles subscribing when the component mounts and unsubscribing when it unmounts, making it easy to keep your UI in sync with the underlying data.
@@ -5312,54 +5446,54 @@ const Task = co.map({
 });
 
 const Project = co.map({
-  name: z.string(),
-  tasks: co.list(Task),
+name: z.string(),
+tasks: co.list(Task),
 });
 
 const AccountRoot = co.map({
-  myProjects: co.list(Project),
+myProjects: co.list(Project),
 });
 
 const MyAppAccount = co.account({
-  root: AccountRoot,
-  profile: co.profile(),
+root: AccountRoot,
+profile: co.profile(),
 });
 
 // ---cut-before---
 
 function ProjectList() {
-  const { me } = useAccount(MyAppAccount, {
-    resolve: {
-      profile: true,
-      root: {
-        myProjects: {
-          $each: {
-            tasks: true,
-          },
-        },
-      },
-    },
-  });
+const { me } = useAccount(MyAppAccount, {
+resolve: {
+profile: true,
+root: {
+myProjects: {
+$each: {
+tasks: true,
+},
+},
+},
+},
+});
 
-  if (!me) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <div>
-      <h1>{me.profile.name}'s projects</h1>
-      <ul>
-        {me.root.myProjects.map((project) => (
-          <li key={project.id}>
-            {project.name} ({project.tasks.length} tasks)
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+if (!me) {
+return <div>Loading...</div>;
 }
 
-```
+return (
+<div>
+<h1>{me.profile.name}'s projects</h1>
+<ul>
+{me.root.myProjects.map((project) => (
+<li key={project.id}>
+{project.name} ({project.tasks.length} tasks)
+</li>
+))}
+</ul>
+</div>
+);
+}
+
+````
 </CodeGroup>
 
 </ContentByFramework>
@@ -5391,7 +5525,8 @@ Task.subscribe(taskId, {}, (task: Loaded<typeof Task>) => {
     console.log("Task loaded:", task.title);
   }
 });
-```
+````
+
 </CodeGroup>
 
 ## Deep Loading
@@ -5408,19 +5543,19 @@ const projectId = "co_123";
 
 // ---cut-before---
 const TeamMember = co.map({
-  name: z.string(),
+name: z.string(),
 });
 
 const Task = co.map({
-  title: z.string(),
-  assignee: z.optional(TeamMember),
-  get subtasks(): CoListSchema<typeof Task> { return co.list(Task) },
+title: z.string(),
+assignee: z.optional(TeamMember),
+get subtasks(): CoListSchema<typeof Task> { return co.list(Task) },
 });
 
 const Project = co.map({
-  name: z.string(),
-  tasks: co.list(Task),
-  owner: TeamMember,
+name: z.string(),
+tasks: co.list(Task),
+owner: TeamMember,
 });
 
 // Load just the project, not its references
@@ -5434,9 +5569,9 @@ project.tasks;
 
 // Load the project and shallowly load its list of tasks
 const projectWithTasksShallow = await Project.load(projectId, {
-  resolve: {
-    tasks: true
-  }
+resolve: {
+tasks: true
+}
 });
 if (!projectWithTasksShallow) { throw new Error("Project or required references not found or not accessible"); }
 
@@ -5449,11 +5584,11 @@ projectWithTasksShallow.tasks[0];
 
 // Load the project and its tasks
 const projectWithTasks = await Project.load(projectId, {
-  resolve: {
-    tasks: {
-      $each: true
-    }
-  }
+resolve: {
+tasks: {
+$each: true
+}
+}
 });
 if (!projectWithTasks) { throw new Error("Project or required references not found or not accessible"); }
 
@@ -5468,27 +5603,28 @@ projectWithTasks.tasks[0].subtasks;
 
 // Load the project, its tasks, and their subtasks
 const projectDeep = await Project.load(projectId, {
-  resolve: {
-    tasks: {
-      $each: {
-        subtasks: {
-          $each: true
-        },
-        assignee: true
-      }
-    }
-  }
+resolve: {
+tasks: {
+$each: {
+subtasks: {
+$each: true
+},
+assignee: true
+}
+}
+}
 });
 if (!projectDeep) { throw new Error("Project or required references not found or not accessible"); }
 
 // string - primitive fields are always loaded
 projectDeep.tasks[0].subtasks[0].title;
 // undefined | null | TeamMember - since assignee is optional:
-//   TeamMember - set and definitely loaded
-//   null - set but unavailable/inaccessible
-//   undefined - not set, or loading (in case of subscription)
+// TeamMember - set and definitely loaded
+// null - set but unavailable/inaccessible
+// undefined - not set, or loading (in case of subscription)
 projectDeep.tasks[0].assignee;
-```
+
+````
 </CodeGroup>
 
 The resolve query defines which parts of the graph you want to load, making it intuitive to express complex loading patterns.
@@ -5529,7 +5665,8 @@ const task = await Task.load(taskId, {
 });
 
 task // => null
-```
+````
+
 </CodeGroup>
 The load operation will fail and return `null` if any requested reference is inaccessible. This maintains data consistency by ensuring all requested references are available before returning the object.
 
@@ -5543,30 +5680,31 @@ When a list contains references to items the user can't access:
 ```ts twoslash
 
 const TeamMember = co.map({
-  name: z.string(),
+name: z.string(),
 });
 
 const Task = co.map({
-  title: z.string(),
-  assignee: z.optional(TeamMember),
-  get subtasks(): CoListSchema<typeof Task> { return co.list(Task) },
+title: z.string(),
+assignee: z.optional(TeamMember),
+get subtasks(): CoListSchema<typeof Task> { return co.list(Task) },
 });
 
 const Project = co.map({
-  name: z.string(),
-  tasks: co.list(Task),
-  owner: TeamMember,
+name: z.string(),
+tasks: co.list(Task),
+owner: TeamMember,
 });
 
 const projectId = "co_123";
 // ---cut-before---
 // If any item in the list is not accessible:
 const project = await Project.load(projectId, {
-  resolve: { tasks: { $each: true } }
+resolve: { tasks: { $each: true } }
 });
 
 project // => null
-```
+
+````
 </CodeGroup>
 If any item in a list is inaccessible to the user, the entire load operation will fail and return `null`. This is because lists expect all their items to be accessible - a partially loaded list could lead to data inconsistencies.
 
@@ -5603,11 +5741,11 @@ project // => Project
 
 // The user doesn't have access to the owner
 project?.owner // => always null
-```
+````
+
 </CodeGroup>
 
 The load operation will succeed and return the object, but the inaccessible reference will always be `null`.
-
 
 #### Deep loading lists with shared items
 
@@ -5624,7 +5762,7 @@ const me = await createJazzTestAccount();
 const account2 = await createJazzTestAccount();
 
 const Person = co.map({
-  name: z.string(),
+name: z.string(),
 });
 
 const Friends = co.list(Person);
@@ -5634,28 +5772,28 @@ const publicGroup = Group.create({ owner: me });
 
 // ---cut-before---
 const source = co.list(Person).create(
-  [
-    Person.create(
-      {
-        name: "Jane",
-      },
-      privateGroup, // We don't have access to Jane
-    ),
-    Person.create(
-      {
-        name: "Alice",
-      },
-      publicGroup, // We have access to Alice
-    ),
-  ],
-  publicGroup,
+[
+Person.create(
+{
+name: "Jane",
+},
+privateGroup, // We don't have access to Jane
+),
+Person.create(
+{
+name: "Alice",
+},
+publicGroup, // We have access to Alice
+),
+],
+publicGroup,
 );
 
 const friends = await co.list(Person).load(source.id, {
-  resolve: {
-    $each: { $onError: null }
-  },
-  loadAs: me,
+resolve: {
+$each: { $onError: null }
+},
+loadAs: me,
 });
 
 // Thanks to $onError catching the errors, the list is loaded
@@ -5669,7 +5807,8 @@ console.log(friends?.[0]); // null
 // Alice is not null because we have access
 // the type is nullable because we have used $onError
 console.log(friends?.[1]); // Person
-```
+
+````
 </CodeGroup>
 
 The `$onError` works as a "catch" clause option to block any error in the resolved children.
@@ -5724,7 +5863,8 @@ const friends = await co.list(Person).load(source.id, {
 // Jane is null because we don't have access to Rex
 // and we have used $onError to catch the error on the list items
 console.log(friends?.[0]); // null
-```
+````
+
 </CodeGroup>
 
 We can actually use `$onError` everywhere in the resolve query, so we can use it to catch the error on dog:
@@ -5734,46 +5874,45 @@ We can actually use `$onError` everywhere in the resolve query, so we can use it
 const me = await createJazzTestAccount();
 const account2 = await createJazzTestAccount();
 
-
 const Dog = co.map({
-  name: z.string(),
+name: z.string(),
 });
 
 const Person = co.map({
-  name: z.string(),
-  dog: Dog,
+name: z.string(),
+dog: Dog,
 });
 
 const User = co.map({
-  name: z.string(),
-  friends: co.list(Person),
+name: z.string(),
+friends: co.list(Person),
 });
 
 const privateGroup = Group.create({ owner: account2 });
 const publicGroup = Group.create({ owner: me });
 
 const source = co.list(Person).create(
-  [
-    Person.create(
-      {
-        name: "Jane",
-        dog: Dog.create(
-          { name: "Rex" },
-          privateGroup,
-        ), // We don't have access to Rex
-      },
-      publicGroup,
-    ),
-  ],
-  publicGroup,
+[
+Person.create(
+{
+name: "Jane",
+dog: Dog.create(
+{ name: "Rex" },
+privateGroup,
+), // We don't have access to Rex
+},
+publicGroup,
+),
+],
+publicGroup,
 );
 
 // ---cut-before---
 const friends = await co.list(Person).load(source.id, {
-  resolve: {
-    $each: { dog: { $onError: null } }
-  },
-  loadAs: me,
+resolve: {
+$each: { dog: { $onError: null } }
+},
+loadAs: me,
 });
 
 // Jane now is not-nullable at type level because
@@ -5786,7 +5925,8 @@ console.log(friends?.[0]); // => Person
 // Jane's dog is null because we don't have access to Rex
 // and we have used $onError to catch the error
 console.log(friends?.[0]?.dog); // => null
-```
+
+````
 </CodeGroup>
 
 ## Type Safety with Loaded Type
@@ -5863,7 +6003,8 @@ function processProject(project: FullyLoadedProject) {
   });
 }
 
-```
+````
+
 </CodeGroup>
 </ContentByFramework>
 
@@ -5872,64 +6013,67 @@ function processProject(project: FullyLoadedProject) {
 ```ts twoslash
 
 const TeamMember = co.map({
-  name: z.string(),
+name: z.string(),
 });
 
 const Task = co.map({
-  title: z.string(),
-  assignee: z.optional(TeamMember),
-  get subtasks(): CoListSchema<typeof Task> {
-    return co.list(Task);
-  },
+title: z.string(),
+assignee: z.optional(TeamMember),
+get subtasks(): CoListSchema<typeof Task> {
+return co.list(Task);
+},
 });
 
 const Project = co.map({
-  name: z.string(),
-  tasks: co.list(Task),
-  owner: TeamMember,
+name: z.string(),
+tasks: co.list(Task),
+owner: TeamMember,
 });
 
 // ---cut-before---
 // Define a type that includes loaded nested data
 type ProjectWithTasks = Loaded<
-  typeof Project,
-  {
-    tasks: { $each: true };
-  }
->;
+typeof Project,
+{
+tasks: { $each: true };
+}
+
+> ;
 
 // Function that expects loaded data
 async function taskList({ project }: { project: ProjectWithTasks }) {
-  // TypeScript knows tasks are loaded, so this is type-safe
-  return project.tasks.map((task) => task.title).join(`\n - `);
+// TypeScript knows tasks are loaded, so this is type-safe
+return project.tasks.map((task) => task.title).join(`\n - `);
 }
 
 // For more complex resolutions
 type FullyLoadedProject = Loaded<
-  typeof Project,
-  {
-    tasks: {
-      $each: {
-        title: true;
-        subtasks: true;
-        assignee: true;
-      };
-    };
-    owner: true;
-  }
->;
+typeof Project,
+{
+tasks: {
+$each: {
+title: true;
+subtasks: true;
+assignee: true;
+};
+};
+owner: true;
+}
+
+> ;
 
 // Function that requires deeply loaded data
 function processProject(project: FullyLoadedProject) {
-  // Safe access to all loaded properties
-  console.log(`Project ${project.name} owned by ${project.owner.name}`);
+// Safe access to all loaded properties
+console.log(`Project ${project.name} owned by ${project.owner.name}`);
 
-  project.tasks.forEach((task) => {
-    console.log(`Task: ${task.title}, Assigned to: ${task.assignee?.name}`);
-    console.log(`Subtasks: ${task.subtasks.length}`);
-  });
+project.tasks.forEach((task) => {
+console.log(`Task: ${task.title}, Assigned to: ${task.assignee?.name}`);
+console.log(`Subtasks: ${task.subtasks.length}`);
+});
 }
-```
+
+````
 </CodeGroup>
 </ContentByFramework>
 
@@ -5981,10 +6125,9 @@ async function completeAllTasks(projectId: string) {
     task.status = "completed";
   });
 }
-```
+````
+
 </CodeGroup>
-
-
 
 ## Best Practices
 
@@ -5993,8 +6136,6 @@ async function completeAllTasks(projectId: string) {
 3. **Clean up subscriptions**: Always store and call the unsubscribe function when you're done
 4. **Handle all loading states**: Check for undefined (loading), null (not found), and success states
 5. **Use the Loaded type**: Add compile-time type safety for components that require specific resolution patterns
-
-
 
 ### Groups, permissions & sharing
 
@@ -6015,7 +6156,8 @@ Here's how you can create a `Group`.
 ```tsx twoslash
 
 const group = Group.create();
-```
+
+````
 </CodeGroup>
 
 The `Group` itself is a CoValue, and whoever owns it is the initial admin.
@@ -6041,7 +6183,8 @@ const bob = await Account.load(bobsID);
 if (bob) {
   group.addMember(bob, "writer");
 }
-```
+````
+
 </CodeGroup>
 
 **Note:** if the account ID is of type `string`, because it comes from a URL parameter or something similar, you need to cast it to `ID<Account>` first:
@@ -6057,9 +6200,10 @@ const group = Group.create();
 const bob = await Account.load(bobsID as ID<Account>);
 
 if (bob) {
-  group.addMember(bob, "writer");
+group.addMember(bob, "writer");
 }
-```
+
+````
 </CodeGroup>
 
 ## Changing a member's role
@@ -6072,7 +6216,8 @@ const bob = await createJazzTestAccount();
 const group = Group.create();
 // ---cut---
 group.addMember(bob, "reader");
-```
+````
+
 </CodeGroup>
 
 Bob just went from a writer to a reader.
@@ -6093,6 +6238,7 @@ group.removeMember(bob);
 </CodeGroup>
 
 Rules:
+
 - All roles can remove themselves.
 - Only admins can remove other users.
 - An admin cannot remove other admins.
@@ -6107,16 +6253,17 @@ You can get the group of an existing CoValue by using `coValue._owner`.
 const existingCoValue = await createJazzTestAccount();
 
 const MyCoMap = co.map({
-  color: z.string(),
+color: z.string(),
 });
 
 // ---cut---
-const group = existingCoValue._owner;
+const group = existingCoValue.\_owner;
 const newValue = MyCoMap.create(
-  { color: "red"},
-  { owner: group }
+{ color: "red"},
+{ owner: group }
 );
-```
+
+````
 </CodeGroup>
 
 Because `._owner` can be an `Account` or a `Group`, in cases where you specifically need to use `Group` methods (such as for adding members or getting your own role), you can cast it to assert it to be a Group:
@@ -6140,7 +6287,8 @@ const group = existingCoValue._owner.castAs(Group);
 group.addMember(bob, "writer");
 
 const role = group.getRoleOf(bob.id);
-```
+````
+
 </CodeGroup>
 
 ## Checking the permissions
@@ -6151,22 +6299,23 @@ You can check the permissions of an account on a CoValue by using the `canRead`,
 ```ts twoslash
 
 const MyCoMap = co.map({
-  color: z.string(),
+color: z.string(),
 });
 // ---cut---
 const value = await MyCoMap.create({ color: "red"})
 const me = Account.getMe();
 
 if (me.canAdmin(value)) {
-  console.log("I can share value with others"); 
+console.log("I can share value with others");
 } else if (me.canWrite(value)) {
-  console.log("I can edit value");
+console.log("I can edit value");
 } else if (me.canRead(value)) {
-  console.log("I can view value");
+console.log("I can view value");
 } else {
-  console.log("I cannot access value");
+console.log("I cannot access value");
 }
-```
+
+````
 </CodeGroup>
 
 To check the permissions of another account, you need to load it first:
@@ -6194,10 +6343,9 @@ if (bob) {
     console.log("Bob cannot access value");
   }
 }
-```
+````
+
 </CodeGroup>
-
-
 
 #### Public sharing & invites
 
@@ -6229,8 +6377,8 @@ and the [todo example](https://github.com/garden-co/jazz/tree/main/examples/todo
 
 <ContentByFramework framework={["react", "react-native", "react-native-expo", "vue", "svelte"]}>
 <CodeGroup>
-```ts twoslash
 
+```ts twoslash
 const Organization = co.map({
   name: z.string(),
 });
@@ -6239,6 +6387,7 @@ const organization = Organization.create({ name: "Garden Computing" });
 
 createInviteLink(organization, "writer"); // or reader, admin, writeOnly
 ```
+
 </CodeGroup>
 </ContentByFramework>
 
@@ -6251,27 +6400,28 @@ as done [here](https://github.com/garden-co/jazz/tree/main/examples/pets/src/2_m
 ```ts twoslash
 
 const Organization = co.map({
-  name: z.string(),
+name: z.string(),
 });
 const organization = Organization.create({ name: "Garden Computing" });
 const organizationID = organization.id;
 // ---cut---
 
 useAcceptInvite({
-  invitedObjectSchema: Organization,
-  onAccept: (organizationID) => {
-    console.log("Accepted invite!")
-    // navigate to the organization page
-  },
+invitedObjectSchema: Organization,
+onAccept: (organizationID) => {
+console.log("Accepted invite!")
+// navigate to the organization page
+},
 });
-```
+
+````
 </CodeGroup>
 
 
 ### Requesting Invites
 
 To allow a non-group member to request an invitation to a group you can use the `writeOnly` role.
-This means that users only have write access to a specific requests list (they can't read other requests). 
+This means that users only have write access to a specific requests list (they can't read other requests).
 However, Administrators can review and approve these requests.
 
 Create the data models.
@@ -6285,7 +6435,8 @@ const JoinRequest = co.map({
 });
 
 const RequestsList = co.list(JoinRequest);
-```
+````
+
 </CodeGroup>
 
 Set up the request system with appropriate access controls.
@@ -6294,37 +6445,38 @@ Set up the request system with appropriate access controls.
 ```ts twoslash
 
 const JoinRequest = co.map({
-  account: Account,
-  status: z.literal(["pending", "approved", "rejected"]),
+account: Account,
+status: z.literal(["pending", "approved", "rejected"]),
 });
 
 const RequestsList = co.list(JoinRequest);
 
 // ---cut-before---
 function createRequestsToJoin() {
-  const requestsGroup = Group.create();
-  requestsGroup.addMember("everyone", "writeOnly");
+const requestsGroup = Group.create();
+requestsGroup.addMember("everyone", "writeOnly");
 
-  return RequestsList.create([], requestsGroup);
+return RequestsList.create([], requestsGroup);
 }
 
 async function sendJoinRequest(
-  requestsList: Loaded<typeof RequestsList>,
-  account: Account,
+requestsList: Loaded<typeof RequestsList>,
+account: Account,
 ) {
-  const request = JoinRequest.create(
-    {
-      account,
-      status: "pending",
-    },
-    requestsList._owner // Inherit the access controls of the requestsList
-  );
+const request = JoinRequest.create(
+{
+account,
+status: "pending",
+},
+requestsList.\_owner // Inherit the access controls of the requestsList
+);
 
-  requestsList.push(request);
+requestsList.push(request);
 
-  return request;
+return request;
 }
-```
+
+````
 </CodeGroup>
 
 Using the write-only access users can submit requests that only administrators can review and approve.
@@ -6360,16 +6512,15 @@ async function approveJoinRequest(
     return false;
   }
 }
-```
+````
+
 </CodeGroup>
-
-
 
 #### Group inheritance
 
 # Group Inheritance
 
-Groups can inherit members from other groups using the `extend` method. 
+Groups can inherit members from other groups using the `extend` method.
 
 When a group extends another group, members of the parent group will become automatically part of the child group.
 
@@ -6385,7 +6536,8 @@ const trackGroup = Group.create();
 
 // This way track becomes visible to the members of playlist
 trackGroup.extend(playlistGroup);
-```
+
+````
 </CodeGroup>
 
 When you extend a group:
@@ -6407,8 +6559,9 @@ organizationGroup.addMember(bob, "admin");
 const billingGroup = Group.create();
 
 // This way the members of the organization can only read the billing data
-billingGroup.extend(organizationGroup, "reader"); 
-```
+billingGroup.extend(organizationGroup, "reader");
+````
+
 </CodeGroup>
 
 The "override role" works in both directions:
@@ -6426,7 +6579,8 @@ const childGroup = Group.create();
 childGroup.extend(parentGroup, "writer");
 
 // Bob and Alice are now writers in the child group
-```
+
+````
 </CodeGroup>
 
 ## Multiple Levels of Inheritance
@@ -6438,11 +6592,12 @@ Groups can be extended multiple levels deep:
 // ---cut---
 const grandParentGroup = Group.create();
 const parentGroup = Group.create();
-const childGroup = Group.create(); 
+const childGroup = Group.create();
 
 childGroup.extend(parentGroup);
 parentGroup.extend(grandParentGroup);
-```
+````
+
 </CodeGroup>
 
 Members of the grandparent group will get access to all descendant groups based on their roles.
@@ -6460,7 +6615,8 @@ const parentGroup = Group.create();
 await parentGroup.removeMember(bob);
 
 // Bob loses access to both parent and child groups
-```
+
+````
 </CodeGroup>
 
 ## Role Inheritance Rules
@@ -6479,11 +6635,13 @@ childGroup.extend(parentGroup);
 
 // Bob stays a writer because his role is higher
 // than the inherited reader role.
-```
+````
+
 </CodeGroup>
 
 When extending groups, only admin, writer and reader roles are inherited:
 <CodeGroup>
+
 ```ts twoslash
 const bob = await createJazzTestAccount();
 // ---cut---
@@ -6495,6 +6653,7 @@ childGroup.extend(parentGroup);
 
 // Bob does not become a member of the child group
 ```
+
 </CodeGroup>
 
 To extend a group:
@@ -6513,8 +6672,9 @@ const companyGroup = company._owner.castAs(Group)
 const teamGroup = Group.create();
 
 // Works only if I'm a member of companyGroup
-teamGroup.extend(companyGroup); 
-```
+teamGroup.extend(companyGroup);
+
+````
 </CodeGroup>
 
 ## Revoking a group extension
@@ -6527,11 +6687,12 @@ You can revoke a group extension by using the `revokeExtend` method:
 const parentGroup = Group.create();
 const childGroup = Group.create();
 
-childGroup.extend(parentGroup); 
+childGroup.extend(parentGroup);
 
 // Revoke the extension
 await childGroup.revokeExtend(parentGroup);
-```
+````
+
 </CodeGroup>
 
 ## Getting all parent groups
@@ -6546,7 +6707,8 @@ const parentGroup = Group.create();
 childGroup.extend(parentGroup);
 
 console.log(childGroup.getParentGroups()); // [parentGroup]
-```
+
+````
 </CodeGroup>
 
 ## Example: Team Hierarchy
@@ -6574,16 +6736,16 @@ teamGroup.addMember(developer, "writer");
 const projectGroup = Group.create();
 projectGroup.extend(teamGroup); // Inherits team permissions
 projectGroup.addMember(client, "reader"); // Client can only read project items
-```
+````
+
 </CodeGroup>
 
 This creates a hierarchy where:
+
 - The CEO has admin access to everything
 - Team members get writer access to team and project content
 - Team leads get admin access to team and project content
 - The client can only read project content
-
-
 
 ### Authentication
 
@@ -6624,8 +6786,6 @@ Jazz provides several ways to authenticate users:
 - [**Clerk Integration**](./clerk): Third-party authentication service with OAuth support
 - [**Jazz Cloud Integration**](./jazz-cloud): Authentication service provided through Jazz Cloud
 - [**Self-Hosting**](./self-hosting): Self-hosted authentication service
-
-
 
 #### Authentication States
 
@@ -6670,23 +6830,24 @@ You can detect the current authentication state using `useAccountOrGuest` and `u
 // ---cut---
 
 function AuthStateIndicator() {
-  const { me } = useAccountOrGuest();
-  const isAuthenticated = useIsAuthenticated();
+const { me } = useAccountOrGuest();
+const isAuthenticated = useIsAuthenticated();
 
-  // Check if guest mode is enabled in JazzProvider
-  const isGuest = me._type !== "Account"
+// Check if guest mode is enabled in JazzProvider
+const isGuest = me.\_type !== "Account"
 
-  // Anonymous authentication: has an account but not fully authenticated
-  const isAnonymous =  me._type === "Account" && !isAuthenticated;
-  return (
-    <div>
-      {isGuest && <span>Guest Mode</span>}
-      {isAnonymous && <span>Anonymous Account</span>}
-      {isAuthenticated && <span>Authenticated</span>}
-    </div>
-  );
+// Anonymous authentication: has an account but not fully authenticated
+const isAnonymous = me.\_type === "Account" && !isAuthenticated;
+return (
+<div>
+{isGuest && <span>Guest Mode</span>}
+{isAnonymous && <span>Anonymous Account</span>}
+{isAuthenticated && <span>Authenticated</span>}
+</div>
+);
 }
-```
+
+````
 </CodeGroup>
 </ContentByFramework>
 
@@ -6753,7 +6914,8 @@ export async function onAnonymousAccountDiscarded(
     me.root.rootPlaylist.tracks.push(track);
   }
 }
-```
+````
+
 </CodeGroup>
 
 To see how this works, try uploading a song in the [music player demo](https://music-demo.jazz.tools/) and then log in with an existing account.
@@ -6855,8 +7017,6 @@ function App() {
 
 For more complex behaviours, you can manually control sync by statefully switching when between `"always"` and `"never"`.
 
-
-
 #### Passkey
 
 # Passkey Authentication
@@ -6890,33 +7050,34 @@ type AuthModalProps = {
 export function AuthModal({ open, onOpenChange }: AuthModalProps) {
   const [username, setUsername] = useState("");
 
-  const auth = usePasskeyAuth({ // Must be inside the JazzProvider!
-    appName: "My super-cool web app",
-  });
+const auth = usePasskeyAuth({ // Must be inside the JazzProvider!
+appName: "My super-cool web app",
+});
 
-  if (auth.state === "signedIn") { // You can also use `useIsAuthenticated()`
-    return <div>You are already signed in</div>;
-  }
-
-  const handleSignUp = async () => {
-    await auth.signUp(username);
-    onOpenChange(false);
-  };
-
-  const handleLogIn = async () => {
-    await auth.logIn();
-    onOpenChange(false);
-  };
-
-  return (
-    <div>
-      <button onClick={handleLogIn}>Log in</button>
-      <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <button onClick={handleSignUp}>Sign up</button>
-    </div>
-  );
+if (auth.state === "signedIn") { // You can also use `useIsAuthenticated()`
+return <div>You are already signed in</div>;
 }
-```
+
+const handleSignUp = async () => {
+await auth.signUp(username);
+onOpenChange(false);
+};
+
+const handleLogIn = async () => {
+await auth.logIn();
+onOpenChange(false);
+};
+
+return (
+<div>
+<button onClick={handleLogIn}>Log in</button>
+<input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+<button onClick={handleSignUp}>Sign up</button>
+</div>
+);
+}
+
+````
 </CodeGroup>
 </ContentByFramework>
 
@@ -7035,21 +7196,46 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
     </div>
   );
 }
-```
+````
+
 </CodeGroup>
 </ContentByFramework>
 
 <ContentByFramework framework={["react-native", "react-native-expo"]}>
 <CodeGroup>
+
 ```tsx twoslash
 // @filename: wordlist.ts
-export const wordlist = ["apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew", "kiwi", "lemon", "mango", "orange", "pear", "quince", "raspberry", "strawberry", "tangerine", "uva", "watermelon", "xigua", "yuzu", "zucchini"];
+export const wordlist = [
+  "apple",
+  "banana",
+  "cherry",
+  "date",
+  "elderberry",
+  "fig",
+  "grape",
+  "honeydew",
+  "kiwi",
+  "lemon",
+  "mango",
+  "orange",
+  "pear",
+  "quince",
+  "raspberry",
+  "strawberry",
+  "tangerine",
+  "uva",
+  "watermelon",
+  "xigua",
+  "yuzu",
+  "zucchini",
+];
 // @filename: AuthModal.tsx
 
 type AuthModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-}
+};
 // ---cut---
 
 export function AuthModal({ open, onOpenChange }: AuthModalProps) {
@@ -7085,10 +7271,7 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         />
       </View>
 
-      <Button
-        title="I have stored my passphrase"
-        onPress={handleSignUp}
-      />
+      <Button title="I have stored my passphrase" onPress={handleSignUp} />
 
       <View>
         <Text>Log in with your passphrase</Text>
@@ -7101,14 +7284,12 @@ export function AuthModal({ open, onOpenChange }: AuthModalProps) {
         />
       </View>
 
-      <Button
-        title="Log in"
-        onPress={handleLogIn}
-      />
+      <Button title="Log in" onPress={handleLogIn} />
     </View>
   );
 }
 ```
+
 </CodeGroup>
 </ContentByFramework>
 
@@ -7132,11 +7313,10 @@ Passphrase authentication is ideal when:
 - **User experience**: Requires users to enter a potentially long phrase
 
 Make sure to emphasize to your users:
+
 1. Store the passphrase in a secure location (password manager, written down in a safe place)
 2. The passphrase is the only way to recover their account
 3. Anyone with the passphrase can access the account
-
-
 
 #### Clerk
 
@@ -7145,8 +7325,6 @@ Make sure to emphasize to your users:
 # Clerk Authentication
 
 We do not currently support Clerk in React Native, but we do have support for [React Native Expo](/docs/react-native-expo/authentication/clerk).
-
-
 
 ### Design patterns
 
@@ -7157,6 +7335,7 @@ We do not currently support Clerk in React Native, but we do have support for [R
 This guide shows you a simple and powerful way to implement forms for creating and updating CoValues.
 
 We'll build:
+
 1. An update form that saves changes as you make them, removing the need for a save button.
 2. A create form that autosaves your changes into a draft, so you can come back to it later.
 
@@ -7204,9 +7383,10 @@ export const BubbleTeaOrder = co.map({
 });
 
 export const DraftBubbleTeaOrder = co.map({
-  name: z.optional(z.string()),
+name: z.optional(z.string()),
 });
-```
+
+````
 </CodeGroup>
 
 ## Writing the components in React
@@ -7248,7 +7428,8 @@ export function OrderForm({
     </form>
   );
 }
-```
+````
+
 </CodeGroup>
 
 ### Writing the edit form
@@ -7259,46 +7440,48 @@ To make the edit form, simply pass the `BubbleTeaOrder`.
 ```tsx twoslash
 
 export const BubbleTeaOrder = co.map({
-  name: z.string(),
+name: z.string(),
 });
 
 export const DraftBubbleTeaOrder = co.map({
-  name: z.optional(z.string()),
+name: z.optional(z.string()),
 });
 
 export function OrderForm({
-  order,
-  onSave,
+order,
+onSave,
 }: {
-  order: Loaded<typeof BubbleTeaOrder> | Loaded<typeof DraftBubbleTeaOrder>;
-  onSave?: (e: React.FormEvent<HTMLFormElement>) => void;
+order: Loaded<typeof BubbleTeaOrder> | Loaded<typeof DraftBubbleTeaOrder>;
+onSave?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
-  return (
-    <form onSubmit={onSave}>
-      <label>
-        Name
-        <input
-          type="text"
-          value={order.name}
-          onChange={(e) => (order.name = e.target.value)}
-          required
-        />
-      </label>
+return (
+<form onSubmit={onSave}>
+<label>
+Name
+<input
+type="text"
+value={order.name}
+onChange={(e) => (order.name = e.target.value)}
+required
+/>
+</label>
 
       {onSave && <button type="submit">Submit</button>}
     </form>
-  );
+
+);
 }
 // ---cut---
 // EditOrder.tsx
 export function EditOrder(props: { id: string }) {
-  const order = useCoState(BubbleTeaOrder, props.id);
+const order = useCoState(BubbleTeaOrder, props.id);
 
-  if (!order) return;
+if (!order) return;
 
-  return <OrderForm order={order} />;
+return <OrderForm order={order} />;
 }
-```
+
+````
 </CodeGroup>
 
 ### Writing the create form
@@ -7376,7 +7559,8 @@ export function CreateOrder() {
 
   return <OrderForm order={draft} onSave={onSave} />;
 }
-```
+````
+
 </CodeGroup>
 
 ## Validation
@@ -7400,9 +7584,11 @@ export const DraftBubbleTeaOrder = co.map({
     }
 
     return { errors };
-  },
+
+},
 }));
-```
+
+````
 </CodeGroup>
 
 Then perform the validation on submit.
@@ -7489,7 +7675,8 @@ export function CreateOrder() {
 
   return <OrderForm order={draft} onSave={onSave} />;
 }
-```
+````
+
 </CodeGroup>
 
 ## Saving the user's work-in-progress
@@ -7507,24 +7694,26 @@ export const BubbleTeaOrder = co.map({
 });
 
 export const DraftBubbleTeaOrder = co.map({
-  name: z.optional(z.string()),
+name: z.optional(z.string()),
 });
 
 export const AccountRoot = co.map({ // [!code ++:15]
-  draft: DraftBubbleTeaOrder,
+draft: DraftBubbleTeaOrder,
 });
 
 export const JazzAccount = co.account({
-  root: AccountRoot,
-  profile: co.map({ name: z.string() }),
+root: AccountRoot,
+profile: co.map({ name: z.string() }),
 }).withMigration((account, creationProps?: { name: string }) => {
-  if (account.root === undefined) {
-    const draft = DraftBubbleTeaOrder.create({});
+if (account.root === undefined) {
+const draft = DraftBubbleTeaOrder.create({});
 
     account.root = AccountRoot.create({ draft });
-  }
+
+}
 });
-```
+
+````
 </CodeGroup>
 
 Let's not forget to update the `AccountSchema`.
@@ -7568,7 +7757,8 @@ export function MyJazzProvider({ children }: { children: React.ReactNode }) {
         </JazzProvider>
     );
 }
-```
+````
+
 </CodeGroup>
 
 Instead of creating a new draft every time we use the create form, let's use the draft from the account root.
@@ -7578,75 +7768,78 @@ Instead of creating a new draft every time we use the create form, let's use the
 // @filename: schema.ts
 
 export const BubbleTeaOrder = co.map({
-  name: z.string(),
+name: z.string(),
 });
 
 export const DraftBubbleTeaOrder = co.map({
-  name: z.optional(z.string()),
+name: z.optional(z.string()),
 }).withHelpers((Self) => ({
-  validate(draft: Loaded<typeof Self>) {
-    const errors: string[] = [];
+validate(draft: Loaded<typeof Self>) {
+const errors: string[] = [];
 
     if (!draft.name) {
       errors.push("Please enter a name.");
     }
 
     return { errors };
-  },
+
+},
 }));
 
 export const AccountRoot = co.map({
-  draft: DraftBubbleTeaOrder,
+draft: DraftBubbleTeaOrder,
 });
 
 export const JazzAccount = co.account({
-  root: AccountRoot,
-  profile: co.map({ name: z.string() }),
+root: AccountRoot,
+profile: co.map({ name: z.string() }),
 }).withMigration((account, creationProps?: { name: string }) => {
-  if (account.root === undefined) {
-    const draft = DraftBubbleTeaOrder.create({});
+if (account.root === undefined) {
+const draft = DraftBubbleTeaOrder.create({});
 
     account.root = AccountRoot.create({ draft });
-  }
+
+}
 });
 
 // @filename: CreateOrder.tsx
 
 export function OrderForm({
-  order,
-  onSave,
+order,
+onSave,
 }: {
-  order: Loaded<typeof BubbleTeaOrder> | Loaded<typeof DraftBubbleTeaOrder>;
-  onSave?: (e: React.FormEvent<HTMLFormElement>) => void;
+order: Loaded<typeof BubbleTeaOrder> | Loaded<typeof DraftBubbleTeaOrder>;
+onSave?: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
-  return (
-    <form onSubmit={onSave}>
-      <label>
-        Name
-        <input
-          type="text"
-          value={order.name}
-          onChange={(e) => (order.name = e.target.value)}
-          required
-        />
-      </label>
+return (
+<form onSubmit={onSave}>
+<label>
+Name
+<input
+type="text"
+value={order.name}
+onChange={(e) => (order.name = e.target.value)}
+required
+/>
+</label>
 
       {onSave && <button type="submit">Submit</button>}
     </form>
-  );
+
+);
 }
 
 // ---cut---
 // CreateOrder.tsx
 export function CreateOrder() {
-  const { me } = useAccount(JazzAccount, { // [!code ++:5]
-    resolve: { root: { draft: true } },
-  });
+const { me } = useAccount(JazzAccount, { // [!code ++:5]
+resolve: { root: { draft: true } },
+});
 
-  if (!me?.root) return;
+if (!me?.root) return;
 
-  const onSave = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+const onSave = (e: React.FormEvent<HTMLFormElement>) => {
+e.preventDefault();
 
     const draft = me.root.draft; // [!code ++:2]
     if (!draft) return;
@@ -7664,25 +7857,27 @@ export function CreateOrder() {
     me.root.draft = DraftBubbleTeaOrder.create( // [!code ++:3]
       {},
     );
-  };
 
-  return <CreateOrderForm id={me.root.draft.id} onSave={onSave} />
+};
+
+return <CreateOrderForm id={me.root.draft.id} onSave={onSave} />
 }
 
 function CreateOrderForm({ // [!code ++:13]
-  id,
-  onSave,
+id,
+onSave,
 }: {
-  id: string
-  onSave: (e: React.FormEvent<HTMLFormElement>) => void;
+id: string
+onSave: (e: React.FormEvent<HTMLFormElement>) => void;
 }) {
-  const draft = useCoState(DraftBubbleTeaOrder, id);
+const draft = useCoState(DraftBubbleTeaOrder, id);
 
-  if (!draft) return;
+if (!draft) return;
 
-  return <OrderForm order={draft} onSave={onSave} />;
+return <OrderForm order={draft} onSave={onSave} />;
 }
-```
+
+````
 </CodeGroup>
 
 When the new draft is created, we need to call `useCoState` again, so that we are passing the new draft to `<OrderForm/>`.
@@ -7717,7 +7912,8 @@ export const DraftBubbleTeaOrder = co.map({
     return draft ? Object.keys(draft._edits).length : false;
   },
 }));
-```
+````
+
 </CodeGroup>
 
 In the UI, you can choose how you want to show the draft indicator.
@@ -7726,56 +7922,59 @@ In the UI, you can choose how you want to show the draft indicator.
 ```tsx twoslash
 
 export const BubbleTeaOrder = co.map({
-  name: z.string(),
+name: z.string(),
 });
 
 export const DraftBubbleTeaOrder = co.map({
-  name: z.optional(z.string()),
+name: z.optional(z.string()),
 }).withHelpers((Self) => ({
-  validate(draft: Loaded<typeof Self>) {
-    const errors: string[] = [];
+validate(draft: Loaded<typeof Self>) {
+const errors: string[] = [];
 
     if (!draft.name) {
       errors.push("Plese enter a name.");
     }
 
     return { errors };
-  },
 
-  hasChanges(draft?: Loaded<typeof Self>) { // [!code ++:3]
-    return draft ? Object.keys(draft._edits).length : false;
-  },
+},
+
+hasChanges(draft?: Loaded<typeof Self>) { // [!code ++:3]
+return draft ? Object.keys(draft.\_edits).length : false;
+},
 }));
 
 export const AccountRoot = co.map({
-  draft: DraftBubbleTeaOrder,
+draft: DraftBubbleTeaOrder,
 });
 
 export const JazzAccount = co.account({
-  root: AccountRoot,
-  profile: co.map({ name: z.string() }),
+root: AccountRoot,
+profile: co.map({ name: z.string() }),
 }).withMigration((account, creationProps?: { name: string }) => {
-  if (account.root === undefined) {
-    const draft = DraftBubbleTeaOrder.create({});
+if (account.root === undefined) {
+const draft = DraftBubbleTeaOrder.create({});
 
     account.root = AccountRoot.create({ draft });
-  }
+
+}
 });
 
 // ---cut---
 // DraftIndicator.tsx
 export function DraftIndicator() {
-  const { me } = useAccount(JazzAccount, {
-    resolve: { root: { draft: true } },
-  });
+const { me } = useAccount(JazzAccount, {
+resolve: { root: { draft: true } },
+});
 
-  if (DraftBubbleTeaOrder.hasChanges(me?.root.draft)) {
-    return (
-      <p>You have a draft</p>
-    );
-  }
+if (DraftBubbleTeaOrder.hasChanges(me?.root.draft)) {
+return (
+<p>You have a draft</p>
+);
 }
-```
+}
+
+````
 </CodeGroup>
 
 A more subtle way is to show a small dot next to the Create button.
@@ -7822,10 +8021,9 @@ export const BubbleTeaOrder = co.map({
   withMilk: z.boolean(),
   instructions: z.optional(z.string()),
 });
-  ```
+````
+
 </CodeGroup>
-
-
 
 #### Organization/Team
 
@@ -7852,14 +8050,15 @@ export const Project = co.map({
 });
 
 export const Organization = co.map({
-  name: z.string(),
+name: z.string(),
 
-  // shared data between users of each organization
-  projects: co.list(Project),
+// shared data between users of each organization
+projects: co.list(Project),
 });
 
 export const ListOfOrganizations = co.list(Organization);
-```
+
+````
 </CodeGroup>
 
 Learn more about [defining schemas](/docs/schemas/covalues).
@@ -7910,7 +8109,8 @@ export const JazzAccount = co
       account.root = JazzAccountRoot.create({ organizations });
     }
   });
-```
+````
+
 </CodeGroup>
 
 This schema now allows users to create `Organization`s and add `Project`s to them.
@@ -7936,53 +8136,55 @@ When the user accepts the invite, add the `Organization` to the user's `organiza
 ```tsx twoslash
 
 const Project = z.object({
-  name: z.string(),
+name: z.string(),
 });
 
 const Organization = co.map({
-  name: z.string(),
-  projects: co.list(Project),
+name: z.string(),
+projects: co.list(Project),
 });
 
 const JazzAccountRoot = co.map({
-  organizations: co.list(Organization),
+organizations: co.list(Organization),
 });
 
 const JazzAccount = co.account({
-  root: JazzAccountRoot,
-  profile: co.profile({}),
+root: JazzAccountRoot,
+profile: co.profile({}),
 });
 
 // ---cut---
 export function AcceptInvitePage() {
-  const { me } = useAccount(JazzAccount, {
-    resolve: { root: { organizations: { $each: { $onError: null } } } },
-  });
+const { me } = useAccount(JazzAccount, {
+resolve: { root: { organizations: { $each: { $onError: null } } } },
+});
 
-  const onAccept = (organizationId: string) => {
-    if (me) {
-      Organization.load(organizationId).then((organization) => {
-        if (organization) {
-          // avoid duplicates
-          const ids = me.root.organizations.map(
-            (organization) => organization?.id,
-          );
-          if (ids.includes(organizationId)) return;
+const onAccept = (organizationId: string) => {
+if (me) {
+Organization.load(organizationId).then((organization) => {
+if (organization) {
+// avoid duplicates
+const ids = me.root.organizations.map(
+(organization) => organization?.id,
+);
+if (ids.includes(organizationId)) return;
 
           me.root.organizations.push(organization);
         }
       });
     }
-  };
 
-  useAcceptInvite({
-    invitedObjectSchema: Organization,
-    onAccept,
-  });
+};
 
-  return <p>Accepting invite...</p>;
+useAcceptInvite({
+invitedObjectSchema: Organization,
+onAccept,
+});
+
+return <p>Accepting invite...</p>;
 }
-```
+
+````
 </CodeGroup>
 
 ## Further reading
@@ -8110,7 +8312,7 @@ export type MusicaAccount = co.loaded<typeof MusicaAccount>;
 
 /** Walkthrough: Continue with ./2_main.tsx */
 
-```
+````
 
 ### /vercel/path0/examples/music-player/src/2_main.tsx
 
@@ -8351,7 +8553,7 @@ import {
 
 export async function uploadMusicTracks(
   files: Iterable<File>,
-  isExampleTrack: boolean = false,
+  isExampleTrack: boolean = false
 ) {
   const { root } = await MusicaAccount.getMe().ensureLoaded({
     resolve: {
@@ -8383,7 +8585,7 @@ export async function uploadMusicTracks(
         title: file.name,
         isExampleTrack,
       },
-      group,
+      group
     );
 
     // The newly created musicTrack can be associated to the
@@ -8411,7 +8613,7 @@ export async function createNewPlaylist() {
       title: "New Playlist",
       tracks: co.list(MusicTrack).create([], playlistGroup),
     },
-    playlistGroup,
+    playlistGroup
   );
 
   // Again, we associate the new playlist to the
@@ -8423,10 +8625,10 @@ export async function createNewPlaylist() {
 
 export async function addTrackToPlaylist(
   playlist: Playlist,
-  track: MusicTrack,
+  track: MusicTrack
 ) {
   const alreadyAdded = playlist.tracks?.some(
-    (t) => t?.id === track.id || t?._refs.sourceTrack?.id === track.id,
+    t => t?.id === track.id || t?._refs.sourceTrack?.id === track.id
   );
 
   if (alreadyAdded) return;
@@ -8447,10 +8649,10 @@ export async function addTrackToPlaylist(
 
 export async function removeTrackFromPlaylist(
   playlist: Playlist,
-  track: MusicTrack,
+  track: MusicTrack
 ) {
   const notAdded = !playlist.tracks?.some(
-    (t) => t?.id === track.id || t?._refs.sourceTrack?.id === track.id,
+    t => t?.id === track.id || t?._refs.sourceTrack?.id === track.id
   );
 
   if (notAdded) return;
@@ -8461,7 +8663,7 @@ export async function removeTrackFromPlaylist(
 
     const index =
       playlist.tracks?.findIndex(
-        (t) => t?.id === track.id || t?._refs.sourceTrack?.id === track.id,
+        t => t?.id === track.id || t?._refs.sourceTrack?.id === track.id
       ) ?? -1;
     if (index > -1) {
       playlist.tracks?.splice(index, 1);
@@ -8502,7 +8704,7 @@ export async function updateActiveTrack(track: MusicTrack) {
 }
 
 export async function onAnonymousAccountDiscarded(
-  anonymousAccount: MusicaAccount,
+  anonymousAccount: MusicaAccount
 ) {
   const { root: anonymousAccountRoot } = await anonymousAccount.ensureLoaded({
     resolve: {
@@ -8545,12 +8747,11 @@ export async function deletePlaylist(playlistId: string) {
     },
   });
 
-  const index = root.playlists.findIndex((p) => p?.id === playlistId);
+  const index = root.playlists.findIndex(p => p?.id === playlistId);
   if (index > -1) {
     root.playlists.splice(index, 1);
   }
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/5_useMediaPlayer.ts
@@ -8647,7 +8848,6 @@ export function useMediaPlayer() {
 }
 
 export type MediaPlayer = ReturnType<typeof useMediaPlayer>;
-
 ```
 
 ### /vercel/path0/examples/music-player/src/6_InvitePage.tsx
@@ -8703,7 +8903,6 @@ export function InvitePage() {
 
 ```ts
 export const apiKey = "music-player-example-jazz@garden.co";
-
 ```
 
 ### /vercel/path0/examples/music-player/src/components/AuthButton.tsx
@@ -11222,7 +11421,7 @@ const MOBILE_BREAKPOINT = 768;
 
 export function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState<boolean | undefined>(
-    undefined,
+    undefined
   );
 
   React.useEffect(() => {
@@ -11237,7 +11436,6 @@ export function useIsMobile() {
 
   return !!isMobile;
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/hooks/use-toast.ts
@@ -11324,8 +11522,8 @@ export const reducer = (state: State, action: Action): State => {
     case "UPDATE_TOAST":
       return {
         ...state,
-        toasts: state.toasts.map((t) =>
-          t.id === action.toast.id ? { ...t, ...action.toast } : t,
+        toasts: state.toasts.map(t =>
+          t.id === action.toast.id ? { ...t, ...action.toast } : t
         ),
       };
 
@@ -11337,20 +11535,20 @@ export const reducer = (state: State, action: Action): State => {
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {
-        state.toasts.forEach((toast) => {
+        state.toasts.forEach(toast => {
           addToRemoveQueue(toast.id);
         });
       }
 
       return {
         ...state,
-        toasts: state.toasts.map((t) =>
+        toasts: state.toasts.map(t =>
           t.id === toastId || toastId === undefined
             ? {
                 ...t,
                 open: false,
               }
-            : t,
+            : t
         ),
       };
     }
@@ -11363,7 +11561,7 @@ export const reducer = (state: State, action: Action): State => {
       }
       return {
         ...state,
-        toasts: state.toasts.filter((t) => t.id !== action.toastId),
+        toasts: state.toasts.filter(t => t.id !== action.toastId),
       };
   }
 };
@@ -11374,7 +11572,7 @@ let memoryState: State = { toasts: [] };
 
 function dispatch(action: Action) {
   memoryState = reducer(memoryState, action);
-  listeners.forEach((listener) => {
+  listeners.forEach(listener => {
     listener(memoryState);
   });
 }
@@ -11397,7 +11595,7 @@ function toast({ ...props }: Toast) {
       ...props,
       id,
       open: true,
-      onOpenChange: (open) => {
+      onOpenChange: open => {
         if (!open) dismiss();
       },
     },
@@ -11431,7 +11629,6 @@ function useToast() {
 }
 
 export { useToast, toast };
-
 ```
 
 ### /vercel/path0/examples/music-player/src/index.css
@@ -11599,7 +11796,6 @@ export function useAudioManager() {
 }
 
 export const AudionManagerProvider = context.Provider;
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/audio/getAudioFileData.ts
@@ -11619,7 +11815,7 @@ export async function getAudioFileData(file: Blob, samples = 200) {
 
 const transformDecodedAudioToWaveformData = (
   audioBuffer: AudioBuffer,
-  samples: number,
+  samples: number
 ) => {
   const rawData = audioBuffer.getChannelData(0); // We only need to work with one channel of data
   const blockSize = Math.floor(rawData.length / samples); // the number of samples in each subdivision
@@ -11650,7 +11846,6 @@ const transformDecodedAudioToWaveformData = (
 
   return sampledData;
 };
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/audio/useMediaEndListener.ts
@@ -11670,7 +11865,6 @@ export function useMediaEndListener(callback: () => void) {
     };
   }, [audioManager, callback]);
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/audio/usePlayMedia.ts
@@ -11700,7 +11894,6 @@ export function usePlayMedia() {
 
   return playMedia;
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/audio/usePlayState.ts
@@ -11745,7 +11938,6 @@ export function usePlayState() {
 
   return { value, toggle: togglePlayState };
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/audio/usePlayerCurrentTime.ts
@@ -11784,7 +11976,6 @@ export function usePlayerCurrentTime() {
     setValue: setCurrentTime,
   };
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/getters.ts
@@ -11806,7 +11997,7 @@ export async function getNextTrack() {
   const tracks = me.root.activePlaylist.tracks;
   const activeTrack = me.root._refs.activeTrack;
 
-  const currentIndex = tracks.findIndex((item) => item?.id === activeTrack?.id);
+  const currentIndex = tracks.findIndex(item => item?.id === activeTrack?.id);
 
   const nextIndex = (currentIndex + 1) % tracks.length;
 
@@ -11827,12 +12018,11 @@ export async function getPrevTrack() {
   const tracks = me.root.activePlaylist.tracks;
   const activeTrack = me.root._refs.activeTrack;
 
-  const currentIndex = tracks.findIndex((item) => item?.id === activeTrack?.id);
+  const currentIndex = tracks.findIndex(item => item?.id === activeTrack?.id);
 
   const previousIndex = (currentIndex - 1 + tracks.length) % tracks.length;
   return tracks[previousIndex];
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/useKeyboardListener.ts
@@ -11854,7 +12044,6 @@ export function useKeyboardListener(code: string, callback: () => void) {
     };
   }, [callback, code]);
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/useUploadExampleData.ts
@@ -11891,7 +12080,6 @@ async function uploadOnboardingData() {
     throw error;
   }
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/lib/utils.ts
@@ -11903,12 +12091,10 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
 ```
 
 ### /vercel/path0/examples/music-player/src/vite-env.d.ts
 
 ```ts
 /// <reference types="vite/client" />
-
 ```

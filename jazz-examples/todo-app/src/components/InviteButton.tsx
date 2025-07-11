@@ -40,8 +40,8 @@ export function InviteButton<T extends CoValue>({
             navigator.clipboard.writeText(inviteLink).then(() =>
               toast({
                 title: "Copied invite link to clipboard!",
-                description: <img src={qr} className="w-20 h-20" />,
-              }),
+                description: <img src={qr} className="h-20 w-20" />,
+              })
             );
           }
         }}

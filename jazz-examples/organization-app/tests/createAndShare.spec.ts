@@ -26,7 +26,7 @@ test("create a new organization and share", async ({
     await marioPage.getByRole("button", { name: "Create" }).click();
 
     await expect(
-      marioPage.getByRole("heading", { name: "Mario's organization" }),
+      marioPage.getByRole("heading", { name: "Mario's organization" })
     ).toBeVisible();
   });
 
@@ -34,13 +34,13 @@ test("create a new organization and share", async ({
     await marioPage.getByRole("button", { name: "Copy invite link" }).click();
 
     const inviteUrl = await marioPage.evaluate(() =>
-      navigator.clipboard.readText(),
+      navigator.clipboard.readText()
     );
 
     await luigiPage.goto(inviteUrl);
 
     await expect(
-      luigiPage.getByRole("heading", { name: "Mario's organization" }),
+      luigiPage.getByRole("heading", { name: "Mario's organization" })
     ).toBeVisible();
     await expect(marioPage.getByText("Luigi")).toBeVisible();
   });
@@ -53,13 +53,13 @@ test("create a new organization and share", async ({
     await expect(
       luigiPage.getByRole("heading", {
         name: "You don't have access to this organization",
-      }),
+      })
     ).toBeVisible();
 
     await luigiPage.getByRole("link", { name: "Go back to home" }).click();
 
     await expect(
-      luigiPage.getByRole("heading", { name: "Organizations example app" }),
+      luigiPage.getByRole("heading", { name: "Organizations example app" })
     ).toBeVisible();
   });
 });

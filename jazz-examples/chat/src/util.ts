@@ -8,7 +8,7 @@ export function onChatLoad(chat: Chat) {
     chat.waitForSync().then(() => {
       window.parent.postMessage(
         { type: "chat-load", id: "/chat/" + chat.id },
-        "*",
+        "*"
       );
     });
   }

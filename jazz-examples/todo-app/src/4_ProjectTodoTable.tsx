@@ -57,18 +57,18 @@ export function ProjectTodoTable() {
           text: CoPlainText.create(text, project._owner),
           version: 1,
         },
-        project._owner,
+        project._owner
       );
 
       // push will cause useCoState to rerender this component, both here and on other devices
       project.tasks.push(task);
     },
-    [project?.tasks, project?._owner],
+    [project?.tasks, project?._owner]
   );
 
   return (
-    <div className="max-w-full w-xl">
-      <div className="flex justify-between items-center gap-4 mb-4">
+    <div className="w-xl max-w-full">
+      <div className="mb-4 flex items-center justify-between gap-4">
         <h1>
           {
             // This is how we can access properties from the project query,
@@ -78,7 +78,7 @@ export function ProjectTodoTable() {
                 {project.title} <span className="text-sm">({project.id})</span>
               </>
             ) : (
-              <Skeleton className="mt-1 w-[200px] h-[1em] rounded-full" />
+              <Skeleton className="mt-1 h-[1em] w-[200px] rounded-full" />
             )
           }
         </h1>
@@ -93,7 +93,7 @@ export function ProjectTodoTable() {
         </TableHeader>
         <TableBody>
           {project?.tasks.map(
-            (task) => task && <TaskRow key={task.id} task={task} />,
+            task => task && <TaskRow key={task.id} task={task} />
           )}
           <NewTaskInputRow createTask={createTask} disabled={!project} />
         </TableBody>
@@ -109,7 +109,7 @@ export function TaskRow({ task }: { task: Loaded<typeof Task> | undefined }) {
         <Checkbox
           className="mt-1"
           checked={task?.done}
-          onCheckedChange={(checked) => {
+          onCheckedChange={checked => {
             // Tick or untick the task
             // Task is also immutable, but this will update all queries
             // that include this task as a reference
@@ -118,26 +118,26 @@ export function TaskRow({ task }: { task: Loaded<typeof Task> | undefined }) {
         />
       </TableCell>
       <TableCell>
-        <div className="flex flex-row justify-between items-center gap-2">
+        <div className="flex flex-row items-center justify-between gap-2">
           {task?.text ? (
             <span className={task?.done ? "line-through" : ""}>
               {task.text}
             </span>
           ) : (
-            <Skeleton className="mt-1 w-[200px] h-[1em] rounded-full" />
+            <Skeleton className="mt-1 h-[1em] w-[200px] rounded-full" />
           )}
           {
             // Here we see for the first time how we can access edit history
             // for a CoValue, and use it to display who created the task.
             task?._edits.text?.by?.profile?.name ? (
               <span
-                className="rounded-full py-0.5 px-2 text-xs"
+                className="rounded-full px-2 py-0.5 text-xs"
                 style={uniqueColoring(task._edits.text.by?.id ?? "")}
               >
                 {task._edits.text.by?.profile?.name}
               </span>
             ) : (
-              <Skeleton className="mt-1 w-[50px] h-[1em] rounded-full" />
+              <Skeleton className="mt-1 h-[1em] w-[50px] rounded-full" />
             )
           }
         </div>
@@ -162,7 +162,7 @@ function NewTaskInputRow({
       </TableCell>
       <TableCell>
         <SubmittableInput
-          onSubmit={(taskText) => createTask(taskText)}
+          onSubmit={taskText => createTask(taskText)}
           label="Add"
           placeholder="New task"
           disabled={disabled}

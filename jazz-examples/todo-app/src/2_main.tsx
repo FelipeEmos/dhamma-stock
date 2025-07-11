@@ -60,13 +60,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <JazzAndAuth>
       <ThemeProvider>
         <TitleAndLogo name={appName} />
-        <div className="flex flex-col h-full items-center justify-start gap-10 pt-10 pb-10 px-5">
+        <div className="flex h-full flex-col items-center justify-start gap-10 px-5 pt-10 pb-10">
           <App />
         </div>
       </ThemeProvider>
       <JazzInspector />
     </JazzAndAuth>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
 
 /**
@@ -104,7 +104,7 @@ export default function App() {
   useAcceptInvite({
     invitedObjectSchema: TodoProject,
     forValueHint: "project",
-    onAccept: (projectID) => router.navigate("/project/" + projectID),
+    onAccept: projectID => router.navigate("/project/" + projectID),
   });
 
   return (
@@ -130,7 +130,7 @@ function HomeScreen() {
   return (
     <>
       {me?.root.projects.length ? <h1>My Projects</h1> : null}
-      {me?.root.projects.map((project) => {
+      {me?.root.projects.map(project => {
         if (!project) return null;
 
         return (

@@ -10,11 +10,11 @@ export function AcceptInvitePage() {
 
   const onAccept = (organizationId: string) => {
     if (me?.root?.organizations) {
-      Organization.load(organizationId).then((organization) => {
+      Organization.load(organizationId).then(organization => {
         if (organization) {
           // avoid duplicates
           const ids = me.root.organizations.map(
-            (organization) => organization?.id,
+            organization => organization?.id
           );
           if (ids.includes(organizationId)) return;
 

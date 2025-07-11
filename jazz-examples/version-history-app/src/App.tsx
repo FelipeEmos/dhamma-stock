@@ -9,7 +9,7 @@ function App() {
   const [issueID, setIssueID] = useState<string | undefined>(
     (window.location.search?.replace("?issue=", "") || undefined) as
       | string
-      | undefined,
+      | undefined
   );
 
   const issue = useCoState(Issue, issueID);
@@ -23,12 +23,12 @@ function App() {
         title: "Buy terrarium",
         description: CoPlainText.create(
           "Make sure it's big enough for 10 snails.",
-          group,
+          group
         ),
         estimate: 5,
         status: "backlog",
       },
-      group,
+      group
     );
     setIssueID(newIssue.id);
     window.history.pushState({}, "", `?issue=${newIssue.id}`);
@@ -37,19 +37,19 @@ function App() {
   return (
     <>
       <header>
-        <nav className="max-w-3xl mx-auto px-3 flex justify-between items-center py-3">
+        <nav className="mx-auto flex max-w-3xl items-center justify-between px-3 py-3">
           <span>
             You're logged in as <strong>{me?.profile?.name}</strong>
           </span>
           <button
-            className="bg-stone-100 py-1.5 px-3 text-sm rounded-md"
+            className="rounded-md bg-stone-100 px-3 py-1.5 text-sm"
             onClick={() => logOut()}
           >
             Log out
           </button>
         </nav>
       </header>
-      <main className="max-w-3xl mx-auto px-3 my-8 flex flex-col gap-8">
+      <main className="mx-auto my-8 flex max-w-3xl flex-col gap-8 px-3">
         {issue ? (
           <>
             <h1 className="sr-only">Issue: {issue.title}</h1>

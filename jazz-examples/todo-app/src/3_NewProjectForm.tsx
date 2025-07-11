@@ -31,14 +31,14 @@ export function NewProjectForm() {
           title,
           tasks: co.list(Task).create([], { owner: projectGroup }),
         },
-        { owner: projectGroup },
+        { owner: projectGroup }
       );
 
       me.root?.projects?.push(project);
 
       navigate("/project/" + project.id);
     },
-    [me, navigate],
+    [me, navigate]
   );
 
   return (

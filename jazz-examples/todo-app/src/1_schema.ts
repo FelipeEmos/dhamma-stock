@@ -17,7 +17,7 @@ export const Task = co
     text: co.plainText(),
     version: z.literal(1),
   })
-  .withMigration((task) => {
+  .withMigration(task => {
     if (!task.version) {
       // Cast to the v1 version
       const task_v1 = task.castAs(Task_V1);
@@ -54,7 +54,7 @@ export const TodoAccount = co
     profile: co.profile(),
     root: TodoAccountRoot,
   })
-  .withMigration(async (account) => {
+  .withMigration(async account => {
     /** The account migration is run on account creation and on every log-in.
      *  You can use it to set up the account root and any other initial CoValues you need.
      */

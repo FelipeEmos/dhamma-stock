@@ -17,7 +17,7 @@ export const BubbleTeaBaseTeaTypes = [
 
 export const ListOfBubbleTeaAddOns = co
   .list(z.literal([...BubbleTeaAddOnTypes]))
-  .withHelpers((Self) => ({
+  .withHelpers(Self => ({
     hasChanges(list?: Loaded<typeof Self> | null) {
       return list && Object.entries(list._raw.insertions).length > 0;
     },
@@ -39,7 +39,7 @@ export const DraftBubbleTeaOrder = co
     withMilk: z.optional(z.boolean()),
     instructions: z.optional(co.plainText()),
   })
-  .withHelpers((Self) => ({
+  .withHelpers(Self => ({
     hasChanges(order: Loaded<typeof Self> | undefined) {
       return (
         !!order &&
@@ -74,7 +74,7 @@ export const JazzAccount = co
     root: AccountRoot,
     profile: co.profile(),
   })
-  .withMigration((account) => {
+  .withMigration(account => {
     if (!account.root) {
       const orders = co.list(BubbleTeaOrder).create([], account);
       const draft = DraftBubbleTeaOrder.create(
@@ -82,7 +82,7 @@ export const JazzAccount = co
           addOns: ListOfBubbleTeaAddOns.create([], account),
           instructions: co.plainText().create("", account),
         },
-        account,
+        account
       );
 
       account.root = AccountRoot.create({ draft, orders }, account);
