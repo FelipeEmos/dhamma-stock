@@ -2,6 +2,7 @@ import { BackButtonLayout } from "@/components/layout/back-button-layout";
 import { WorkspaceDetailsHeader } from "@/features/workspace/components/workspace-details-header";
 import { WorkspaceEditDialog } from "@/features/workspace/components/workspace-edit-dialog";
 import { WorkspaceFormData } from "@/features/workspace/forms/workspace-form";
+import { getWorkspacePermissions } from "@/features/workspace/lib/permissions";
 import * as Jazz from "@/jazz";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useAccount } from "jazz-tools/react";
@@ -27,7 +28,7 @@ function RouteComponent() {
   });
 
   // Check if current user can edit/delete this workspace
-  const canManageWorkspace = workspace._owner.myRole() === "admin";
+  const { canManage } = getWorkspacePermissions(workspace);
 
   const handleEdit = () => {
     setIsEditDialogOpen(true);
@@ -55,7 +56,7 @@ function RouteComponent() {
   };
 
   const handleDelete = async () => {
-    if (!canManageWorkspace) {
+    if (!canManage) {
       console.error("Sem permissão para deletar workspace");
       return;
     }
@@ -94,7 +95,7 @@ function RouteComponent() {
       title="Detalhes do Grupo"
     >
       <div className="w-full max-w-md space-y-6">
-        {canManageWorkspace && (
+        {canManage && (
           <WorkspaceDetailsHeader
             workspace={workspace}
             onEdit={handleEdit}
@@ -102,7 +103,7 @@ function RouteComponent() {
           />
         )}
 
-        {!canManageWorkspace && (
+        {!canManage && (
           <div className="flex flex-col items-center space-y-4 p-6">
             <h1 className="text-xl font-semibold">{workspace.name}</h1>
             <p className="text-muted-foreground text-sm">
@@ -111,7 +112,7 @@ function RouteComponent() {
           </div>
         )}
 
-        {canManageWorkspace && (
+        {canManage && (
           <WorkspaceEditDialog
             workspace={workspace}
             open={isEditDialogOpen}
