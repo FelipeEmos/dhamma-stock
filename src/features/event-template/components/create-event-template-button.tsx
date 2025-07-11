@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button, ButtonProps } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,29 +11,29 @@ import {
   EventTemplateFormData,
 } from "@/features/event-template/forms/event-template-form";
 import * as Jazz from "@/jazz";
+import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
-import { useState } from "react";
+import * as React from "react";
 
-interface CreateEventTemplateButtonProps {
+interface CreateEventTemplateButtonProps extends ButtonProps {
   workspace: Jazz.WorkspaceType;
+  className?: string;
 }
 
 export function CreateEventTemplateButton({
   workspace,
+  className,
+  ...buttonProps
 }: CreateEventTemplateButtonProps) {
-  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [createModalOpen, setCreateModalOpen] = React.useState(false);
 
   const handleCreateEventTemplate = (data: EventTemplateFormData) => {
-    // Calculate next order value
-    const nextOrder = workspace.eventTemplates.length;
-
     const newEventTemplate = Jazz.EventTemplate.create(
       {
         name: data.name,
         duration: data.duration,
         countFrom: data.countFrom,
         eventType: data.eventType,
-        order: nextOrder,
       },
       workspace._owner
     );
@@ -47,7 +47,7 @@ export function CreateEventTemplateButton({
   return (
     <Dialog open={createModalOpen} onOpenChange={setCreateModalOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full">
+        <Button className={cn("w-full", className)} {...buttonProps}>
           <Plus className="mr-2 h-4 w-4" />
           Novo Evento
         </Button>

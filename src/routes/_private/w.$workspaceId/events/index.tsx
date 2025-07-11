@@ -16,8 +16,9 @@ function RouteComponent() {
       to="/w/$workspaceId/home"
       params={params}
       title="Cursos e Eventos"
+      className="w-full max-w-md justify-start"
     >
-      <EventTemplateList workspace={workspace} />
+      <EventTemplateList workspace={workspace} className="w-full" />
     </BackButtonLayout>
   );
 }

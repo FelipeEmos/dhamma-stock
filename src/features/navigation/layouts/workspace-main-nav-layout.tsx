@@ -17,6 +17,9 @@ export function WorkspaceMainNavLayout({
   workspaceId: string;
 }) {
   const isHidden = !useMatchRoutePrefix(visibilityPrefix);
+  const hiddenStyle = {
+    "hidden lg:hidden": isHidden,
+  };
 
   return (
     <div className="flex min-h-svh w-full flex-col lg:flex-row">
@@ -25,9 +28,7 @@ export function WorkspaceMainNavLayout({
         workspaceId={workspaceId}
         className={cn(
           "border-border bg-sidebar fixed right-0 bottom-0 left-0 z-10 flex items-center justify-center border-t lg:fixed lg:top-0 lg:right-auto lg:bottom-0 lg:left-0 lg:h-svh lg:w-28 lg:border-t-0 lg:border-r",
-          {
-            hidden: isHidden,
-          }
+          hiddenStyle
         )}
       />
 
@@ -36,9 +37,7 @@ export function WorkspaceMainNavLayout({
         workspaceId={workspaceId}
         className={cn(
           "border-border bg-sidebar invisible hidden lg:flex lg:w-28 lg:items-center lg:justify-center lg:border-t-0 lg:border-r",
-          {
-            hidden: isHidden,
-          }
+          hiddenStyle
         )}
       />
 
@@ -51,9 +50,7 @@ export function WorkspaceMainNavLayout({
           workspaceId={workspaceId}
           className={cn(
             "border-border bg-sidebar invisible flex items-center justify-center border-t lg:hidden",
-            {
-              hidden: isHidden,
-            }
+            hiddenStyle
           )}
         />
       </ScrollArea>

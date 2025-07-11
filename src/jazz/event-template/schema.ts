@@ -11,5 +11,4 @@ export const EventTemplateSchema = co.map({
   }),
   countFrom: CountingMethodSchema,
   eventType: EventTypeSchema,
-  order: z.number(),
 });

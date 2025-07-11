@@ -17,8 +17,8 @@ export function BackButtonLayout({
   ...linkOptions
 }: BackButtonLayoutProps) {
   return (
-    <div className="bg-background flex min-h-svh flex-col">
-      <header className="bg-muted/30 border-b">
+    <div className="bg-background flex min-h-svh flex-col items-center">
+      <header className="bg-muted/30 w-full border-b">
         <div className="flex min-h-12 justify-center px-2 py-2">
           <div className="flex w-full max-w-6xl items-center justify-between">
             <Button variant="ghost" size="icon" asChild className="p-6">
