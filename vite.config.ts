@@ -21,9 +21,10 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,ico,png,svg,webp}"],
       },
       manifest: {
-        name: "Dhamma Kitchen - Teste PWA",
-        short_name: "DhammaKitchenTestePwa",
-        description: "Teste de",
+        name: "Dhamma Stock",
+        short_name: "Dhamma Stock",
+        description:
+          "Aplicativo de gerência de estoque para um centro de meditação",
         theme_color: "#ffffff",
         background_color: "#ffffff",
         display: "standalone",
