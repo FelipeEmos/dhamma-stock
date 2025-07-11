@@ -119,7 +119,7 @@ export function EventTemplateList({
           items={workspace.eventTemplates.map(template => template.id)}
           strategy={verticalListSortingStrategy}
         >
-          <div className="space-y-2 pt-8">
+          <div className="flex flex-col gap-4 pt-8">
             {workspace.eventTemplates.map(template => (
               <EventTemplateItem
                 key={template.id}

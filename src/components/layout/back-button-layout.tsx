@@ -7,6 +7,7 @@ import * as React from "react";
 interface BackButtonLayoutProps extends LinkOptions {
   title?: React.ReactNode;
   children?: React.ReactNode;
+  headerFooter?: React.ReactNode;
   className?: string;
 }
 
@@ -14,6 +15,7 @@ export function BackButtonLayout({
   title,
   children,
   className,
+  headerFooter,
   ...linkOptions
 }: BackButtonLayoutProps) {
   return (
@@ -30,6 +32,7 @@ export function BackButtonLayout({
             <div className="w-10"></div>
           </div>
         </div>
+        {headerFooter}
       </header>
 
       <main
