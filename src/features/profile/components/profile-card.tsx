@@ -1,10 +1,9 @@
 import * as Jazz from "@/jazz";
 import { cn } from "@/lib/utils";
-import { Loaded } from "jazz-tools";
 import { ProgressiveImg } from "jazz-tools/react";
 
 interface ProfileCardImageProps {
-  profile: Loaded<typeof Jazz.Profile>;
+  profile: Jazz.ProfileType;
   size?: "sm" | "md" | "lg";
   className?: string;
 }
@@ -44,6 +43,8 @@ export function ProfileCardImage({
       )}
     >
       {profile.image ? (
+        // TOIMPROVE: better image typesafety
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         <ProgressiveImg image={profile.image as any}>
           {({ src }) => (
             <img
@@ -63,7 +64,7 @@ export function ProfileCardImage({
 }
 
 interface ProfileCardProps {
-  profile: Loaded<typeof Jazz.Profile>;
+  profile: Jazz.ProfileType;
   size?: "sm" | "md" | "lg";
   showEmail?: boolean;
   className?: string;

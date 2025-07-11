@@ -6,7 +6,7 @@ import { z } from "zod";
 
 const profileSchema = z.object({
   name: z.string().min(2, "O nome precisa ter no mínimo 2 caracteres"),
-  email: z.string().email("Email inválido"),
+  email: z.email("Email inválido"),
   image: z.any().optional(),
 });
 

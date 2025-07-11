@@ -28,10 +28,14 @@ function RouteComponent() {
 
 function useSafeRouteWorkspace() {
   const { workspaceId } = Route.useParams();
-  return useCoState(Jazz.Workspace, workspaceId);
+  return useCoState(Jazz.Workspace, workspaceId, {
+    resolve: {
+      eventTemplates: { $each: true },
+    },
+  });
 }
 
-export function useRouteWorkspace() {
+export function useRouteWorkspace(): Jazz.WorkspaceType {
   const workspace = useSafeRouteWorkspace();
   if (!workspace) {
     throw new Error(

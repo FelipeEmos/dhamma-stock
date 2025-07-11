@@ -16,24 +16,30 @@ export function WorkspaceMainNavLayout({
   visibilityPrefix: RegExp;
   workspaceId: string;
 }) {
-  const isVisible = useMatchRoutePrefix(visibilityPrefix);
-
-  if (!isVisible) {
-    return <div className="flex h-screen w-full flex-col">{children}</div>;
-  }
+  const isHidden = !useMatchRoutePrefix(visibilityPrefix);
 
   return (
     <div className="flex min-h-svh w-full flex-col lg:flex-row">
       {/* Fixed Navigation for mobile, fixed for desktop */}
       <NavBarItems
         workspaceId={workspaceId}
-        className="border-border bg-sidebar fixed right-0 bottom-0 left-0 z-10 flex items-center justify-center border-t lg:fixed lg:top-0 lg:right-auto lg:bottom-0 lg:left-0 lg:h-svh lg:w-28 lg:border-t-0 lg:border-r"
+        className={cn(
+          "border-border bg-sidebar fixed right-0 bottom-0 left-0 z-10 flex items-center justify-center border-t lg:fixed lg:top-0 lg:right-auto lg:bottom-0 lg:left-0 lg:h-svh lg:w-28 lg:border-t-0 lg:border-r",
+          {
+            hidden: isHidden,
+          }
+        )}
       />
 
       {/* Invisible spacer for desktop padding */}
       <NavBarItems
         workspaceId={workspaceId}
-        className="border-border bg-sidebar invisible hidden lg:flex lg:w-28 lg:items-center lg:justify-center lg:border-t-0 lg:border-r"
+        className={cn(
+          "border-border bg-sidebar invisible hidden lg:flex lg:w-28 lg:items-center lg:justify-center lg:border-t-0 lg:border-r",
+          {
+            hidden: isHidden,
+          }
+        )}
       />
 
       {/* Content with scroll */}
@@ -43,7 +49,12 @@ export function WorkspaceMainNavLayout({
         {/* Invisible spacer for mobile padding */}
         <NavBarItems
           workspaceId={workspaceId}
-          className="border-border bg-sidebar invisible flex items-center justify-center border-t lg:hidden"
+          className={cn(
+            "border-border bg-sidebar invisible flex items-center justify-center border-t lg:hidden",
+            {
+              hidden: isHidden,
+            }
+          )}
         />
       </ScrollArea>
     </div>

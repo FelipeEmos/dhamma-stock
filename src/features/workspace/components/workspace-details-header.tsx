@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
+import * as Jazz from "@/jazz";
+import { Edit } from "lucide-react";
 import { WorkspaceAvatarImage } from "./workspace-avatar";
 import { WorkspaceDeleteButton } from "./workspace-delete-button";
-import * as Jazz from "@/jazz";
-import { Loaded } from "jazz-tools";
-import { Edit } from "lucide-react";
 
 interface WorkspaceDetailsHeaderProps {
-  workspace: Loaded<typeof Jazz.Workspace>;
+  workspace: Jazz.WorkspaceType;
   onEdit: () => void;
   onDelete: () => void;
 }

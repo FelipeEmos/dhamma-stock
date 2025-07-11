@@ -1,10 +1,9 @@
 import * as Jazz from "@/jazz";
 import { cn } from "@/lib/utils";
-import { Loaded } from "jazz-tools";
 import { ProgressiveImg } from "jazz-tools/react";
 
 interface WorkspaceAvatarImageProps {
-  workspace: Loaded<typeof Jazz.Workspace>;
+  workspace: Jazz.WorkspaceShallowType;
   size?: "sm" | "md" | "lg";
   className?: string;
 }
@@ -64,7 +63,7 @@ export function WorkspaceAvatarImage({
 }
 
 interface WorkspaceAvatarProps {
-  workspace: Loaded<typeof Jazz.Workspace>;
+  workspace: Jazz.WorkspaceShallowType;
   size?: "sm" | "md" | "lg";
   showLocation?: boolean;
   className?: string;

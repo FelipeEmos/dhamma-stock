@@ -9,13 +9,12 @@ import {
   ProfileForm,
   ProfileFormData,
 } from "@/features/profile/forms/profile-form";
-import { ProfileCard } from "./profile-card";
 import * as Jazz from "@/jazz";
-import { Loaded } from "jazz-tools";
 import { useState } from "react";
+import { ProfileCard } from "./profile-card";
 
 interface EditProfileDialogProps {
-  profile: Loaded<typeof Jazz.Profile>;
+  profile: Jazz.ProfileType;
   onSubmit: (data: ProfileFormData) => void | Promise<void>;
 }
 

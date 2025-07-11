@@ -11,10 +11,11 @@ import {
   WorkspaceFormData,
 } from "@/features/workspace/forms/workspace-form";
 import * as Jazz from "@/jazz";
-import { Plus } from "lucide-react";
-import { useState } from "react";
+import { WorkspaceData } from "@/jazz/workspace/data";
 import { Group } from "jazz-tools";
 import { useAccount } from "jazz-tools/react";
+import { Plus } from "lucide-react";
+import { useState } from "react";
 
 export function CreateWorkspaceButton() {
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -32,6 +33,8 @@ export function CreateWorkspaceButton() {
       return;
     }
 
+    const workspaceGroup = Group.create();
+
     const newWorkspace = Jazz.Workspace.create(
       {
         name: data.name,
@@ -43,8 +46,9 @@ export function CreateWorkspaceButton() {
                 state: data.state,
               }
             : undefined,
+        eventTemplates: WorkspaceData.createNewEventTemplates(workspaceGroup),
       },
-      Group.create()
+      workspaceGroup
     );
 
     console.log("Created new workspace", newWorkspace);

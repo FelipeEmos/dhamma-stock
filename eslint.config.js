@@ -79,5 +79,6 @@ export default defineConfig([
     ".vscode",
     ".vercel",
     ".output",
+    "./jazz-examples",
   ]),
 ]);

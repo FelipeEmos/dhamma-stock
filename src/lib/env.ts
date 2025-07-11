@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "jazz-tools";
 
 const envSchema = z.object({
   VITE_JAZZ_API_KEY: z.string(),
