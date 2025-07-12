@@ -1,9 +1,10 @@
 import { BackButtonLayout } from "@/components/layout/back-button-layout";
 import { createFileRoute } from "@tanstack/react-router";
 import { useRouteEventTemplate } from "./route";
-import { cn } from "@/lib/utils";
-import { EventTypeColor } from "@/features/event-template/event-type";
+import { useRouteWorkspace } from "../../route";
+
 import { EventTemplateDetailsCard } from "@/features/event-template/components/event-template-details-card";
+import { DemandList } from "@/features/demand/components/demand-list";
 
 export const Route = createFileRoute(
   "/_private/w/$workspaceId/events/e/$eventId/"
@@ -13,6 +14,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
   const eventTemplate = useRouteEventTemplate();
+  const workspace = useRouteWorkspace();
   const params = Route.useParams();
 
   return (
@@ -25,9 +27,10 @@ function RouteComponent() {
       <div className="space-y-4">
         <EventTemplateDetailsCard eventTemplate={eventTemplate} />
 
-        {/* Placeholder for event template details */}
-        <div className="text-muted-foreground py-8 text-center">
-          Detalhes do evento em desenvolvimento
+        {/* Seção de Demandas */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Demandas</h3>
+          <DemandList eventTemplate={eventTemplate} workspace={workspace} />
         </div>
       </div>
     </BackButtonLayout>

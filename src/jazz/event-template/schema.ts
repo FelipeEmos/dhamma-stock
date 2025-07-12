@@ -1,6 +1,7 @@
 import { EventTypeSchema } from "@/features/event-template/event-type";
 import { CountingMethodSchema } from "@/lib/counting";
 import { DurationUnitSchema } from "@/lib/duration";
+import { DemandSchema } from "../demand/schema";
 import { z, co } from "jazz-tools";
 
 export const EventTemplateSchema = co.map({
@@ -11,4 +12,5 @@ export const EventTemplateSchema = co.map({
   }),
   countFrom: CountingMethodSchema,
   eventType: EventTypeSchema,
+  demands: co.list(DemandSchema),
 });

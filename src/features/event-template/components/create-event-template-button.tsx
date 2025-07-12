@@ -34,6 +34,7 @@ export function CreateEventTemplateButton({
         duration: data.duration,
         countFrom: data.countFrom,
         eventType: data.eventType,
+        demands: Jazz.EventTemplateData.createNewDemands(workspace._owner),
       },
       workspace._owner
     );

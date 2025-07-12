@@ -2,7 +2,6 @@ import { InvalidResourceLayout } from "@/components/layout/invalid-resource-layo
 import { LoadingScreen } from "@/components/layout/loading-screen";
 import * as Jazz from "@/jazz";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { useCoState } from "jazz-tools/react";
 
 export const Route = createFileRoute(
   "/_private/w/$workspaceId/events/e/$eventId"
@@ -31,11 +30,7 @@ function RouteComponent() {
 
 function useSafeRouteEventTemplate() {
   const { eventId } = Route.useParams();
-  return useCoState(Jazz.EventTemplate, eventId, {
-    resolve: {
-      // Add any necessary resolve configs here
-    },
-  });
+  return Jazz.useEventTemplate(eventId);
 }
 
 export function useRouteEventTemplate(): Jazz.EventTemplateType {

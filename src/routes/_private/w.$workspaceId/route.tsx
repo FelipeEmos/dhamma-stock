@@ -3,7 +3,6 @@ import { LoadingScreen } from "@/components/layout/loading-screen";
 import { WorkspaceMainNavLayout } from "@/features/navigation/layouts/workspace-main-nav-layout";
 import * as Jazz from "@/jazz";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { useCoState } from "jazz-tools/react";
 
 export const Route = createFileRoute("/_private/w/$workspaceId")({
   component: RouteComponent,
@@ -28,11 +27,7 @@ function RouteComponent() {
 
 function useSafeRouteWorkspace() {
   const { workspaceId } = Route.useParams();
-  return useCoState(Jazz.Workspace, workspaceId, {
-    resolve: {
-      eventTemplates: { $each: true },
-    },
-  });
+  return Jazz.useWorkspace(workspaceId);
 }
 
 export function useRouteWorkspace(): Jazz.WorkspaceType {

@@ -23,6 +23,8 @@ import { Route as PrivateWWorkspaceIdOrdersNavIndexRouteImport } from './routes/
 import { Route as PrivateWWorkspaceIdNotificationsNavIndexRouteImport } from './routes/_private/w.$workspaceId/notifications/_nav.index'
 import { Route as PrivateWWorkspaceIdEventsEEventIdRouteRouteImport } from './routes/_private/w.$workspaceId/events/e.$eventId/route'
 import { Route as PrivateWWorkspaceIdEventsEEventIdIndexRouteImport } from './routes/_private/w.$workspaceId/events/e.$eventId/index'
+import { Route as PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteImport } from './routes/_private/w.$workspaceId/events/e.$eventId/demands/d.$demandId/route'
+import { Route as PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRouteImport } from './routes/_private/w.$workspaceId/events/e.$eventId/demands/d.$demandId/index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -103,6 +105,19 @@ const PrivateWWorkspaceIdEventsEEventIdIndexRoute =
     path: '/',
     getParentRoute: () => PrivateWWorkspaceIdEventsEEventIdRouteRoute,
   } as any)
+const PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRoute =
+  PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteImport.update({
+    id: '/demands/d/$demandId',
+    path: '/demands/d/$demandId',
+    getParentRoute: () => PrivateWWorkspaceIdEventsEEventIdRouteRoute,
+  } as any)
+const PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRoute =
+  PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () =>
+      PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -118,6 +133,8 @@ export interface FileRoutesByFullPath {
   '/w/$workspaceId/orders': typeof PrivateWWorkspaceIdOrdersNavIndexRoute
   '/w/$workspaceId/stock': typeof PrivateWWorkspaceIdStockNavIndexRoute
   '/w/$workspaceId/events/e/$eventId/': typeof PrivateWWorkspaceIdEventsEEventIdIndexRoute
+  '/w/$workspaceId/events/e/$eventId/demands/d/$demandId': typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteWithChildren
+  '/w/$workspaceId/events/e/$eventId/demands/d/$demandId/': typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,6 +148,7 @@ export interface FileRoutesByTo {
   '/w/$workspaceId/orders': typeof PrivateWWorkspaceIdOrdersNavIndexRoute
   '/w/$workspaceId/stock': typeof PrivateWWorkspaceIdStockNavIndexRoute
   '/w/$workspaceId/events/e/$eventId': typeof PrivateWWorkspaceIdEventsEEventIdIndexRoute
+  '/w/$workspaceId/events/e/$eventId/demands/d/$demandId': typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -148,6 +166,8 @@ export interface FileRoutesById {
   '/_private/w/$workspaceId/orders/_nav/': typeof PrivateWWorkspaceIdOrdersNavIndexRoute
   '/_private/w/$workspaceId/stock/_nav/': typeof PrivateWWorkspaceIdStockNavIndexRoute
   '/_private/w/$workspaceId/events/e/$eventId/': typeof PrivateWWorkspaceIdEventsEEventIdIndexRoute
+  '/_private/w/$workspaceId/events/e/$eventId/demands/d/$demandId': typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteWithChildren
+  '/_private/w/$workspaceId/events/e/$eventId/demands/d/$demandId/': typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -165,6 +185,8 @@ export interface FileRouteTypes {
     | '/w/$workspaceId/orders'
     | '/w/$workspaceId/stock'
     | '/w/$workspaceId/events/e/$eventId/'
+    | '/w/$workspaceId/events/e/$eventId/demands/d/$demandId'
+    | '/w/$workspaceId/events/e/$eventId/demands/d/$demandId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -178,6 +200,7 @@ export interface FileRouteTypes {
     | '/w/$workspaceId/orders'
     | '/w/$workspaceId/stock'
     | '/w/$workspaceId/events/e/$eventId'
+    | '/w/$workspaceId/events/e/$eventId/demands/d/$demandId'
   id:
     | '__root__'
     | '/'
@@ -194,6 +217,8 @@ export interface FileRouteTypes {
     | '/_private/w/$workspaceId/orders/_nav/'
     | '/_private/w/$workspaceId/stock/_nav/'
     | '/_private/w/$workspaceId/events/e/$eventId/'
+    | '/_private/w/$workspaceId/events/e/$eventId/demands/d/$demandId'
+    | '/_private/w/$workspaceId/events/e/$eventId/demands/d/$demandId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -302,17 +327,49 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateWWorkspaceIdEventsEEventIdIndexRouteImport
       parentRoute: typeof PrivateWWorkspaceIdEventsEEventIdRouteRoute
     }
+    '/_private/w/$workspaceId/events/e/$eventId/demands/d/$demandId': {
+      id: '/_private/w/$workspaceId/events/e/$eventId/demands/d/$demandId'
+      path: '/demands/d/$demandId'
+      fullPath: '/w/$workspaceId/events/e/$eventId/demands/d/$demandId'
+      preLoaderRoute: typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteImport
+      parentRoute: typeof PrivateWWorkspaceIdEventsEEventIdRouteRoute
+    }
+    '/_private/w/$workspaceId/events/e/$eventId/demands/d/$demandId/': {
+      id: '/_private/w/$workspaceId/events/e/$eventId/demands/d/$demandId/'
+      path: '/'
+      fullPath: '/w/$workspaceId/events/e/$eventId/demands/d/$demandId/'
+      preLoaderRoute: typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRouteImport
+      parentRoute: typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRoute
+    }
   }
 }
 
+interface PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteChildren {
+  PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRoute: typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRoute
+}
+
+const PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteChildren: PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteChildren =
+  {
+    PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRoute:
+      PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdIndexRoute,
+  }
+
+const PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteWithChildren =
+  PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRoute._addFileChildren(
+    PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteChildren,
+  )
+
 interface PrivateWWorkspaceIdEventsEEventIdRouteRouteChildren {
   PrivateWWorkspaceIdEventsEEventIdIndexRoute: typeof PrivateWWorkspaceIdEventsEEventIdIndexRoute
+  PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRoute: typeof PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteWithChildren
 }
 
 const PrivateWWorkspaceIdEventsEEventIdRouteRouteChildren: PrivateWWorkspaceIdEventsEEventIdRouteRouteChildren =
   {
     PrivateWWorkspaceIdEventsEEventIdIndexRoute:
       PrivateWWorkspaceIdEventsEEventIdIndexRoute,
+    PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRoute:
+      PrivateWWorkspaceIdEventsEEventIdDemandsDDemandIdRouteRouteWithChildren,
   }
 
 const PrivateWWorkspaceIdEventsEEventIdRouteRouteWithChildren =

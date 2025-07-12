@@ -281,7 +281,11 @@ Na pasta ./src/features você vai encontrar esses domínios, em que uma separaç
     - ./src/features/some-domain/components
     - ./src/features/some-domain/forms
 
-Todos os schemas JAZZ do domínio devem existir em um arquivo chamado "./src/jazz/<domainName>-schema.ts", onde <domainName> é o nome do domínio.
+Todos os schemas JAZZ do domínio devem existir em um arquivo chamado "./src/jazz/<domainName>/schema.ts", onde <domainName> é o nome do domínio. A variável do schema deve se chamar `<DomainName>Schema`.
+Arquivos relacionados à esse são os
+- ./src/jazz/<domainName>/data.ts -> Define o namespace `<DomainName>Data` com criações de coValue relevantes para esse domínio e migração. Definir APENAS os necessários, nada de criar proativamente.
+- ./src/jazz/<domainName>/migration.ts -> Define a função de `migrate` dentro do namespace `<DomainName>Migration`, que tem como assinatura o "(coValue: co.Loaded<typeof DomainNameSchema>) => Promise<void>"
+- ./src/jazz/<domainName>/index.ts -> Agrega o Schema à migration.
 
 
 # Stack
