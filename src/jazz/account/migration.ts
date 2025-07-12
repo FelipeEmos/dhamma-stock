@@ -4,16 +4,26 @@ import { AccountSchema } from "./schema";
 
 export namespace AccountMigration {
   export async function migrate(coValue: co.loaded<typeof AccountSchema>) {
-    const account = await coValue.ensureLoaded({ resolve: {} });
+    // First try to load with root resolution
+    const account = await coValue.ensureLoaded({
+      resolve: {
+        root: {
+          workspaces: {
+            $each: true,
+            $onError: null,
+          },
+        },
+      },
+    });
 
-    const skip = !!account.root;
-    if (skip) {
+    // If root exists, skip migration
+    if (account.root) {
+      console.log("✅ [AccountMigration] Skipping - root already exists");
       return;
     }
 
     const userPrivateGroup = Group.create();
-    if (!account.root) {
-      account.root = AccountRootData.createNew(userPrivateGroup);
-    }
+    account.root = AccountRootData.createNew(userPrivateGroup);
+    console.log("🆕 [AccountMigration] Created new root with empty workspaces");
   }
 }

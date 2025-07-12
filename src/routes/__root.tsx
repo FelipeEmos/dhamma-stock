@@ -1,14 +1,15 @@
+import { useLoadAccountRoot } from "@/features/account-root/use-load-account-root";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { useAccount } from "jazz-tools/react";
 
 export const Route = createRootRoute({
   component: RootLayout,
 });
 
 function RootLayout() {
-  const account = useAccount();
-  const isLoading = account.me === undefined;
+  const { me } = useLoadAccountRoot();
+
+  const isLoading = me === undefined;
 
   if (isLoading) {
     return (

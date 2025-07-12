@@ -1,23 +1,13 @@
 import { SearchInput } from "@/components/ui/search-input";
-import * as Jazz from "@/jazz";
+import { useLoadAccountRoot } from "@/features/account-root/use-load-account-root";
 import { Link } from "@tanstack/react-router";
-import { useAccount } from "jazz-tools/react";
 import { useState } from "react";
 import { WorkspaceAvatar } from "./workspace-avatar";
 
 export function UserWorkspaceSelector() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { me } = useAccount(Jazz.Account, {
-    resolve: {
-      root: {
-        workspaces: {
-          $each: { $onError: null },
-        },
-      },
-    },
-  });
-  const workspaces = me?.root?.workspaces?.filter(w => !!w) ?? [];
+  const { workspaces } = useLoadAccountRoot();
 
   const filteredWorkspaces = workspaces.filter(workspace =>
     workspace.name.toLowerCase().includes(searchTerm.toLowerCase())
