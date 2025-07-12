@@ -13,7 +13,7 @@ function RouteComponent() {
 
   return (
     <div className="flex min-h-svh flex-col">
-      <div className="flex justify-between border-b p-4">
+      <div className="flex items-center justify-between border-b p-4">
         <CurrentWorkspaceDetailsButton />
         <Button asChild>
           <Link to="/home-root">
