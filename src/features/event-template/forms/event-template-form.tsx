@@ -11,7 +11,11 @@ import {
 import { useEventTemplateValidation } from "@/features/event-template/hooks/use-event-template-validation";
 import { InputField } from "@/features/form/input-field";
 import * as Jazz from "@/jazz";
-import { CountingMethods, CountingMethodSchema } from "@/lib/counting";
+import {
+  CountingFromDayLabelText,
+  CountingMethods,
+  CountingMethodSchema,
+} from "@/lib/counting";
 import {
   DurationUnitLabel,
   DurationUnits,
@@ -152,30 +156,14 @@ export function EventTemplateForm({
               defaultValue={CountingMethods.ZERO_FIRST}
               className="gap-0"
             >
-              <div className="flex items-center space-x-2 py-2">
-                <RadioGroupItem
-                  value={CountingMethods.ZERO_FIRST}
-                  id={CountingMethods.ZERO_FIRST}
-                />
-                <Label htmlFor={CountingMethods.ZERO_FIRST}>
-                  Do dia zero:{" "}
-                  <span className="text-primary">
-                    (<span className="font-bold">D0</span>, D1, D2 ...)
-                  </span>
-                </Label>
-              </div>
-              <div className="flex items-center space-x-2 py-2">
-                <RadioGroupItem
-                  value={CountingMethods.ONE_FIRST}
-                  id={CountingMethods.ONE_FIRST}
-                />
-                <Label htmlFor={CountingMethods.ONE_FIRST}>
-                  Do dia um:{" "}
-                  <span className="text-primary">
-                    (<span className="font-bold">D1</span>, D2, D3 ...)
-                  </span>
-                </Label>
-              </div>
+              {Object.values(CountingMethods).map(method => (
+                <div key={method} className="flex items-center space-x-2 py-2">
+                  <RadioGroupItem value={method} id={method} />
+                  <Label htmlFor={method}>
+                    <CountingFromDayLabelText countFrom={method} />
+                  </Label>
+                </div>
+              ))}
             </RadioGroup>
           )}
         />
