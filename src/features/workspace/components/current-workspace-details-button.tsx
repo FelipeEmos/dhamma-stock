@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { useRouteWorkspace } from "@/routes/_private/w.$workspaceId/route";
 import { Link } from "@tanstack/react-router";
-import { ChevronDown } from "lucide-react";
 import { WorkspaceAvatar } from "./workspace-avatar";
-import { cn } from "@/lib/utils";
 
 export function CurrentWorkspaceDetailsButton({
   className,
